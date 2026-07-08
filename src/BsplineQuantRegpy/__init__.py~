@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+PysplineQuantReg - Régression quantile avec B-splines sous contraintes de forme
+"""
+
+from .__version__ import __version__
+
+# Import des fonctions principales depuis les sous-modules
+from .models.quantile_reg import (
+    SplineLinearQuant,
+    SplineQuadraticQuant,
+    SplineCubicQuant,
+    SplineQuarticQuant,
+    rhotau
+)
+from .gui.Quant_reg_tk import main as Quant_reg_tk
+
+# Import des fonctions de base et contraintes (pour usage avancé)
+from .core.bases import build_bsplines_and_deriv
+from .core.constraints import (
+    apply_karlin_constraints_cubic,
+    apply_karlin_constraints_quadratic,
+    apply_val_constraints
+)
+
+# Définition de ce qui est exporté par "from PysplineQuantReg import *"
+__all__ = [
+    '__version__',
+    'SplineLinearQuant',
+    'SplineQuadraticQuant',
+    'SplineCubicQuant',
+    'SplineQuarticQuant',
+    'rhotau',
+    'build_bsplines_and_deriv',
+    'apply_karlin_constraints_cubic',
+    'apply_karlin_constraints_quadratic',
+    'apply_val_constraints'
+]
