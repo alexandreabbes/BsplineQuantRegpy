@@ -118,6 +118,11 @@ class QuantileSplineApp:
         ]
         
         self.setup_ui()
+    def quit_app(self):
+     """Quitte l'application proprement."""
+     if messagebox.askokcancel("Quitter", "Voulez-vous vraiment quitter l'application ?"):
+        self.root.quit()
+        self.root.destroy()
         
     def setup_ui(self):
         """Configuration de l'interface"""
@@ -361,31 +366,39 @@ class QuantileSplineApp:
         self.knot_mode_changed()
         self.check_modules()
     
+    # ============ MENU ============
     def setup_menu(self):
         """Configure le menu de l'application."""
         menubar = tk.Menu(self.root)
         self.root.config(menu=menubar)
         
+        # Menu Fichier
         file_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Fichier", menu=file_menu)
         file_menu.add_command(label="Charger CSV", command=self.load_csv)
         file_menu.add_command(label="Charger Excel", command=self.load_excel)
         file_menu.add_separator()
-        file_menu.add_command(label="Quitter", command=self.root.quit)
+        file_menu.add_command(label="Quitter", command=self.quit_app)
+        
+        # Menu Exemples
         
         examples_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Exemples", menu=examples_menu)
-        examples_menu.add_command(label="Données de test", command=self.generate_test_data)
-        examples_menu.add_command(label="📊 Données température", command=self.load_temperature_example)
+        examples_menu.add_command(label="📘 Exemple basique", command=self.load_basic_example)
         examples_menu.add_command(label="📈 Comparaison des degrés", command=self.run_comparison_example)
-        examples_menu.add_command(label="📈 Comparaison des degrés2", command=self.run_comparison_example2)
-        examples_menu.add_command(label="📈 Basic Example", command=self.load_basic_example2)
-            # Menu Scripts
+        examples_menu.add_command(label=" Exemple courbe logistque", command=self.run_logistic_example)
+        examples_menu.add_separator()
+        examples_menu.add_command(label="📊 Chargement des données température", command=self.load_temperature_example)
+        examples_menu.add_command(label="🌡️ Analyse des températures (contraintes)", command=self.run_temperature_analysis)
+        
+        
+        
+        # Menu Scripts
         scripts_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Scripts", menu=scripts_menu)
-        scripts_menu.add_command(label=" Exécuter example_basic.py", command=self.load_basic_example2)
-        scripts_menu.add_command(label=" Exécuter comparison_example.py", command=self.run_comparison_example2)
-        
+        scripts_menu.add_command(label="▶ Exécuter example_basic.py", command=self.load_basic_example)
+        scripts_menu.add_command(label="▶ Exécuter comparison_example.py", command=self.run_comparison_example)
+    
     # ============ MÉTHODES ============
     
     def check_modules(self):
@@ -465,7 +478,6 @@ class QuantileSplineApp:
         dialog.geometry("300x200")
         dialog.transient(self.root)
         dialog.grab_set()
-        
         ttk.Label(dialog, text="Colonne X:").grid(row=0, column=0, padx=5, pady=5)
         x_var = tk.StringVar(value=numeric_cols[0])
         ttk.Combobox(dialog, textvariable=x_var, values=numeric_cols, state="readonly").grid(row=0, column=1, padx=5, pady=5)
@@ -840,18 +852,18 @@ class QuantileSplineApp:
             except Exception as e:
                 messagebox.showerror("Erreur", str(e))
     
-    # ============ Exemples ============
-    def load_example_basic2(self):
-     """Charge et exécute l'exemple basic depuis un script externe."""
+    # ============ EXEMPLES ============
+    def run_logistic_example(self):
+     """Lance le test avec la fonction logistique."""
      try:
         import subprocess
         import os
         
-        # Chercher le script example_basic.py
+        # Chercher le script example_logistic.py
         possible_paths = [
-            os.path.join(PROJECT_ROOT, 'examples', 'example_basic.py'),
-            os.path.join(os.path.dirname(__file__), '..', '..', '..', 'examples', 'example_basic2.py'),
-            'examples/example_basic.py',
+            os.path.join(PROJECT_ROOT, 'examples', 'example_logistic.py'),
+            os.path.join(EXAMPLES_PATH, 'example_logistic.py'),
+            'examples/example_logistic.py',
         ]
         
         script_path = None
@@ -862,25 +874,65 @@ class QuantileSplineApp:
         
         if script_path is None:
             messagebox.showerror("Erreur", 
-                "Fichier example_basic.py non trouvé.\n\n"
+                "Fichier example_logistic.py non trouvé.\n\n"
                 "Assurez-vous que le fichier existe dans le dossier examples/")
             return
         
         # Lancer le script
-        self.status_var.set("Lancement de l'exemple basic...")
+        self.status_var.set("Lancement du test logistique...")
         self.root.update()
         
         import sys
         subprocess.Popen([sys.executable, script_path])
         
-        self.status_var.set("Exemple basic lancé")
+        self.status_var.set("Test logistique lancé")
         
      except Exception as e:
         messagebox.showerror("Erreur", f"Erreur: {e}")
         import traceback
         traceback.print_exc()
-        
+            
+    def load_basic_example(self):
+        """Charge et exécute l'exemple basic depuis un script externe."""
+        try:
+            import subprocess
+            import os
+            
+            # Chercher le script example_basic.py
+            possible_paths = [
+                os.path.join(PROJECT_ROOT, 'examples', 'example_basic.py'),
+                os.path.join(EXAMPLES_PATH, 'example_basic.py'),
+                'examples/example_basic.py',
+            ]
+            
+            script_path = None
+            for p in possible_paths:
+                if os.path.exists(p):
+                    script_path = p
+                    break
+            
+            if script_path is None:
+                messagebox.showerror("Erreur", 
+                    "Fichier example_basic.py non trouvé.\n\n"
+                    "Assurez-vous que le fichier existe dans le dossier examples/")
+                return
+            
+            # Lancer le script
+            self.status_var.set("Lancement de l'exemple basic...")
+            self.root.update()
+            
+            import sys
+            subprocess.Popen([sys.executable, script_path])
+            
+            self.status_var.set("Exemple basic lancé")
+            
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Erreur: {e}")
+            import traceback
+            traceback.print_exc()
+    
     def load_temperature_example(self):
+        """Charge l'exemple des données de température."""
         try:
             import os
             import pandas as pd
@@ -929,104 +981,281 @@ class QuantileSplineApp:
             self.status_var.set("Données température chargées avec nœuds spécifiques")
             self.canvas.draw()
             
-            messagebox.showinfo("Succès", "Données de température chargées!\n\nNœuds aux années: 1880, 1889, 1900, 1910, 1930, 1940, 1965, 1992")
+            messagebox.showinfo("Succès", 
+                "Données de température chargées!\n\n"
+                "Nœuds aux années: 1880, 1889, 1900, 1910, 1930, 1940, 1965, 1992")
         except Exception as e:
             messagebox.showerror("Erreur", f"Impossible de charger l'exemple: {str(e)}")
             import traceback
             traceback.print_exc()
-            
-    def run_comparison_example2(self):
-     """Lance l'exemple de comparaison des degrés."""
+    def run_temperature_analysis(self):
+     """Lance une analyse complète des données de température avec différentes contraintes."""
      try:
-        # Ajouter le chemin examples à sys.path
-        if EXAMPLES_PATH not in sys.path:
-            sys.path.insert(0, EXAMPLES_PATH)
-        
-        # Vérifier que le fichier existe
         import os
-        example_file = os.path.join(EXAMPLES_PATH, 'comparison_example.py')
-        if not os.path.exists(example_file):
-            messagebox.showerror("Erreur", 
-                f"Fichier non trouvé: {example_file}\n\n"
-                f"EXAMPLES_PATH = {EXAMPLES_PATH}")
-            return
+        import pandas as pd
+        import matplotlib.pyplot as plt
+        from matplotlib.figure import Figure
+        from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
         
-        # Importer le module dynamiquement
-        import importlib.util
-        spec = importlib.util.spec_from_file_location("comparison_example", example_file)
-        example_module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(example_module)
+        # Chercher le fichier temp.xls
+        possible_paths = [
+            os.path.join(PROJECT_ROOT, 'examples', 'temp.xls'),
+            os.path.join(PROJECT_ROOT, 'data', 'temp.xls'),
+            os.path.join(os.path.dirname(__file__), '..', '..', '..', 'examples', 'temp.xls'),
+            'examples/temp.xls',
+            'temp.xls',
+        ]
         
-        # Appeler la fonction main
-        example_module.main()
+        file_path = None
+        for p in possible_paths:
+            if os.path.exists(p):
+                file_path = p
+                break
         
-        self.status_var.set("Comparaison des degrés affichée")
+        if file_path is None:
+            file_path = filedialog.askopenfilename(
+                title="Sélectionner le fichier temp.xls",
+                filetypes=[("Excel files", "*.xls *.xlsx")]
+            )
+            if not file_path:
+                return
+        
+        # Charger les données
+        temp = pd.read_excel(file_path)
+        temp_val = temp.values
+        year = temp_val[:, 0]
+        ytab = temp_val[:, 1]
+        
+        # Normalisation
+        xtab = (year - year[0]) / (year[-1] - year[0])
+        
+        # Nœuds spécifiques pour l'étude des tendances
+        year_knots = np.array([1880, 1889, 1900, 1910, 1930, 1940, 1965, 1992])
+        knots = (year_knots - 1880) / (1992 - 1880)
+        kn = len(knots) - 1
+        
+        def yr(x):
+            return 1880 + x * (1992 - 1880)
+        
+        # Créer la figure
+        fig = Figure(figsize=(16, 10), dpi=100)
+        x_eval = np.linspace(0, 1, 500)
+        tau = 0.5
+        solver = 'CLARABEL'
+        
+        # ============================================
+        # 1. Sans contraintes
+        # ============================================
+        ax1 = fig.add_subplot(2, 3, 1)
+        ax1.scatter(yr(xtab), ytab, alpha=0.5, s=15, color='gray', label='Données')
+        ax1.set_title('1. Sans contraintes')
+        ax1.set_xlabel('Année')
+        ax1.set_ylabel('Δ Température (°C)')
+        
+        try:
+            res = SplineCubicQuant(xtab, ytab, knots, tau, monot=0, cv=0, der3=0, solver=solver)
+            if res is not None:
+                ax1.plot(yr(x_eval), res(x_eval), 'b-', linewidth=2, label=f'τ={tau}')
+        except Exception as e:
+            print(f"Erreur: {e}")
+        
+        ax1.plot(yr(knots), np.ones_like(knots)*max(ytab)*0.9, 'r|', markersize=8, label='Nœuds')
+        ax1.legend(fontsize='small')
+        ax1.grid(True, alpha=0.3)
+        
+        # ============================================
+        # 2. Contrainte croissante partout
+        # ============================================
+        ax2 = fig.add_subplot(2, 3, 2)
+        ax2.scatter(yr(xtab), ytab, alpha=0.5, s=15, color='gray', label='Données')
+        ax2.set_title('2. Contrainte croissante')
+        ax2.set_xlabel('Année')
+        ax2.set_ylabel('Δ Température (°C)')
+        
+        try:
+            res = SplineCubicQuant(xtab, ytab, knots, tau, monot=1, cv=0, der3=0, solver=solver)
+            if res is not None:
+                ax2.plot(yr(x_eval), res(x_eval), 'g-', linewidth=2, label='Croissante')
+        except Exception as e:
+            print(f"Erreur: {e}")
+        
+        ax2.plot(yr(knots), np.ones_like(knots)*max(ytab)*0.9, 'r|', markersize=8, label='Nœuds')
+        ax2.legend(fontsize='small')
+        ax2.grid(True, alpha=0.3)
+        
+        # ============================================
+        # 3. Contrainte décroissante (contre-nature)
+        # ============================================
+        ax3 = fig.add_subplot(2, 3, 3)
+        ax3.scatter(yr(xtab), ytab, alpha=0.5, s=15, color='gray', label='Données')
+        ax3.set_title('3. Contrainte décroissante')
+        ax3.set_xlabel('Année')
+        ax3.set_ylabel('Δ Température (°C)')
+        
+        try:
+            res = SplineCubicQuant(xtab, ytab, knots, tau, monot=-1, cv=0, der3=0, solver=solver)
+            if res is not None:
+                ax3.plot(yr(x_eval), res(x_eval), 'r-', linewidth=2, label='Décroissante')
+        except Exception as e:
+            print(f"Erreur: {e}")
+        
+        ax3.plot(yr(knots), np.ones_like(knots)*max(ytab)*0.9, 'r|', markersize=8, label='Nœuds')
+        ax3.legend(fontsize='small')
+        ax3.grid(True, alpha=0.3)
+        
+        # ============================================
+        # 4. Contrainte croissante + convexe
+        # ============================================
+        ax4 = fig.add_subplot(2, 3, 4)
+        ax4.scatter(yr(xtab), ytab, alpha=0.5, s=15, color='gray', label='Données')
+        ax4.set_title('4. Croissante + Convexe')
+        ax4.set_xlabel('Année')
+        ax4.set_ylabel('Δ Température (°C)')
+        
+        try:
+            res = SplineCubicQuant(xtab, ytab, knots, tau, monot=1, cv=1, der3=0, solver=solver)
+            if res is not None:
+                ax4.plot(yr(x_eval), res(x_eval), 'm-', linewidth=2, label='Croissante+Convexe')
+        except Exception as e:
+            print(f"Erreur: {e}")
+        
+        ax4.plot(yr(knots), np.ones_like(knots)*max(ytab)*0.9, 'r|', markersize=8, label='Nœuds')
+        ax4.legend(fontsize='small')
+        ax4.grid(True, alpha=0.3)
+        
+        # ============================================
+        # 5. Contrainte partielle (décroissante sur 1940-1965)
+        # ============================================
+        ax5 = fig.add_subplot(2, 3, 5)
+        ax5.scatter(yr(xtab), ytab, alpha=0.5, s=15, color='gray', label='Données')
+        ax5.set_title('5. Contrainte partielle\n(croissante sauf 1940-1965)')
+        ax5.set_xlabel('Année')
+        ax5.set_ylabel('Δ Température (°C)')
+        
+        # Contrainte: décroissante sur l'intervalle 1940-1965
+        monot_partiel = [1, 1, 1, 1, 1, -1, 1]  # 7 intervalles
+        # correspond aux années: 1880-1889, 1889-1900, 1900-1910, 1910-1930, 
+        # 1930-1940, 1940-1965, 1965-1992
+        
+        try:
+            res = SplineCubicQuant(xtab, ytab, knots, tau, monot=monot_partiel, cv=0, der3=0, solver=solver)
+            if res is not None:
+                ax5.plot(yr(x_eval), res(x_eval), 'c-', linewidth=2, label='Partielle')
+                
+                # Colorier la zone 1940-1965
+                ax5.axvspan(1940, 1965, alpha=0.2, color='yellow', label='Zone décroissante')
+        except Exception as e:
+            print(f"Erreur: {e}")
+        
+        ax5.plot(yr(knots), np.ones_like(knots)*max(ytab)*0.9, 'r|', markersize=8, label='Nœuds')
+        ax5.legend(fontsize='small')
+        ax5.grid(True, alpha=0.3)
+        
+        # ============================================
+        # 6. Comparaison de toutes les contraintes
+        # ============================================
+        ax6 = fig.add_subplot(2, 3, 6)
+        ax6.scatter(yr(xtab), ytab, alpha=0.3, s=10, color='gray', label='Données')
+        ax6.set_title('6. Comparaison des approches')
+        ax6.set_xlabel('Année')
+        ax6.set_ylabel('Δ Température (°C)')
+        
+        colors = ['blue', 'green', 'red', 'magenta', 'cyan']
+        labels = ['Sans', 'Croissante', 'Décroissante', 'C+Convexe', 'Partielle']
+        
+        # Tracer les 5 courbes
+        for i, (monot, cv_val, color, label) in enumerate(zip(
+            [0, 1, -1, 1, monot_partiel],
+            [0, 0, 0, 1, 0],
+            colors, labels
+        )):
+            try:
+                res = SplineCubicQuant(xtab, ytab, knots, tau, monot=monot, cv=cv_val, der3=0, solver=solver)
+                if res is not None:
+                    ax6.plot(yr(x_eval), res(x_eval), color=color, linewidth=1.5, label=label)
+            except Exception as e:
+                print(f"Erreur pour {label}: {e}")
+        
+        ax6.plot(yr(knots), np.ones_like(knots)*max(ytab)*0.9, 'k|', markersize=8, label='Nœuds')
+        ax6.legend(fontsize='small')
+        ax6.grid(True, alpha=0.3)
+        
+        plt.tight_layout()
+        
+        # Créer une fenêtre Tkinter pour la figure
+        fig_window = tk.Toplevel(self.root)
+        fig_window.title("Analyse des températures - Régression quantile contrainte")
+        fig_window.geometry("1200x800")
+        
+        canvas = FigureCanvasTkAgg(fig, master=fig_window)
+        canvas.draw()
+        canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+        
+        toolbar = NavigationToolbar2Tk(canvas, fig_window)
+        toolbar.update()
+        
+        btn_frame = ttk.Frame(fig_window)
+        btn_frame.pack(pady=5)
+        ttk.Button(btn_frame, text="Fermer", command=fig_window.destroy).pack(side=tk.LEFT, padx=5)
+        
+        # Bouton pour charger les données dans la GUI
+        def load_data_to_gui():
+            self.xtab = xtab
+            self.ytab = ytab
+            self.knots = knots
+            self.temperature_years = year
+            self.clear_all()
+            self.plot_data()
+            self.plot_knots()
+            self.ax.set_title('Températures globales (1880-1992)')
+            self.data_info.set(f"{len(xtab)} points (température)")
+            self.status_var.set("Données température chargées depuis l'analyse")
+            self.canvas.draw()
+            fig_window.destroy()
+        
+        ttk.Button(btn_frame, text="Charger ces données dans la GUI", 
+                  command=load_data_to_gui).pack(side=tk.LEFT, padx=5)
+        
+        self.status_var.set("Analyse des températures terminée")
         
      except Exception as e:
-        messagebox.showerror("Erreur", f"Erreur: {e}")
+        messagebox.showerror("Erreur", f"Erreur lors de l'analyse: {e}")
         import traceback
         traceback.print_exc()
-        
     def run_comparison_example(self):
+        """Lance l'exemple de comparaison des degrés depuis un script externe."""
         try:
-            from comparison_example import generate_comparison_data, run_comparison_analysis
-            x, y, knots = generate_comparison_data()
+            import subprocess
+            import os
             
-            import matplotlib.pyplot as plt
-            from matplotlib.figure import Figure
-            from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+            # Chercher le script comparison_example.py
+            possible_paths = [
+                os.path.join(PROJECT_ROOT, 'examples', 'comparison_example.py'),
+                os.path.join(EXAMPLES_PATH, 'comparison_example.py'),
+                'examples/comparison_example.py',
+            ]
             
-            x_eval = np.linspace(0, 1, 500)
-            fig = Figure(figsize=(14, 10), dpi=100)
+            script_path = None
+            for p in possible_paths:
+                if os.path.exists(p):
+                    script_path = p
+                    break
             
-            # Sous-graphique 1
-            ax1 = fig.add_subplot(2, 2, 1)
-            ax1.scatter(x, y, alpha=0.3, s=10, color='gray', label='Données')
-            colors = ['blue', 'green', 'red', 'orange']
-            deg_labels = ['Linéaire', 'Quadratique', 'Cubique', 'Quartique']
-            tau = 0.5
-            solver = 'CLARABEL'
+            if script_path is None:
+                messagebox.showerror("Erreur", 
+                    "Fichier comparison_example.py non trouvé.\n\n"
+                    "Assurez-vous que le fichier existe dans le dossier examples/")
+                return
             
-            for d, color, label in zip([1, 2, 3, 4], colors, deg_labels):
-                try:
-                    if d == 1:
-                        res = SplineLinearQuant(x, y, knots, tau=tau, monot=0, solver=solver)
-                    elif d == 2:
-                        res = SplineQuadraticQuant(x, y, knots, tau=tau, monot=0, cv=0, solver=solver)
-                    elif d == 3:
-                        res = SplineCubicQuant(x, y, knots, tau=tau, monot=0, cv=0, der3=0, solver=solver)
-                    else:
-                        res = SplineQuarticQuant(x, y, knots, tau=tau, monot=0, cv=0, d3=0, solver=solver)
-                    if res is not None:
-                        ax1.plot(x_eval, res(x_eval), color=color, linewidth=2, label=label)
-                except Exception as e:
-                    print(f"Erreur degré {d}: {e}")
+            # Lancer le script
+            self.status_var.set("Lancement de la comparaison...")
+            self.root.update()
             
-            ax1.plot(knots, np.ones_like(knots)*max(y)*0.95, 'k|', markersize=8, label='Nœuds')
-            ax1.set_title('Sans contraintes')
-            ax1.legend(fontsize='small')
-            ax1.grid(True, alpha=0.3)
+            import sys
+            subprocess.Popen([sys.executable, script_path])
             
-            # ... (ajouter les autres sous-graphiques)
+            self.status_var.set("Comparaison lancée")
             
-            fig_window = tk.Toplevel(self.root)
-            fig_window.title("Comparaison des degrés avec contraintes")
-            fig_window.geometry("1000x800")
-            
-            canvas = FigureCanvasTkAgg(fig, master=fig_window)
-            canvas.draw()
-            canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-            
-            toolbar = NavigationToolbar2Tk(canvas, fig_window)
-            toolbar.update()
-            
-            btn_frame = ttk.Frame(fig_window)
-            btn_frame.pack(pady=5)
-            ttk.Button(btn_frame, text="Fermer", command=fig_window.destroy).pack()
-            
-            self.status_var.set("Comparaison des degrés affichée")
-        except ImportError as e:
-            messagebox.showerror("Erreur", f"Impossible de charger l'exemple: {e}")
         except Exception as e:
             messagebox.showerror("Erreur", f"Erreur: {e}")
             import traceback
