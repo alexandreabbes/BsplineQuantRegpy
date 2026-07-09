@@ -999,13 +999,13 @@ class QuantileSplineApp:
             
             temp = pd.read_excel(file_path)
             temp_val = temp.values
-            xtab = temp_val[:, 0]
+            year = temp_val[:, 0]
             ytab = temp_val[:, 1]
             
-            #xtab = (year - year[0]) / (year[-1] - year[0])
+            xtab = (year - year[0]) / (year[-1] - year[0])
             
-            knots = np.array([1880, 1889, 1900, 1910, 1930, 1940, 1965, 1992])
-            #knots = (year_knots - 1880) / (1992 - 1880)
+            year_knots = np.array([1880, 1889, 1900, 1910, 1930, 1940, 1965, 1992])
+            knots = (year_knots - 1880) / (1992 - 1880)
             
             self.xtab = xtab
             self.ytab = ytab

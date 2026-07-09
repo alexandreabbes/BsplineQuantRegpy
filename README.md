@@ -1,2 +1,0 @@
-# PysplineQuantReg
-# BsplineQuantRegpy
