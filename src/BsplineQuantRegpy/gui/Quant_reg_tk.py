@@ -126,126 +126,148 @@ class QuantileSplineApp:
         
     def setup_ui(self):
         """Configuration de l'interface"""
-        
+
         # Frame principal
         main_frame = ttk.Frame(self.root, padding="10")
         main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
-        
+
         # Configuration des poids
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
         main_frame.columnconfigure(1, weight=3)
         main_frame.rowconfigure(0, weight=1)
-        
+
         # ============ MENU ============
         self.setup_menu()
-        
+
         # ============ NOTEBOOK avec onglets ============
         notebook = ttk.Notebook(main_frame)
         notebook.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), padx=5, pady=5)
-        
+
         main_frame.columnconfigure(0, weight=1)
         main_frame.rowconfigure(0, weight=1)
-        
+
         # Onglets
         tab1 = ttk.Frame(notebook)
         notebook.add(tab1, text="1. Données & Spline")
-        
+
         tab2 = ttk.Frame(notebook)
         notebook.add(tab2, text="2. Contraintes")
-        
+
         tab3 = ttk.Frame(notebook)
-        notebook.add(tab3, text="3. Exécution")
-        
-        # ------------------------------------------------------------
-        # CONTENU DE L'ONGLET 1
-        # ------------------------------------------------------------
-        
+        notebook.add(tab3, text="3. Exécution & Export")
+
+        # ============================================================
+        # ONGLET 1: DONNÉES & SPLINE
+        # ============================================================
+
         # Section Import des données
-        import_frame = ttk.LabelFrame(tab1, text="Import des données", padding="10")
+        import_frame = ttk.LabelFrame(tab1, text="1. Import des données", padding="10")
         import_frame.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=5, padx=5)
-        
+
         ttk.Button(import_frame, text="Charger CSV", command=self.load_csv).grid(row=0, column=0, padx=2)
         ttk.Button(import_frame, text="Charger Excel", command=self.load_excel).grid(row=0, column=1, padx=2)
         ttk.Button(import_frame, text="Données test", command=self.generate_test_data).grid(row=0, column=2, padx=2)
-        
+
         self.data_info = tk.StringVar(value="Aucune donnée")
         ttk.Label(import_frame, textvariable=self.data_info).grid(row=1, column=0, columnspan=3, pady=5)
-        
+
+        # Fonction test personnalisée
+        test_frame = ttk.Frame(import_frame)
+        test_frame.grid(row=2, column=0, columnspan=3, pady=5, sticky=(tk.W, tk.E))
+
+        ttk.Label(test_frame, text="Fonction test (x):").grid(row=0, column=0, sticky=tk.W)
+        self.test_function_var = tk.StringVar(value="2*x + 0.2*sin(10*pi*x) + 0.2*randn(n)")
+        test_entry = ttk.Entry(test_frame, textvariable=self.test_function_var, width=40)
+        test_entry.grid(row=1, column=0, padx=2, pady=2, sticky=(tk.W, tk.E))
+
+        ttk.Button(test_frame, text="Générer test", command=self.generate_custom_test).grid(row=1, column=1, padx=2)
+
+        ttk.Label(test_frame, text="Nb points:").grid(row=2, column=0, sticky=tk.W, pady=2)
+        self.test_npoints_var = tk.IntVar(value=200)
+        test_npoints_spin = ttk.Spinbox(test_frame, from_=10, to=1000, textvariable=self.test_npoints_var, width=8)
+        test_npoints_spin.grid(row=2, column=1, sticky=tk.W, pady=2)
+
         # Section Paramètres spline
-        spline_frame = ttk.LabelFrame(tab1, text="Paramètres spline", padding="10")
-        spline_frame.grid(row=2, column=0, sticky=(tk.W, tk.E), pady=5, padx=5)
-        
+        spline_frame = ttk.LabelFrame(tab1, text="2. Paramètres spline", padding="10")
+        spline_frame.grid(row=1, column=0, sticky=(tk.W, tk.E), pady=5, padx=5)
+
+        # Degré
         ttk.Label(spline_frame, text="Degré:").grid(row=0, column=0, sticky=tk.W)
         self.degree_var = tk.IntVar(value=3)
         ttk.Radiobutton(spline_frame, text="1 (Linéaire)", variable=self.degree_var, value=1, command=self.update_degree).grid(row=0, column=1, sticky=tk.W)
         ttk.Radiobutton(spline_frame, text="2 (Quadratique)", variable=self.degree_var, value=2, command=self.update_degree).grid(row=0, column=2, sticky=tk.W)
         ttk.Radiobutton(spline_frame, text="3 (Cubique)", variable=self.degree_var, value=3, command=self.update_degree).grid(row=1, column=1, sticky=tk.W)
         ttk.Radiobutton(spline_frame, text="4 (Quartique)", variable=self.degree_var, value=4, command=self.update_degree).grid(row=1, column=2, sticky=tk.W)
-        
+
         # Mode nœuds
         ttk.Label(spline_frame, text="Nœuds:").grid(row=2, column=0, sticky=tk.W, pady=5)
         self.knot_mode = tk.StringVar(value="auto")
         ttk.Radiobutton(spline_frame, text="Auto (quantiles)", variable=self.knot_mode, value="auto", command=self.knot_mode_changed).grid(row=2, column=1, columnspan=2, sticky=tk.W)
         ttk.Radiobutton(spline_frame, text="Manuel (clics)", variable=self.knot_mode, value="manual", command=self.knot_mode_changed).grid(row=3, column=1, columnspan=2, sticky=tk.W)
-        
+
         ttk.Label(spline_frame, text="Nombre:").grid(row=4, column=0, sticky=tk.W, pady=5)
         self.knot_count = tk.IntVar(value=11)
         self.knot_spinbox = ttk.Spinbox(spline_frame, from_=4, to=30, textvariable=self.knot_count, width=5)
         self.knot_spinbox.grid(row=4, column=1, sticky=tk.W)
-        
+
         # Boutons nœuds
         knot_btn_frame = ttk.Frame(spline_frame)
         knot_btn_frame.grid(row=5, column=0, columnspan=3, pady=5)
-        
+
         self.define_knots_btn = ttk.Button(knot_btn_frame, text="Définir nœuds", command=self.define_knots)
         self.define_knots_btn.pack(side=tk.LEFT, padx=2)
-        
+
         self.validate_knots_btn = ttk.Button(knot_btn_frame, text="Valider nœuds", command=self.validate_manual_knots)
         self.validate_knots_btn.pack(side=tk.LEFT, padx=2)
         self.validate_knots_btn.config(state='disabled')
-        
+
         ttk.Button(knot_btn_frame, text="Effacer nœuds", command=self.clear_knots).pack(side=tk.LEFT, padx=2)
-        
-        # Fonction test personnalisée
-        test_frame = ttk.Frame(import_frame)
-        test_frame.grid(row=2, column=0, columnspan=3, pady=5, sticky=(tk.W, tk.E))
-        
-        ttk.Label(test_frame, text="Fonction test (x):").grid(row=0, column=0, sticky=tk.W)
-        self.test_function_var = tk.StringVar(value="2*x + 0.2*sin(10*pi*x) + 0.2*randn(n)")
-        test_entry = ttk.Entry(test_frame, textvariable=self.test_function_var, width=40)
-        test_entry.grid(row=1, column=0, padx=2, pady=2, sticky=(tk.W, tk.E))
-        
-        ttk.Button(test_frame, text="Générer test", command=self.generate_custom_test).grid(row=1, column=1, padx=2)
-        
-        ttk.Label(test_frame, text="Nb points:").grid(row=2, column=0, sticky=tk.W, pady=2)
-        self.test_npoints_var = tk.IntVar(value=50)
-        test_npoints_spin = ttk.Spinbox(test_frame, from_=10, to=1000, textvariable=self.test_npoints_var, width=8)
-        test_npoints_spin.grid(row=2, column=1, sticky=tk.W, pady=2)
-        
-        # ------------------------------------------------------------
-        # CONTENU DE L'ONGLET 2
-        # ------------------------------------------------------------
-        
+
+        # Section Ajustement des axes (dans l'onglet 1)
+        axes_frame = ttk.LabelFrame(tab1, text="3. Ajustement des axes", padding="10")
+        axes_frame.grid(row=2, column=0, sticky=(tk.W, tk.E), pady=5, padx=5)
+
+        # X min/max
+        ttk.Label(axes_frame, text="X min:").grid(row=0, column=0, padx=5, pady=5, sticky=tk.W)
+        self.xmin_var = tk.DoubleVar(value=0.0)
+        xmin_entry = ttk.Entry(axes_frame, textvariable=self.xmin_var, width=10)
+        xmin_entry.grid(row=0, column=1, padx=5, pady=5)
+
+        ttk.Label(axes_frame, text="X max:").grid(row=0, column=2, padx=5, pady=5, sticky=tk.W)
+        self.xmax_var = tk.DoubleVar(value=1.0)
+        xmax_entry = ttk.Entry(axes_frame, textvariable=self.xmax_var, width=10)
+        xmax_entry.grid(row=0, column=3, padx=5, pady=5)
+
+        btn_axes_frame = ttk.Frame(axes_frame)
+        btn_axes_frame.grid(row=1, column=0, columnspan=4, pady=5)
+
+        ttk.Button(btn_axes_frame, text="Appliquer", command=self.apply_axes_limits).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_axes_frame, text="Auto", command=self.adjust_axes).pack(side=tk.LEFT, padx=5)
+
+        # ============================================================
+        # ONGLET 2: CONTRAINTES
+        # ============================================================
+
         constraint_frame = ttk.LabelFrame(tab2, text="Contraintes de forme", padding="10")
         constraint_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N), pady=5, padx=5)
-        
+
         self.constraint_mode_var = tk.StringVar(value="uniform")
         ttk.Radiobutton(constraint_frame, text="Uniformes", variable=self.constraint_mode_var, 
                        value="uniform", command=self.toggle_constraint_mode).grid(row=0, column=0, sticky=tk.W)
         ttk.Radiobutton(constraint_frame, text="Par région", variable=self.constraint_mode_var, 
                        value="region", command=self.toggle_constraint_mode).grid(row=0, column=1, sticky=tk.W)
-        
+
         self.uniform_frame = ttk.Frame(constraint_frame)
         self.uniform_frame.grid(row=1, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=5)
-        
+
         # Monotonie
         ttk.Label(self.uniform_frame, text="Monotonie:").grid(row=0, column=0, sticky=tk.W)
         self.monot_var = tk.IntVar(value=0)
         ttk.Radiobutton(self.uniform_frame, text="↗", variable=self.monot_var, value=1).grid(row=0, column=1)
         ttk.Radiobutton(self.uniform_frame, text="↘", variable=self.monot_var, value=-1).grid(row=0, column=2)
         ttk.Radiobutton(self.uniform_frame, text="✗", variable=self.monot_var, value=0).grid(row=0, column=3)
-        
+
         # Convexité
         self.convex_frame = ttk.Frame(self.uniform_frame)
         self.convex_frame.grid(row=1, column=0, columnspan=4, sticky=(tk.W, tk.E), pady=5)
@@ -254,7 +276,7 @@ class QuantileSplineApp:
         ttk.Radiobutton(self.convex_frame, text="∪", variable=self.convex_var, value=1).grid(row=0, column=1)
         ttk.Radiobutton(self.convex_frame, text="∩", variable=self.convex_var, value=-1).grid(row=0, column=2)
         ttk.Radiobutton(self.convex_frame, text="✗", variable=self.convex_var, value=0).grid(row=0, column=3)
-        
+
         # Dérivée 3
         self.der3_frame = ttk.Frame(self.uniform_frame)
         self.der3_frame.grid(row=2, column=0, columnspan=4, sticky=(tk.W, tk.E), pady=5)
@@ -263,33 +285,36 @@ class QuantileSplineApp:
         ttk.Radiobutton(self.der3_frame, text="+", variable=self.der3_var, value=1).grid(row=0, column=1)
         ttk.Radiobutton(self.der3_frame, text="-", variable=self.der3_var, value=-1).grid(row=0, column=2)
         ttk.Radiobutton(self.der3_frame, text="✗", variable=self.der3_var, value=0).grid(row=0, column=3)
-        
+
         # Régions
         self.region_frame = ttk.Frame(constraint_frame)
         self.region_frame.grid(row=1, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=5)
         self.region_frame.grid_remove()
-        
+
         ttk.Button(self.region_frame, text="Ajouter région", command=self.start_region_selection).pack(pady=2)
         ttk.Button(self.region_frame, text="Effacer régions", command=self.clear_regions).pack(pady=2)
         self.region_listbox = tk.Listbox(self.region_frame, height=4, width=35)
         self.region_listbox.pack(pady=5, fill=tk.X)
-        
-        # ------------------------------------------------------------
-        # CONTENU DE L'ONGLET 3
-        # ------------------------------------------------------------
-        
+
+        # ============================================================
+        # ONGLET 3: EXÉCUTION & EXPORT
+        # ============================================================
+
+        # Section Solveur
         solver_frame = ttk.LabelFrame(tab3, text="Solveur", padding="10")
         solver_frame.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=5, padx=5)
-        
+
         ttk.Label(solver_frame, text="Solveur CVXPY:").grid(row=0, column=0, sticky=tk.W)
         self.solver_var = tk.StringVar(value='CLARABEL')
         solver_combo = ttk.Combobox(solver_frame, textvariable=self.solver_var, 
                                    values=self.solvers, state='readonly', width=15)
         solver_combo.grid(row=0, column=1, padx=5, pady=5)
-        
+
+        # Section Exécution
         exec_frame = ttk.LabelFrame(tab3, text="Exécution", padding="10")
         exec_frame.grid(row=1, column=0, sticky=(tk.W, tk.E), pady=5, padx=5)
-        
+
+        # Tau
         ttk.Label(exec_frame, text="τ:").grid(row=0, column=0)
         self.tau_var = tk.DoubleVar(value=0.5)
         tau_scale = ttk.Scale(exec_frame, from_=0.01, to=0.99, variable=self.tau_var,
@@ -298,23 +323,26 @@ class QuantileSplineApp:
         self.tau_label = ttk.Label(exec_frame, text="0.50")
         self.tau_label.grid(row=0, column=2)
         tau_scale.configure(command=lambda x: self.tau_label.configure(text=f"{float(x):.2f}"))
-        
+
+        # Boutons d'exécution
         btn_frame = ttk.Frame(exec_frame)
         btn_frame.grid(row=1, column=0, columnspan=3, pady=10)
-        ttk.Button(btn_frame, text="Lancer", command=self.run_regression).pack(side=tk.LEFT, padx=5)
-        
+
+        ttk.Button(btn_frame, text="▶ Lancer", command=self.run_regression).pack(side=tk.LEFT, padx=5)
         ttk.Button(btn_frame, text="Effacer tout", command=self.clear_all).pack(side=tk.LEFT, padx=5)
-        
+
+        # Barre de progression
         self.progress = ttk.Progressbar(tab3, mode='indeterminate')
         self.progress.grid(row=2, column=0, sticky=(tk.W, tk.E), pady=10, padx=5)
-        
+
+        # Statut
         self.status_var = tk.StringVar(value="Prêt")
         ttk.Label(tab3, textvariable=self.status_var, foreground="blue").grid(row=3, column=0, pady=5, padx=5)
-        
-        # Gestion des courbes
+
+        # Section Gestion des courbes
         curve_frame = ttk.LabelFrame(tab3, text="Gestion des courbes", padding="10")
-        curve_frame.grid(row=2, column=0, sticky=(tk.W, tk.E), pady=5, padx=5)
-        
+        curve_frame.grid(row=4, column=0, sticky=(tk.W, tk.E), pady=5, padx=5)
+
         color_frame = ttk.Frame(curve_frame)
         color_frame.grid(row=0, column=0, columnspan=2, pady=5, sticky=(tk.W, tk.E))
         ttk.Label(color_frame, text="Couleur:").grid(row=0, column=0, padx=2)
@@ -324,21 +352,38 @@ class QuantileSplineApp:
                           values=colors, state='readonly', width=10)
         color_combo.grid(row=0, column=1, padx=2)
         ttk.Button(color_frame, text="Appliquer", command=self.apply_color).grid(row=0, column=2, padx=5)
-        
+
         curve_btn_frame = ttk.Frame(curve_frame)
         curve_btn_frame.grid(row=1, column=0, columnspan=2, pady=5)
         ttk.Button(curve_btn_frame, text="Effacer dernière courbe", command=self.clear_last_curve).pack(side=tk.LEFT, padx=2)
         ttk.Button(curve_btn_frame, text="Effacer toutes les courbes", command=self.clear_all_curves).pack(side=tk.LEFT, padx=2)
-        
+
         self.curve_count = 0
         self.curve_lines = []
         self.curve_count_var = tk.StringVar(value="Courbes: 0")
         ttk.Label(curve_frame, textvariable=self.curve_count_var).grid(row=2, column=0, columnspan=2, pady=5)
-        
-        # ============ Visualisation ============
+
+        # Section Export
+        export_frame = ttk.LabelFrame(tab3, text="Export", padding="10")
+        export_frame.grid(row=5, column=0, sticky=(tk.W, tk.E), pady=5, padx=5)
+
+        export_btn_frame = ttk.Frame(export_frame)
+        export_btn_frame.grid(row=0, column=0, pady=5)
+
+        ttk.Button(export_btn_frame, text="📤 Exporter code autonome", 
+                  command=self.export_standalone_code).pack(side=tk.LEFT, padx=5)
+        ttk.Button(export_btn_frame, text="📥 Exporter données CSV", 
+                  command=self.export_data_csv).pack(side=tk.LEFT, padx=5)
+        ttk.Button(export_btn_frame, text="📊 Exporter PNG", 
+                  command=self.export_results).pack(side=tk.LEFT, padx=5)
+
+        # ============================================================
+        # VISUALISATION
+        # ============================================================
+
         viz_frame = ttk.LabelFrame(main_frame, text="Visualisation", padding="10")
         viz_frame.grid(row=0, column=1, sticky=(tk.W, tk.E, tk.N, tk.S), padx=5, pady=5)
-        
+
         self.fig = Figure(figsize=(8, 6), dpi=100)
         self.ax = self.fig.add_subplot(111)
         self.ax.set_xlabel('x')
@@ -346,41 +391,30 @@ class QuantileSplineApp:
         self.ax.set_title('Régression quantile avec splines contraintes')
         self.ax.grid(True, alpha=0.3)
         self.ax.set_xlim([0, 1])
-        
+
         self.canvas = FigureCanvasTkAgg(self.fig, master=viz_frame)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-        
+
         toolbar = NavigationToolbar2Tk(self.canvas, viz_frame)
         toolbar.update()
-        
+
         self.canvas.mpl_connect('button_press_event', self.on_click)
         self.canvas.mpl_connect('motion_notify_event', self.on_motion)
         self.canvas.mpl_connect('button_release_event', self.on_release)
-        
+
         self.press = None
         self.current_line = None
-        
+
+        # Initialisation
         self.toggle_constraint_mode()
         self.update_degree()
         self.knot_mode_changed()
         self.check_modules()
-        #### AJUSTER les AXES
-        btn_frame_axes = ttk.Frame(exec_frame)
-        btn_frame_axes.grid(row=2, column=0, columnspan=3, pady=5)
-        ttk.Button(btn_frame_axes, text="Ajuster les axes", command=self.adjust_axes).pack(side=tk.LEFT, padx=5)
-    #Export des données
-        
-        export_frame = ttk.Frame(exec_frame)
-        
-        export_frame.grid(row=2, column=0, columnspan=3, pady=5)
 
-        ttk.Button(btn_frame, text="Exporter png ", command=self.export_results).pack(side=tk.LEFT, padx=5)
-        ttk.Button(export_frame, text="📤 Exporter code autonome", 
-          command=self.export_standalone_code).pack(side=tk.LEFT, padx=5)
 
-        ttk.Button(export_frame, text="📥 Exporter données CSV", 
-          command=self.export_data_csv).pack(side=tk.LEFT, padx=5)
+
+        
 
 
     # ============ MENU ============
@@ -629,7 +663,50 @@ class QuantileSplineApp:
         self.ax.set_ylim([y_min - margin_y, y_max + margin_y])
 
         self.canvas.draw()
+    def apply_axes_limits(self):
+        """Applique les limites d'axes définies par l'utilisateur."""
+        try:
+            xmin = self.xmin_var.get()
+            xmax = self.xmax_var.get()
 
+            if xmin >= xmax:
+                messagebox.showwarning("Attention", "X min doit être inférieur à X max.")
+                return
+
+            self.ax.set_xlim([xmin, xmax])
+            self.canvas.draw()
+            self.status_var.set(f"Axes ajustés: [{xmin:.3f}, {xmax:.3f}]")
+
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Erreur: {e}")
+
+    def adjust_axes(self):
+        """Ajuste automatiquement les axes en fonction des données."""
+        if self.xtab is None or self.ytab is None:
+            messagebox.showwarning("Attention", "Aucune donnée pour ajuster les axes.")
+            return
+
+        # Axe X
+        x_min, x_max = self.xtab.min(), self.xtab.max()
+        margin_x = 0.05 * (x_max - x_min) if x_max > x_min else 0.1
+        xlim_min = x_min - margin_x
+        xlim_max = x_max + margin_x
+
+        # Axe Y
+        y_min, y_max = self.ytab.min(), self.ytab.max()
+        margin_y = 0.1 * (y_max - y_min) if y_max > y_min else 0.1
+        ylim_min = y_min - margin_y
+        ylim_max = y_max + margin_y
+
+        self.ax.set_xlim([xlim_min, xlim_max])
+        self.ax.set_ylim([ylim_min, ylim_max])
+
+        # Mettre à jour les champs
+        self.xmin_var.set(xlim_min)
+        self.xmax_var.set(xlim_max)
+
+        self.canvas.draw()
+        self.status_var.set(f"Axes auto: X=[{xlim_min:.3f}, {xlim_max:.3f}]")
         
     def plot_data(self):
         """Affiche les données avec les bons axes."""
@@ -1563,11 +1640,6 @@ class QuantileSplineApp:
         ax.set_title(f'Régression quantile avec splines (degré {{DEGREE}}, τ={{TAU}})')
         ax.legend()
         ax.grid(True, alpha=0.3)
-
-        
-        ax.text(0.02, 0.98, info_text, transform=ax.transAxes,
-                verticalalignment='top', fontsize=9,
-                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
         plt.tight_layout()
         plt.show()
