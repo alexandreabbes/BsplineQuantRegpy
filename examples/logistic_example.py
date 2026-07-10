@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Script de comparaison des différents degrés de splines avec contraintes.
+Script de test avec la fonction logistique et différentes contraintes.
 Peut être exécuté indépendamment ou appelé depuis la GUI.
 """
 
@@ -10,7 +10,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import os
-
+"""
+Script de test pour degrés 1
+"""
 
 
 # Ajouter le chemin du projet si exécuté indépendamment
@@ -20,265 +22,253 @@ if __name__ == "__main__":
     if SRC_PATH not in sys.path:
         sys.path.insert(0, SRC_PATH)
 
-try:
-    from PysplineQuantReg import (
-        SplineLinearQuant,
-        SplineQuadraticQuant,
-        SplineCubicQuant,
-        SplineQuarticQuant
-    )
-except ImportError:
-    # Fallback pour les imports relatifs
-    from ..src.PysplineQuantReg import (
-        SplineLinearQuant,
-        SplineQuadraticQuant,
-        SplineCubicQuant,
-        SplineQuarticQuant
-    )
 
-def run_logistic_example(self):
-    """Lance un test avec la fonction logistique et différentes contraintes pour plusieurs quantiles."""
-    try:
-        import matplotlib.pyplot as plt
-        from matplotlib.figure import Figure
-        from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+from BsplineQuantRegpy import (
+    SplineLinearQuant,
+    SplineQuadraticQuant,
+    SplineCubicQuant,
+    SplineQuarticQuant,
+    quantile_spline
+)
+
+
+
+
+def run_logistic_example(show_plots=True, return_data=False,degree=3):
+    """
+    Exécute le test avec la fonction logistique.
+    
+    Parameters
+    ----------
+    show_plots : bool
+        Afficher les graphiques
+    return_data : bool
+        Retourner les données générées
+    
+    Returns
+    -------
+    dict or None
+        Données si return_data=True
+    """
+    print("=" * 70)
+    print("TEST FONCTION LOGISTIQUE - RÉGRESSION QUANTILE CONTRAINTE")
+    print("=" * 70)
+    
+    np.random.seed(42)
+    n_points = 100
+    xtab =np.linspace(0, 1, n_points)
+    
+    # Fonction logistique: f(x) = exp(-5+10x) / (1 + exp(-5+10x))
+    ytab = np.exp(-5 + 10*xtab) / (1 + np.exp(-5 + 10*xtab)) + 0.2 * np.random.randn(n_points)
+    
+    kn = 12
+    knots = np.quantile(xtab, np.linspace(0, 1, kn + 1))
+    print(f"degré: {degree}")
+    print(f"Nombre de points: {n_points}")
+    print(f"Nombre de nœuds: {kn}")
+    print(f"Point d'inflexion: 0.5")
+    
+    
+    # Quantiles à tester
+    quantiles = [0.1, 0.5, 0.9]
+    solver = 'CLARABEL'
+    
+    # Définition des contraintes
+    monot_uniform = 1  # Croissante partout
+    
+    # Convexité: concave puis convexe (point d'inflexion à 0.5)
+    cv_mixed = np.zeros(kn + 1)
+    for i in range(kn + 1):
+        x_pos = knots[i] if i < len(knots) else knots[-1]
+        if x_pos < 0.5:
+            cv_mixed[i] = 1  # Concave avant 0.5
+        else:
+            cv_mixed[i] = -1   # Convexe après 0.5
+    
+    der3 = -1
+    
+    results = {
+        'x': xtab,
+        'y': ytab,
+        'knots': knots,
+        'quantiles': quantiles,
+        'results': {}
+    }
+    
+    # Exécuter les régressions pour chaque quantile
+    for tau in quantiles:
+        results['results'][tau] = {}
         
-        np.random.seed(42)
-        n_points = 200
-        xtab = np.linspace(0, 1, n_points)
+        # Sans contrainte
+        try:
+            res = quantile_spline(xtab, ytab, knots, tau, monot=0, cv=0, der3=0, solver=solver,degree=degree)
+            results['results'][tau]['none'] = res
+            print(f"✓ τ={tau}: Sans contrainte OK")
+        except Exception as e:
+            print(f"✗ τ={tau}: Sans contrainte {e}")
+            results['results'][tau]['none'] = None
         
-        # Fonction logistique: f(x) = exp(-5+10x) / (1 + exp(-5+10x))
-        # Point d'inflexion à x = 0.5
-        ytab = np.exp(-5 + 10*xtab) / (1 + np.exp(-5 + 10*xtab)) + 0.05 * np.random.randn(n_points)
+        # Croissante
+        try:
+            res = quantile_spline(xtab, ytab, knots, tau, monot=monot_uniform, cv=0, der3=0, solver=solver,degree=degree)
+            results['results'][tau]['monot'] = res
+            print(f"✓ τ={tau}: Croissante OK")
+        except Exception as e:
+            print(f"✗ τ={tau}: Croissante {e}")
+            results['results'][tau]['monot'] = None
         
-        kn = 10
-        knots = np.quantile(xtab, np.linspace(0, 1, kn + 1))
+        # Convexité mixte
+        try:
+            res = quantile_spline(xtab, ytab, knots, tau, monot=0, cv=cv_mixed, der3=0, solver=solver,degree=degree)
+            results['results'][tau]['cv_mixed'] = res
+            print(f"✓ τ={tau}: Convexité mixte OK")
+        except Exception as e:
+            print(f"✗ τ={tau}: Convexité mixte {e}")
+            results['results'][tau]['cv_mixed'] = None
         
-        # Quantiles à tester
-        quantiles = [0.1, 0.5, 0.9]
+        # Croissante + Convexité mixte
+        try:
+            res = quantile_spline(xtab, ytab, knots, tau, monot=monot_uniform, cv=cv_mixed, der3=0, solver=solver,degree=degree)
+            results['results'][tau]['monot_cv'] = res
+            print(f"✓ τ={tau}: Croissante+Convexité OK")
+        except Exception as e:
+            print(f"✗ τ={tau}: Croissante+Convexité {e}")
+            results['results'][tau]['monot_cv'] = None
         
-        # Définition des contraintes
-        # La fonction logistique est croissante partout
-        monot_uniform = 1  # Croissante partout
-        
-        # Convexité: concave puis convexe (point d'inflexion à 0.5)
-        # Pour une spline cubique: cv > 0 = convexe, cv < 0 = concave
-        cv_mixed = np.zeros(kn + 1)
-        for i in range(kn + 1):
-            x_pos = knots[i] if i < len(knots) else knots[-1]
-            if x_pos < 0.5:
-                cv_mixed[i] = -1  # Concave avant 0.5
-            else:
-                cv_mixed[i] = 1   # Convexe après 0.5
-        
-        # Dérivée 3: positive (car la dérivée seconde est croissante)
-        der3_positive = 1
-        
+        # Contraintes derivee 3e négative
+        try:
+            res = quantile_spline(xtab, ytab, knots, tau, monot=0, cv=0, der3=der3, solver=solver,degree=degree)
+            results['results'][tau]['all'] = res
+            print(f"✓ τ={tau}: Contrainte dérivée 3e négative")
+        except Exception as e:
+            print(f"✗ τ={tau}: Contrainte Dérivée 3e {e}")
+            results['results'][tau]['all'] = None
+    
+    if show_plots:
         # Créer la figure
-        fig = Figure(figsize=(16, 12), dpi=100)
+        fig, axes = plt.subplots(2, 3, figsize=(16, 12))
         x_eval = np.linspace(0, 1, 500)
-        solver = 'CLARABEL'
+        colors = ['blue', 'green', 'red']
         
-        # ============================================
         # 1. Sans contraintes
-        # ============================================
-        ax1 = fig.add_subplot(2, 3, 1)
-        ax1.scatter(xtab, ytab, alpha=0.3, s=10, color='gray', label='Données')
+        ax = axes[0, 0]
+        ax.scatter(xtab, ytab, alpha=0.3, s=10, color='gray', label='Données')
+        for tau, color in zip(quantiles, colors):
+            res = results['results'][tau]['none']
+            if res is not None:
+                ax.plot(x_eval, res(x_eval), color=color, linewidth=2, label=f'τ={tau}')
+        ax.plot(knots, np.ones_like(knots)*max(ytab)*0.95, 'k|', markersize=8, label='Nœuds')
+        ax.set_title('1. Sans contraintes')
+        ax.set_xlabel('x')
+        ax.set_ylabel('y')
+        ax.legend(fontsize='small')
+        ax.grid(True, alpha=0.3)
         
-        for tau, color in zip(quantiles, ['blue', 'green', 'red']):
-            try:
-                res = SplineCubicQuant(xtab, ytab, knots, tau, monot=0, cv=0, der3=0, solver=solver)
-                if res is not None:
-                    ax1.plot(x_eval, res(x_eval), color=color, linewidth=2, label=f'τ={tau}')
-            except Exception as e:
-                print(f"Erreur sans contrainte τ={tau}: {e}")
+        # 2. Contrainte croissante
+        ax = axes[0, 1]
+        ax.scatter(xtab, ytab, alpha=0.3, s=10, color='gray', label='Données')
+        ax.set_title('2. Contrainte croissante')
+        ax.set_xlabel('x')
+        ax.set_ylabel('y')
+        for tau, color in zip(quantiles, colors):
+            res = results['results'][tau]['monot']
+            if res is not None:
+                ax.plot(x_eval, res(x_eval), color=color, linewidth=2, label=f'τ={tau}')
+        ax.plot(knots, np.ones_like(knots)*max(ytab)*0.95, 'k|', markersize=8, label='Nœuds')
+        ax.legend(fontsize='small')
+        ax.grid(True, alpha=0.3)
         
-        ax1.plot(knots, np.ones_like(knots)*max(ytab)*0.95, 'k|', markersize=8, label='Nœuds')
-        ax1.set_title('1. Sans contraintes')
-        ax1.set_xlabel('x')
-        ax1.set_ylabel('y')
-        ax1.legend(fontsize='small')
-        ax1.grid(True, alpha=0.3)
+        # 3. Convexité mixte
+        ax = axes[0, 2]
+        ax.scatter(xtab, ytab, alpha=0.3, s=10, color='gray', label='Données')
+        ax.set_title('3. Convexité mixte (concave puis convexe)')
+        ax.set_xlabel('x')
+        ax.set_ylabel('y')
+        ax.axvspan(0, 0.5, alpha=0.1, color='red', label='Concave')
+        ax.axvspan(0.5, 1, alpha=0.1, color='blue', label='Convexe')
+        for tau, color in zip(quantiles, colors):
+            res = results['results'][tau]['cv_mixed']
+            if res is not None:
+                ax.plot(x_eval, res(x_eval), color=color, linewidth=2, label=f'τ={tau}')
+        ax.plot(knots, np.ones_like(knots)*max(ytab)*0.95, 'k|', markersize=8, label='Nœuds')
+        ax.legend(fontsize='small')
+        ax.grid(True, alpha=0.3)
         
-        # ============================================
-        # 2. Contrainte de monotonie (croissante)
-        # ============================================
-        ax2 = fig.add_subplot(2, 3, 2)
-        ax2.scatter(xtab, ytab, alpha=0.3, s=10, color='gray', label='Données')
-        ax2.set_title('2. Contrainte croissante')
-        ax2.set_xlabel('x')
-        ax2.set_ylabel('y')
+        # 4. Croissante + Convexité mixte
+        ax = axes[1, 0]
+        ax.scatter(xtab, ytab, alpha=0.3, s=10, color='gray', label='Données')
+        ax.set_title('4. Croissante + Convexité mixte')
+        ax.set_xlabel('x')
+        ax.set_ylabel('y')
+        ax.axvspan(0, 0.5, alpha=0.1, color='red')
+        ax.axvspan(0.5, 1, alpha=0.1, color='blue')
+        for tau, color in zip(quantiles, colors):
+            res = results['results'][tau]['monot_cv']
+            if res is not None:
+                ax.plot(x_eval, res(x_eval), color=color, linewidth=2, label=f'τ={tau}')
+        ax.plot(knots, np.ones_like(knots)*max(ytab)*0.95, 'k|', markersize=8, label='Nœuds')
+        ax.legend(fontsize='small')
+        ax.grid(True, alpha=0.3)
         
-        for tau, color in zip(quantiles, ['blue', 'green', 'red']):
-            try:
-                res = SplineCubicQuant(xtab, ytab, knots, tau, monot=monot_uniform, cv=0, der3=0, solver=solver)
-                if res is not None:
-                    ax2.plot(x_eval, res(x_eval), color=color, linewidth=2, label=f'τ={tau}')
-            except Exception as e:
-                print(f"Erreur croissante τ={tau}: {e}")
+        # 5. Toutes les contraintes
+        ax = axes[1, 1]
+        ax.scatter(xtab, ytab, alpha=0.3, s=10, color='gray', label='Données')
+        ax.set_title('5. Dérivée 3e négative')
+        ax.set_xlabel('x')
+        ax.set_ylabel('y')
+        ax.axvspan(0, 0.5, alpha=0.1, color='red')
+        ax.axvspan(0.5, 1, alpha=0.1, color='blue')
+        for tau, color in zip(quantiles, colors):
+            res = results['results'][tau]['all']
+            if res is not None:
+                ax.plot(x_eval, res(x_eval), color=color, linewidth=2, label=f'τ={tau}')
+        ax.plot(knots, np.ones_like(knots)*max(ytab)*0.95, 'k|', markersize=8, label='Nœuds')
+        ax.legend(fontsize='small')
+        ax.grid(True, alpha=0.3)
         
-        ax2.plot(knots, np.ones_like(knots)*max(ytab)*0.95, 'k|', markersize=8, label='Nœuds')
-        ax2.legend(fontsize='small')
-        ax2.grid(True, alpha=0.3)
-        
-        # ============================================
-        # 3. Contrainte de convexité mixte (concave puis convexe)
-        # ============================================
-        ax3 = fig.add_subplot(2, 3, 3)
-        ax3.scatter(xtab, ytab, alpha=0.3, s=10, color='gray', label='Données')
-        ax3.set_title('3. Convexité mixte\n(concave avant 0.5, convexe après)')
-        ax3.set_xlabel('x')
-        ax3.set_ylabel('y')
-        
-        # Colorier les zones concave/convexe
-        ax3.axvspan(0, 0.5, alpha=0.1, color='red', label='Concave')
-        ax3.axvspan(0.5, 1, alpha=0.1, color='blue', label='Convexe')
-        
-        for tau, color in zip(quantiles, ['blue', 'green', 'red']):
-            try:
-                res = SplineCubicQuant(xtab, ytab, knots, tau, monot=0, cv=cv_mixed, der3=0, solver=solver)
-                if res is not None:
-                    ax3.plot(x_eval, res(x_eval), color=color, linewidth=2, label=f'τ={tau}')
-            except Exception as e:
-                print(f"Erreur convexité mixte τ={tau}: {e}")
-        
-        ax3.plot(knots, np.ones_like(knots)*max(ytab)*0.95, 'k|', markersize=8, label='Nœuds')
-        ax3.legend(fontsize='small')
-        ax3.grid(True, alpha=0.3)
-        
-        # ============================================
-        # 4. Contrainte croissante + convexité mixte
-        # ============================================
-        ax4 = fig.add_subplot(2, 3, 4)
-        ax4.scatter(xtab, ytab, alpha=0.3, s=10, color='gray', label='Données')
-        ax4.set_title('4. Croissante + Convexité mixte')
-        ax4.set_xlabel('x')
-        ax4.set_ylabel('y')
-        
-        ax4.axvspan(0, 0.5, alpha=0.1, color='red')
-        ax4.axvspan(0.5, 1, alpha=0.1, color='blue')
-        
-        for tau, color in zip(quantiles, ['blue', 'green', 'red']):
-            try:
-                res = SplineCubicQuant(xtab, ytab, knots, tau, monot=monot_uniform, cv=cv_mixed, der3=0, solver=solver)
-                if res is not None:
-                    ax4.plot(x_eval, res(x_eval), color=color, linewidth=2, label=f'τ={tau}')
-            except Exception as e:
-                print(f"Erreur croissante+convexe τ={tau}: {e}")
-        
-        ax4.plot(knots, np.ones_like(knots)*max(ytab)*0.95, 'k|', markersize=8, label='Nœuds')
-        ax4.legend(fontsize='small')
-        ax4.grid(True, alpha=0.3)
-        
-        # ============================================
-        # 5. Toutes les contraintes (croissante + convexité mixte + dérivée 3)
-        # ============================================
-        ax5 = fig.add_subplot(2, 3, 5)
-        ax5.scatter(xtab, ytab, alpha=0.3, s=10, color='gray', label='Données')
-        ax5.set_title('5. Toutes les contraintes\n(croissante + convexité mixte + d3 positive)')
-        ax5.set_xlabel('x')
-        ax5.set_ylabel('y')
-        
-        ax5.axvspan(0, 0.5, alpha=0.1, color='red')
-        ax5.axvspan(0.5, 1, alpha=0.1, color='blue')
-        
-        for tau, color in zip(quantiles, ['blue', 'green', 'red']):
-            try:
-                res = SplineCubicQuant(xtab, ytab, knots, tau, 
-                                      monot=monot_uniform, cv=cv_mixed, der3=der3_positive, solver=solver)
-                if res is not None:
-                    ax5.plot(x_eval, res(x_eval), color=color, linewidth=2, label=f'τ={tau}')
-            except Exception as e:
-                print(f"Erreur toutes contraintes τ={tau}: {e}")
-        
-        ax5.plot(knots, np.ones_like(knots)*max(ytab)*0.95, 'k|', markersize=8, label='Nœuds')
-        ax5.legend(fontsize='small')
-        ax5.grid(True, alpha=0.3)
-        
-        # ============================================
         # 6. Comparaison des contraintes (τ=0.5)
-        # ============================================
-        ax6 = fig.add_subplot(2, 3, 6)
-        ax6.scatter(xtab, ytab, alpha=0.3, s=10, color='gray', label='Données')
-        ax6.set_title('6. Comparaison des contraintes (τ=0.5)')
-        ax6.set_xlabel('x')
-        ax6.set_ylabel('y')
+        ax = axes[1, 2]
+        ax.scatter(xtab, ytab, alpha=0.3, s=10, color='gray', label='Données')
+        ax.set_title('6. Comparaison des contraintes (τ=0.5)')
+        ax.set_xlabel('x')
+        ax.set_ylabel('y')
         
-        tau_mid = 0.5
         configs = [
-            (0, 0, 0, 'blue', 'Sans contrainte'),
-            (monot_uniform, 0, 0, 'green', 'Croissante'),
-            (0, cv_mixed, 0, 'orange', 'Convexité mixte'),
-            (monot_uniform, cv_mixed, 0, 'purple', 'Croiss.+Cvx mixte'),
-            (monot_uniform, cv_mixed, der3_positive, 'red', 'Toutes contraintes'),
+            ('none', 'blue', 'Sans contrainte'),
+            ('monot', 'green', 'Croissante'),
+            ('cv_mixed', 'orange', 'Convexité mixte'),
+            ('monot_cv', 'purple', 'Croiss.+Cvx mixte'),
+            ('all', 'red', 'Dérivée 3e'),
         ]
         
-        for monot, cv, der3, color, label in configs:
-            try:
-                res = SplineCubicQuant(xtab, ytab, knots, tau_mid, monot=monot, cv=cv, der3=der3, solver=solver)
-                if res is not None:
-                    ax6.plot(x_eval, res(x_eval), color=color, linewidth=2, label=label)
-            except Exception as e:
-                print(f"Erreur {label}: {e}")
+        tau_mid = 0.5
+        for key, color, label in configs:
+            res = results['results'][tau_mid][key]
+            if res is not None:
+                ax.plot(x_eval, res(x_eval), color=color, linewidth=2, label=label)
         
-        ax6.plot(knots, np.ones_like(knots)*max(ytab)*0.95, 'k|', markersize=8, label='Nœuds')
-        ax6.legend(fontsize='small')
-        ax6.grid(True, alpha=0.3)
+        ax.plot(knots, np.ones_like(knots)*max(ytab)*0.95, 'k|', markersize=8, label='Nœuds')
+        ax.legend(fontsize='small')
+        ax.grid(True, alpha=0.3)
         
         plt.tight_layout()
-        
-        # Créer une fenêtre Tkinter pour la figure
-        fig_window = tk.Toplevel(self.root)
-        fig_window.title("Test fonction logistique - Régression quantile contrainte")
-        fig_window.geometry("1400x1000")
-        
-        canvas = FigureCanvasTkAgg(fig, master=fig_window)
-        canvas.draw()
-        canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-        
-        toolbar = NavigationToolbar2Tk(canvas, fig_window)
-        toolbar.update()
-        
-        btn_frame = ttk.Frame(fig_window)
-        btn_frame.pack(pady=5)
-        ttk.Button(btn_frame, text="Fermer", command=fig_window.destroy).pack(side=tk.LEFT, padx=5)
-        
-        # Bouton pour charger les données dans la GUI
-        def load_data_to_gui():
-            self.xtab = xtab
-            self.ytab = ytab
-            self.knots = knots
-            self.clear_all()
-            self.plot_data()
-            self.plot_knots()
-            self.ax.set_title('Fonction logistique - Données')
-            self.data_info.set(f"{len(xtab)} points (logistique)")
-            self.status_var.set("Données logistique chargées")
-            self.canvas.draw()
-            fig_window.destroy()
-        
-        ttk.Button(btn_frame, text="Charger ces données dans la GUI", 
-                  command=load_data_to_gui).pack(side=tk.LEFT, padx=5)
-        
-        self.status_var.set("Test logistique terminé")
-        
-    except Exception as e:
-        messagebox.showerror("Erreur", f"Erreur lors du test: {e}")
-        import traceback
-        traceback.print_exc()
-def main():
-    """Fonction principale pour exécution indépendante."""
-    print("=" * 70)
-    print("Exemple de Regression Quantile avec une fonction logistique bruitée ")
-    print("=" * 70)
-    
-   
-    # Exécuter l'analyse
-    run_logistic_example()
+        plt.show()
     
     print("\n" + "=" * 70)
-    print("FIN DE LA COMPARAISON")
+    print("TEST TERMINÉ")
     print("=" * 70)
     
+    if return_data:
+        return results
+    else:
+        return None
+
+
+def main():
+    """Fonction principale pour exécution indépendante."""
+    run_logistic_example(show_plots=True,degree=1)
+
+
 if __name__ == "__main__":
     main()

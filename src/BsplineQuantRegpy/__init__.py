@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-PysplineQuantReg - Quantile Regression with Constrained Splines
+BsplineQuantRegpy - Quantile Regression with Constrained Splines
 ==============================================================
 
 Package pour la régression quantile avec splines sous contraintes
@@ -26,16 +26,15 @@ from .models.quantile_reg import (
     SplineQuadraticQuant,
     SplineCubicQuant,
     SplineQuarticQuant,
-    #quantile_spline,  # Interface unifiée
+    quantile_spline,  # Interface unifiée
 )
 
-# ============ CŒUR ============
+# ============core
+
 from .core.bases import build_bsplines_and_deriv
-from .core.constraints import (
-    apply_karlin_constraints_cubic,
-    apply_karlin_constraints_quadratic,
-    apply_val_constraints,
-)
+from .core.constraints import (apply_karlin_constraints_cubic,
+                               apply_karlin_constraints_quadratic,
+                               apply_val_constraints)
 
 # ============ GUI ============
 # La GUI n'est pas importée automatiquement pour éviter les dépendances Tkinter

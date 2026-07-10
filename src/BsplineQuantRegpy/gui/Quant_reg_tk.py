@@ -219,7 +219,7 @@ class QuantileSplineApp:
         ttk.Button(test_frame, text="Générer test", command=self.generate_custom_test).grid(row=1, column=1, padx=2)
         
         ttk.Label(test_frame, text="Nb points:").grid(row=2, column=0, sticky=tk.W, pady=2)
-        self.test_npoints_var = tk.IntVar(value=200)
+        self.test_npoints_var = tk.IntVar(value=50)
         test_npoints_spin = ttk.Spinbox(test_frame, from_=10, to=1000, textvariable=self.test_npoints_var, width=8)
         test_npoints_spin.grid(row=2, column=1, sticky=tk.W, pady=2)
         
@@ -302,7 +302,7 @@ class QuantileSplineApp:
         btn_frame = ttk.Frame(exec_frame)
         btn_frame.grid(row=1, column=0, columnspan=3, pady=10)
         ttk.Button(btn_frame, text="Lancer", command=self.run_regression).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="Exporter", command=self.export_results).pack(side=tk.LEFT, padx=5)
+        
         ttk.Button(btn_frame, text="Effacer tout", command=self.clear_all).pack(side=tk.LEFT, padx=5)
         
         self.progress = ttk.Progressbar(tab3, mode='indeterminate')
@@ -369,7 +369,20 @@ class QuantileSplineApp:
         btn_frame_axes = ttk.Frame(exec_frame)
         btn_frame_axes.grid(row=2, column=0, columnspan=3, pady=5)
         ttk.Button(btn_frame_axes, text="Ajuster les axes", command=self.adjust_axes).pack(side=tk.LEFT, padx=5)
-    
+    #Export des données
+        
+        export_frame = ttk.Frame(exec_frame)
+        
+        export_frame.grid(row=2, column=0, columnspan=3, pady=5)
+
+        ttk.Button(btn_frame, text="Exporter png ", command=self.export_results).pack(side=tk.LEFT, padx=5)
+        ttk.Button(export_frame, text="📤 Exporter code autonome", 
+          command=self.export_standalone_code).pack(side=tk.LEFT, padx=5)
+
+        ttk.Button(export_frame, text="📥 Exporter données CSV", 
+          command=self.export_data_csv).pack(side=tk.LEFT, padx=5)
+
+
     # ============ MENU ============
     def setup_menu(self):
         """Configure le menu de l'application."""
@@ -381,7 +394,9 @@ class QuantileSplineApp:
         menubar.add_cascade(label="Fichier", menu=file_menu)
         file_menu.add_command(label="Charger CSV", command=self.load_csv)
         file_menu.add_command(label="Charger Excel", command=self.load_excel)
-        file_menu.add_command(label="Exporter les résultats", command=self.export_results)
+        file_menu.add_command(label="Exporter les résultats(png)", command=self.export_results)
+        # Dans l'onglet 3, après btn_frame
+        
         file_menu.add_separator()
         file_menu.add_command(label="Quitter", command=self.quit_app)
         
@@ -390,20 +405,20 @@ class QuantileSplineApp:
         
         examples_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Exemples", menu=examples_menu)
-        examples_menu.add_command(label="📘 Exemple basique", command=self.load_basic_example)
-        examples_menu.add_command(label="📈 Comparaison des degrés", command=self.run_comparison_example)
-        examples_menu.add_command(label=" Exemple courbe logistque", command=self.run_logistic_example)
+        examples_menu.add_command(label="Basic", command=self.load_basic_example)
+        examples_menu.add_command(label="Exemple courbe logistique (degré du menu) ", command=self.run_logistic_example)
+
         examples_menu.add_separator()
-        examples_menu.add_command(label="📊 Chargement des données température", command=self.load_temperature_example)
-        examples_menu.add_command(label="🌡️ Analyse des températures (contraintes)", command=self.run_temperature_analysis)
+        examples_menu.add_command(label="Load global temperature data ", command=self.load_temperature_example)
+        examples_menu.add_command(label="Analysis  température data (contraints)", command=self.run_temperature_analysis)
         
         
         
         # Menu Scripts
         scripts_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Scripts", menu=scripts_menu)
-        scripts_menu.add_command(label="▶ Exécuter example_basic.py", command=self.load_basic_example)
-        scripts_menu.add_command(label="▶ Exécuter comparison_example.py", command=self.run_comparison_example)
+#        scripts_menu.add_command(label="Exécuter example_basic.py", command=self.load_basic_example)
+#        scripts_menu.add_command(label="Exécuter comparison_example.py", command=self.run_comparison_example)
     
     # ============ MÉTHODES ============
     
@@ -889,8 +904,53 @@ class QuantileSplineApp:
                 self.status_var.set(f"Exporté: {filename}")
             except Exception as e:
                 messagebox.showerror("Erreur", str(e))
-    
+
+    def export_data_csv(self):
+        """Exporte les données et la spline en CSV."""
+        try:
+            if self.xtab is None or self.ytab is None:
+                messagebox.showwarning("Attention", "Aucune donnée à exporter.")
+                return
+
+            filename = filedialog.asksaveasfilename(
+                title="Exporter les données CSV",
+                defaultextension=".csv",
+                filetypes=[("CSV files", "*.csv"), ("All files", "*.*")])
+
+            if not filename:
+                return
+
+            import pandas as pd
+
+            # Créer le DataFrame
+            data = {'x': self.xtab, 'y': self.ytab}
+
+            # Ajouter les valeurs de la spline si disponible
+            #if self.spline_result is not None:
+            #    x_eval = np.linspace(self.xtab.min(), self.xtab.max(), 500)
+            #    y_eval = self.spline_result(x_eval)
+            #    data['spline_x'] = x_eval
+            #    data['spline_y'] = y_eval
+
+            df = pd.DataFrame(data)
+
+            # Ajouter des métadonnées en commentaire
+            with open(filename, 'w') as f:
+                #f.write(f"# Généré par SplineQuantReg GUI\n")
+                #f.write(f"# Degré: {self.degree}\n")
+                #f.write(f"# τ: {self.tau_var.get()}\n")
+                #f.write(f"# Monotonie: {self.monot_var.get()}\n")
+                #f.write(f"# Convexité: {self.convex_var.get()}\n")
+                #f.write(f"# Nœuds: {self.knots.tolist() if self.knots is not None else []}\n")
+                #f.write("#\n")
+                df.to_csv(f, index=False)
+
+            self.status_var.set(f" Données exportées: {os.path.basename(filename)}")
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Erreur lors de l'export: {e}")
     # ============ EXEMPLES ============
+    #def run_logistic_example1(self):
+        
     def run_logistic_example(self):
      """Lance le test avec la fonction logistique."""
      try:
@@ -899,9 +959,9 @@ class QuantileSplineApp:
         
         # Chercher le script example_logistic.py
         possible_paths = [
-            os.path.join(PROJECT_ROOT, 'examples', 'example_logistic.py'),
-            os.path.join(EXAMPLES_PATH, 'example_logistic.py'),
-            'examples/example_logistic.py',
+            os.path.join(PROJECT_ROOT, 'examples', 'logistic_example.py'),
+            os.path.join(EXAMPLES_PATH, 'logistic_example.py'),
+            'examples/logistic_example.py',
         ]
         
         script_path = None
@@ -919,12 +979,30 @@ class QuantileSplineApp:
         # Lancer le script
         self.status_var.set("Lancement du test logistique...")
         self.root.update()
+        #Entrer la fonction logistique dans le champ de variables"
         
-        import sys
-        subprocess.Popen([sys.executable, script_path])
+        self.test_function_var.set("exp(-5 + 10*x) / (1 + exp(-5 + 10*x)) + 0.2 * randn(n)")
         
+        # Mettre à jour le nombre de points
+        self.test_npoints_var.set(100)
+        
+        # Générer les données automatiquement
+        self.generate_custom_test()
+        
+        # Mettre à jour le titre du graphique
+        self.ax.set_title('Fonction logistique avec bruit')
+        self.canvas.draw()
+        
+        #Charger le test tout fait
+        
+        #import sys #méthode subprocess
+        #subprocess.Popen([sys.executable, script_path])
+        
+        import logistic_example # methode directe
+        deg=self.degree
+        logistic_example.run_logistic_example(degree=deg)
         self.status_var.set("Test logistique lancé")
-        
+
      except Exception as e:
         messagebox.showerror("Erreur", f"Erreur: {e}")
         import traceback
@@ -1261,44 +1339,7 @@ class QuantileSplineApp:
         messagebox.showerror("Erreur", f"Erreur lors de l'analyse: {e}")
         import traceback
         traceback.print_exc()
-    def run_comparison_example(self):
-        """Lance l'exemple de comparaison des degrés depuis un script externe."""
-        try:
-            import subprocess
-            import os
-            
-            # Chercher le script comparison_example.py
-            possible_paths = [
-                os.path.join(PROJECT_ROOT, 'examples', 'comparison_example.py'),
-                os.path.join(EXAMPLES_PATH, 'comparison_example.py'),
-                'examples/comparison_example.py',
-            ]
-            
-            script_path = None
-            for p in possible_paths:
-                if os.path.exists(p):
-                    script_path = p
-                    break
-            
-            if script_path is None:
-                messagebox.showerror("Erreur", 
-                    "Fichier comparison_example.py non trouvé.\n\n"
-                    "Assurez-vous que le fichier existe dans le dossier examples/")
-                return
-            
-            # Lancer le script
-            self.status_var.set("Lancement de la comparaison...")
-            self.root.update()
-            
-            import sys
-            subprocess.Popen([sys.executable, script_path])
-            
-            self.status_var.set("Comparaison lancée")
-            
-        except Exception as e:
-            messagebox.showerror("Erreur", f"Erreur: {e}")
-            import traceback
-            traceback.print_exc()
+    
     
     def generate_custom_test(self):
         try:
@@ -1322,6 +1363,227 @@ class QuantileSplineApp:
             self.status_var.set("Données test générées")
         except Exception as e:
             messagebox.showerror("Erreur", f"Erreur dans la fonction: {str(e)}")
+    def export_standalone_code(self):
+        """
+        Exporte un code Python autonome pour reproduire la courbe actuelle.
+        Inclut les données (CSV), la fonction de test, et tous les paramètres.
+        """
+        try:
+            import os
+            import tempfile
+
+            # Vérifier qu'il y a des données et un résultat
+            if self.xtab is None or self.ytab is None:
+                messagebox.showwarning("Attention", "Aucune donnée à exporter.")
+                return
+
+            if self.spline_result is None:
+                messagebox.showwarning("Attention", "Aucune régression effectuée. Lancez d'abord la régression.")
+                return
+
+            # Demander où sauvegarder
+            filename = filedialog.asksaveasfilename(
+                title="Exporter le code Python autonome",
+                defaultextension=".py",
+                filetypes=[("Python files", "*.py"), ("All files", "*.*")]
+            )
+
+            if not filename:
+                return
+
+            # Récupérer les paramètres
+            degree = self.degree
+            tau = self.tau_var.get()
+            solver = self.solver_var.get()
+            monot = self.monot_var.get()
+            convex = self.convex_var.get()
+            der3 = self.der3_var.get()
+            knots = np.array(self.knots) if self.knots is not None else []
+
+            # Récupérer la fonction de test (si elle a été utilisée)
+            test_function = self.test_function_var.get() if hasattr(self, 'test_function_var') else ""
+
+            # Récupérer la couleur utilisée
+            color = self.color_var.get() if hasattr(self, 'color_var') else 'blue'
+
+            # Créer le code
+            code = self._generate_standalone_code(
+                xtab=self.xtab,
+                ytab=self.ytab,
+                knots=knots,
+                degree=degree,
+                tau=tau,
+                solver=solver,
+                monot=monot,
+                convex=convex,
+                der3=der3,
+                test_function=test_function,
+                color=color
+            )
+
+            # Écrire le fichier
+            with open(filename, 'w', encoding='utf-8') as f:
+                f.write(code)
+
+            self.status_var.set(f"✅ Code exporté: {os.path.basename(filename)}")
+            messagebox.showinfo("Succès", 
+                f"Code exporté avec succès vers:\n{filename}\n\n"
+                "Vous pouvez exécuter ce fichier indépendamment.")
+
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Erreur lors de l'export: {e}")
+            import traceback
+            traceback.print_exc()
+
+
+    def _generate_standalone_code(self, xtab, ytab, knots, degree, tau, solver, 
+                                   monot, convex, der3, test_function, color):
+        """
+        Génère le code Python autonome.
+        """
+        import numpy as np
+
+        # Convertir les données en chaînes pour le code
+        xtab_str = np.array2string(xtab, precision=6, separator=', ', max_line_width=100)
+        ytab_str = np.array2string(ytab, precision=6, separator=', ', max_line_width=100)
+        knots_str = np.array2string(knots, precision=6, separator=', ', max_line_width=100)
+
+        # Construction du code
+        code = f'''#!/usr/bin/env python
+        # -*- coding: utf-8 -*-
+
+        import numpy as np
+        import matplotlib.pyplot as plt
+        import sys
+        import os
+
+        # Ajouter le chemin du projet si nécessaire
+        try:
+            from BsplineQuantRegpy import SplineCubicQuant, SplineQuarticQuant, SplineLinearQuant, SplineQuadraticQuant
+        except ImportError:
+            try:
+                from PysplineQuantReg import SplineCubicQuant, SplineQuarticQuant, SplineLinearQuant, SplineQuadraticQuant
+            except ImportError:
+                print("Erreur: impossible d'importer les modules spline.")
+                print("Assurez-vous que le package est installé ou dans le PYTHONPATH.")
+                sys.exit(1)
+
+        # ============ PARAMÈTRES ============
+        DEGREE = {degree}
+        TAU = {tau}
+        SOLVER = '{solver}'
+        MONOT = {monot}
+        CONVEX = {convex}
+        DER3 = {der3}
+        COLOR = '{color}'
+
+        # ============ DONNÉES ============
+        x = np.array({xtab_str})
+        y = np.array({ytab_str})
+        knots = np.array({knots_str})
+
+        print("=" * 70)
+        print("RÉGRESSION QUANTILE AVEC SPLINES CONTRAINTES")
+        print("=" * 70)
+        print(f"Degré: {{DEGREE}}")
+        print(f"τ: {{TAU}}")
+        print(f"Solveur: {{SOLVER}}")
+        print(f"Monotonie: {{MONOT}}")
+        print(f"Convexité: {{CONVEX}}")
+        print(f"Dérivée 3: {{DER3}}")
+        print(f"Nombre de points: {{len(x)}}")
+        print(f"Nombre de nœuds: {{len(knots)}}")
+
+        # ============ RÉGRESSION ============
+        # Sélectionner la fonction appropriée selon le degré
+        if DEGREE == 1:
+            from BsplineQuantRegpy import SplineLinearQuant as spline_func
+        elif DEGREE == 2:
+            from BsplineQuantRegpy import SplineQuadraticQuant as spline_func
+        elif DEGREE == 3:
+            from BsplineQuantRegpy import SplineCubicQuant as spline_func
+        else:
+            from BsplineQuantRegpy import SplineQuarticQuant as spline_func
+
+        print("\\nLancement de la régression...")
+
+        try:
+            result = spline_func(
+                x, y, knots, 
+                tau=TAU, 
+                monot=MONOT, 
+                cv=CONVEX, 
+                der3=DER3,
+                solver=SOLVER
+            )
+        except TypeError:
+            # Fallback pour les fonctions qui n'acceptent pas der3
+            try:
+                result = spline_func(
+                    x, y, knots, 
+                    tau=TAU, 
+                    monot=MONOT, 
+                    cv=CONVEX, 
+                    solver=SOLVER
+                )
+            except:
+                result = spline_func(
+                    x, y, knots, 
+                    tau=TAU, 
+                    monot=MONOT, 
+                    solver=SOLVER
+                )
+
+        if result is None:
+            print("❌ La régression n'a pas convergé.")
+            sys.exit(1)
+
+        print("✅ Régression réussie !")
+
+        # ============ ÉVALUATION ============
+        x_eval = np.linspace(min(x), max(x), 500)
+        y_eval = result(x_eval)
+
+        # ============ VISUALISATION ============
+        fig, ax = plt.subplots(figsize=(10, 6))
+
+        # Données
+        ax.scatter(x, y, alpha=0.5, s=20, color='gray', label='Données')
+
+        # Spline
+        ax.plot(x_eval, y_eval, color=COLOR, linewidth=2, 
+                label=f'Spline degré {{DEGREE}}, τ={{TAU}}')
+
+        # Nœuds
+        ax.plot(knots, np.ones_like(knots)*max(y)*0.95, 'r|', 
+                markersize=10, label='Nœuds')
+
+        ax.set_xlabel('x')
+        ax.set_ylabel('y')
+        ax.set_title(f'Régression quantile avec splines (degré {{DEGREE}}, τ={{TAU}})')
+        ax.legend()
+        ax.grid(True, alpha=0.3)
+
+        
+        ax.text(0.02, 0.98, info_text, transform=ax.transAxes,
+                verticalalignment='top', fontsize=9,
+                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+
+        plt.tight_layout()
+        plt.show()
+
+        print("\\n" + "=" * 70)
+        print("EXÉCUTION TERMINÉE")
+        print("=" * 70)
+        '''
+
+        return code
+
+
+    def _get_timestamp(self):
+        """Retourne la date et l'heure actuelles."""
+        from datetime import datetime
+        return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 def main():

@@ -10,16 +10,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import os
-
+import warnings
+fie=__file__
 # Ajouter le chemin du projet si exécuté indépendamment
+print(__name__)
+print(__file__)
+
 if __name__ == "__main__":
-    PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath("./")))
     SRC_PATH = os.path.join(PROJECT_ROOT, 'src')
     if SRC_PATH not in sys.path:
         sys.path.insert(0, SRC_PATH)
 
 try:
-    from PysplineQuantReg import (
+    from BsplineQuantRegpy import (
         SplineLinearQuant,
         SplineQuadraticQuant,
         SplineCubicQuant,
@@ -27,12 +31,8 @@ try:
     )
 except ImportError:
     # Fallback pour les imports relatifs
-    from ..src.PysplineQuantReg import (
-        SplineLinearQuant,
-        SplineQuadraticQuant,
-        SplineCubicQuant,
-        SplineQuarticQuant
-    )
+    print('erreur de chargement du module BsplineQuantRegpy')
+    
 
 
 def generate_comparison_data(n=300, seed=42):

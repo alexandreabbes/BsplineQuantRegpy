@@ -22,11 +22,12 @@ if __name__ == "__main__":
 
 
 
-from PysplineQuantReg import (
+from BsplineQuantRegpy import (
     SplineLinearQuant,
     SplineQuadraticQuant,
     SplineCubicQuant,
     SplineQuarticQuant,
+    quantile_spline
     
 )
 
@@ -323,4 +324,4 @@ def test_with_different_quantiles():
 if __name__ == "__main__":
     # Lancer les tests
     results = test_all_degrees()
-    test_with_different_quantiles()
+    #test_with_different_quantiles()

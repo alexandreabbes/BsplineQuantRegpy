@@ -71,7 +71,7 @@ print(f"EXAMPLES_PATH: {EXAMPLES_PATH}")
 
 # ============ IMPORTS ============
 try:
-    from PysplineQuantReg import (
+    from BsplineQuantRegpy import (
         SplineLinearQuant,
         SplineQuadraticQuant,
         SplineCubicQuant,
@@ -365,6 +365,10 @@ class QuantileSplineApp:
         self.update_degree()
         self.knot_mode_changed()
         self.check_modules()
+        #### AJUSTER les AXES
+        btn_frame_axes = ttk.Frame(exec_frame)
+        btn_frame_axes.grid(row=2, column=0, columnspan=3, pady=5)
+        ttk.Button(btn_frame_axes, text="Ajuster les axes", command=self.adjust_axes).pack(side=tk.LEFT, padx=5)
     
     # ============ MENU ============
     def setup_menu(self):
@@ -377,27 +381,28 @@ class QuantileSplineApp:
         menubar.add_cascade(label="Fichier", menu=file_menu)
         file_menu.add_command(label="Charger CSV", command=self.load_csv)
         file_menu.add_command(label="Charger Excel", command=self.load_excel)
+        file_menu.add_command(label="Exporter les résultats", command=self.export_results)
         file_menu.add_separator()
         file_menu.add_command(label="Quitter", command=self.quit_app)
+        
         
         # Menu Exemples
         
         examples_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Exemples", menu=examples_menu)
-        examples_menu.add_command(label="📘 Exemple basique", command=self.load_basic_example)
-        examples_menu.add_command(label="📈 Comparaison des degrés", command=self.run_comparison_example)
-        examples_menu.add_command(label=" Exemple courbe logistque", command=self.run_logistic_example)
+        examples_menu.add_command(label="Exemple basique", command=self.load_basic_example)
+        examples_menu.add_command(label="Exemple courbe logistque", command=self.run_logistic_example)
         examples_menu.add_separator()
-        examples_menu.add_command(label="📊 Chargement des données température", command=self.load_temperature_example)
-        examples_menu.add_command(label="🌡️ Analyse des températures (contraintes)", command=self.run_temperature_analysis)
+        examples_menu.add_command(label="Load global temperature data ", command=self.load_temperature_example)
+        examples_menu.add_command(label="Analysis  température data (contraints)", command=self.run_temperature_analysis)
         
         
         
         # Menu Scripts
         scripts_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Scripts", menu=scripts_menu)
-        scripts_menu.add_command(label="▶ Exécuter example_basic.py", command=self.load_basic_example)
-        scripts_menu.add_command(label="▶ Exécuter comparison_example.py", command=self.run_comparison_example)
+#        scripts_menu.add_command(label="Exécuter example_basic.py", command=self.load_basic_example)
+#        scripts_menu.add_command(label="Exécuter comparison_example.py", command=self.run_comparison_example)
     
     # ============ MÉTHODES ============
     
@@ -454,54 +459,42 @@ class QuantileSplineApp:
         if filename:
             try:
                 df = pd.read_csv(filename)
-                self.process_dataframe(df)
+                df_val=df.values
+                self.xtab=df_val[:,0]
+                self.ytab=df_val[:,1]
+                x_min=min(self.xtab)
+                x_max = max(self.xtab)
+                self.ax.set_xlim([x_min, x_max])
+                # Mettre à jour les informations
+                self.data_info.set(f"{len(self.xtab)} points")
+                self.status_var.set("Données chargées avec succès")
+                self.canvas.draw()
+                self.clear_all()
+                self.plot_data()
             except Exception as e:
                 messagebox.showerror("Erreur", str(e))
+
     
     def load_excel(self):
         filename = filedialog.askopenfilename(filetypes=[("Excel", "*.xlsx *.xls")])
         if filename:
             try:
                 df = pd.read_excel(filename)
-                self.process_dataframe(df)
-            except Exception as e:
-                messagebox.showerror("Erreur", str(e))
-    
-    def process_dataframe(self, df):
-        numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
-        if len(numeric_cols) < 2:
-            messagebox.showerror("Erreur", "Besoin de 2 colonnes numériques")
-            return
-        
-        dialog = tk.Toplevel(self.root)
-        dialog.title("Sélection colonnes")
-        dialog.geometry("300x200")
-        dialog.transient(self.root)
-        dialog.grab_set()
-        ttk.Label(dialog, text="Colonne X:").grid(row=0, column=0, padx=5, pady=5)
-        x_var = tk.StringVar(value=numeric_cols[0])
-        ttk.Combobox(dialog, textvariable=x_var, values=numeric_cols, state="readonly").grid(row=0, column=1, padx=5, pady=5)
-        
-        ttk.Label(dialog, text="Colonne Y:").grid(row=1, column=0, padx=5, pady=5)
-        y_var = tk.StringVar(value=numeric_cols[1] if len(numeric_cols) > 1 else numeric_cols[0])
-        ttk.Combobox(dialog, textvariable=y_var, values=numeric_cols, state="readonly").grid(row=1, column=1, padx=5, pady=5)
-        
-        def confirm():
-            try:
-                self.xtab = df[x_var.get()].values.astype(float)
-                self.ytab = df[y_var.get()].values.astype(float)
+                df_val=df.values
+                self.xtab=df_val[:,0]
+                self.ytab=df_val[:,1]
                 x_min, x_max = self.xtab.min(), self.xtab.max()
-                if x_min != x_max:
-                    self.xtab = (self.xtab - x_min) / (x_max - x_min)
-                dialog.destroy()
+                self.ax.set_xlim([x_min, x_max])
+                # Mettre à jour les informations
+                self.data_info.set(f"{len(self.xtab)} points")
+                self.status_var.set("Données chargées avec succès")
+                self.canvas.draw()
                 self.clear_all()
                 self.plot_data()
-                self.data_info.set(f"{len(self.xtab)} points")
-                self.status_var.set("Données chargées")
             except Exception as e:
                 messagebox.showerror("Erreur", str(e))
-        
-        ttk.Button(dialog, text="Confirmer", command=confirm).grid(row=2, column=0, columnspan=2, pady=20)
+
+
     
     def generate_test_data(self):
         np.random.seed(42)
@@ -604,7 +597,49 @@ class QuantileSplineApp:
         self.status_var.set("Tout effacé")
     
     # ============ Visualisation ============
+    def adjust_axes(self):
+        """Ajuste les axes en fonction des données."""
+        if self.xtab is None or self.ytab is None:
+            return
+
+        # Axe X
+        x_min, x_max = self.xtab.min(), self.xtab.max()
+        margin_x = 0.05 * (x_max - x_min) if x_max > x_min else 0.1
+        self.ax.set_xlim([x_min - margin_x, x_max + margin_x])
+
+        # Axe Y
+        y_min, y_max = self.ytab.min(), self.ytab.max()
+        margin_y = 0.1 * (y_max - y_min) if y_max > y_min else 0.1
+        self.ax.set_ylim([y_min - margin_y, y_max + margin_y])
+
+        self.canvas.draw()
+
+        
     def plot_data(self):
+        """Affiche les données avec les bons axes."""
+        self.ax.clear()
+        if self.xtab is not None and self.ytab is not None:
+            self.ax.scatter(self.xtab, self.ytab, alpha=0.5, s=20, label='Données')
+
+            # === RÉGLER LES AXES EN FONCTION DES DONNÉES ===
+            # Axe X
+            x_min, x_max = self.xtab.min(), self.xtab.max()
+            margin_x = 0.05 * (x_max - x_min) if x_max > x_min else 0.1
+            self.ax.set_xlim([x_min - margin_x, x_max + margin_x])
+
+            # Axe Y
+            y_min, y_max = self.ytab.min(), self.ytab.max()
+            margin_y = 0.1 * (y_max - y_min) if y_max > y_min else 0.1
+            self.ax.set_ylim([y_min - margin_y, y_max + margin_y])
+
+        self.ax.set_xlabel('x')
+        self.ax.set_ylabel('y')
+        self.ax.set_title('Régression quantile avec splines contraintes')
+        self.ax.grid(True, alpha=0.3)
+        self.ax.legend()
+        self.canvas.draw()
+        
+    def plot_data_back(self):
         self.ax.clear()
         if self.xtab is not None and self.ytab is not None:
             self.ax.scatter(self.xtab, self.ytab, alpha=0.5, s=20, label='Données')
@@ -618,7 +653,7 @@ class QuantileSplineApp:
     
     def plot_result(self):
         if self.spline_result is not None:
-            x_eval = np.linspace(0, 1, 500)
+            x_eval = np.linspace(self.xtab[0], self.xtab[-1], 500)
             y_eval = self.spline_result(x_eval)
             color = self.color_var.get()
             line = self.ax.plot(x_eval, y_eval, color=color, linewidth=2, label=f'τ={self.tau_var.get():.2f}')
@@ -819,6 +854,8 @@ class QuantileSplineApp:
             self.progress.stop()
             if self.spline_result is not None:
                 self.plot_result()
+                ##=== AJUSTER LES AXES APRÈS LE TRACÉ ===
+                self.adjust_axes()
                 self.status_var.set(f"Réussi! τ={tau:.2f} (solveur: {solver})")
             else:
                 self.status_var.set("Échec - non convergence")
@@ -861,9 +898,9 @@ class QuantileSplineApp:
         
         # Chercher le script example_logistic.py
         possible_paths = [
-            os.path.join(PROJECT_ROOT, 'examples', 'example_logistic.py'),
-            os.path.join(EXAMPLES_PATH, 'example_logistic.py'),
-            'examples/example_logistic.py',
+            os.path.join(PROJECT_ROOT, 'examples', 'logistic_example.py'),
+            os.path.join(EXAMPLES_PATH, 'logistic_example.py'),
+            'examples/logistic_example.py',
         ]
         
         script_path = None
@@ -886,7 +923,7 @@ class QuantileSplineApp:
         subprocess.Popen([sys.executable, script_path])
         
         self.status_var.set("Test logistique lancé")
-        
+
      except Exception as e:
         messagebox.showerror("Erreur", f"Erreur: {e}")
         import traceback
@@ -963,6 +1000,7 @@ class QuantileSplineApp:
             temp_val = temp.values
             year = temp_val[:, 0]
             ytab = temp_val[:, 1]
+            
             xtab = (year - year[0]) / (year[-1] - year[0])
             
             year_knots = np.array([1880, 1889, 1900, 1910, 1930, 1940, 1965, 1992])
@@ -1222,44 +1260,7 @@ class QuantileSplineApp:
         messagebox.showerror("Erreur", f"Erreur lors de l'analyse: {e}")
         import traceback
         traceback.print_exc()
-    def run_comparison_example(self):
-        """Lance l'exemple de comparaison des degrés depuis un script externe."""
-        try:
-            import subprocess
-            import os
-            
-            # Chercher le script comparison_example.py
-            possible_paths = [
-                os.path.join(PROJECT_ROOT, 'examples', 'comparison_example.py'),
-                os.path.join(EXAMPLES_PATH, 'comparison_example.py'),
-                'examples/comparison_example.py',
-            ]
-            
-            script_path = None
-            for p in possible_paths:
-                if os.path.exists(p):
-                    script_path = p
-                    break
-            
-            if script_path is None:
-                messagebox.showerror("Erreur", 
-                    "Fichier comparison_example.py non trouvé.\n\n"
-                    "Assurez-vous que le fichier existe dans le dossier examples/")
-                return
-            
-            # Lancer le script
-            self.status_var.set("Lancement de la comparaison...")
-            self.root.update()
-            
-            import sys
-            subprocess.Popen([sys.executable, script_path])
-            
-            self.status_var.set("Comparaison lancée")
-            
-        except Exception as e:
-            messagebox.showerror("Erreur", f"Erreur: {e}")
-            import traceback
-            traceback.print_exc()
+    
     
     def generate_custom_test(self):
         try:

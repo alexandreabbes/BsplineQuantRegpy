@@ -623,3 +623,13 @@ def SplineQuarticQuant(xtab, ytab, knots, tau, monot, cv, d3=None, solver='CLARA
     s = np.concatenate([[l_end] * degree, knots, [r_end] * degree])
     polyn = BSpline(s, alpha.value, degree)    
     return polyn
+
+def quantile_spline(xtab, ytab, knots, tau, degree=3, monot=0, cv=0, der3=0, solver='CLARABEL',weight=None):
+       if degree==1:
+           return SplineLinearQuant(xtab, ytab, knots, tau, monot, solver, weight)
+       if degree==2:
+           return SplineQuadraticQuant(xtab, ytab, knots, tau, monot, cv, solver, weight)
+       if degree==3:
+           return SplineCubicQuant(xtab, ytab, knots, tau, monot, cv,der3, solver, weight)
+       if degree==4:
+           return SplineQuarticQuant(xtab, ytab, knots, tau, monot, cv, der3, solver, weight)
