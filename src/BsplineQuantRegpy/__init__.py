@@ -87,14 +87,13 @@ __all__ = [
     "run_logistic_example",
     "run_basic_example",
     "run_temperature_analysis",
-    "quick_start"
-    "quick_start2"
+    "quick_start",
+    "quick_start2",
     # GUI
     "run_gui",
 ]
 
 # ============ INFORMATION ============
-print(f"BsplineQuantRegpy v{__version__} chargé")
+print(f"BsplineQuantRegpy v{__version__}")
 print(f"Auteur: {__author__}")
-print("Fonctions disponibles: SplineLinearQuant, SplineQuadraticQuant, SplineCubicQuant, SplineQuarticQuant")
 print("Pour lancer la GUI: run_gui()")

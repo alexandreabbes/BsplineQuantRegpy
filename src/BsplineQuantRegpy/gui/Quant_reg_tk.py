@@ -1059,7 +1059,7 @@ class QuantileSplineApp:
                 run_logistic_example,
                 run_basic_example,
             )
-            print("✓ Module spline chargé")
+
         except ImportError as e:
             print(f"✗ Erreur import: {e}")
             SplineLinearQuant = None
