@@ -45,7 +45,6 @@ from .core.constraints import (
 from .examples import (
     logistic_example,
     example_temperature,
-    example_temperature_basic,
     quick_start,
     quick_start2,
 )
@@ -68,7 +67,7 @@ def run_basic_example():
     """Lance l'analyse des données de température."""
 
 from .examples.example_temperature import run_temperature_analysis
-from .examples.example_temperature_basic import run_temperature_analysis_basic    
+from .examples.logistic_example import run_logistic_example
 
 
 # ============ EXPORT ============
@@ -88,7 +87,6 @@ __all__ = [
     "run_logistic_example",
     "run_basic_example",
     "run_temperature_analysis",
-    "run_temperature_analysis_basic"
     "quick_start"
     "quick_start2"
     # GUI

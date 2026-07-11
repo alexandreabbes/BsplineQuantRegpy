@@ -23,8 +23,7 @@ from  importlib import resources
 warnings.filterwarnings('ignore')
 
 # ============ IMPORTS DU PACKAGE ============
-try:
-    from BsplineQuantRegpy import (
+from BsplineQuantRegpy import (
         SplineLinearQuant,
         SplineQuadraticQuant,
         SplineCubicQuant,
@@ -34,16 +33,6 @@ try:
         run_basic_example,
         run_temperature_analysis,       
     )
-    print("✓ Module spline chargé")
-except ImportError as e:
-    print(f"✗ Erreur import: {e}")
-    SplineLinearQuant = None
-    SplineQuadraticQuant = None
-    SplineCubicQuant = None
-    SplineQuarticQuant = None
-    quantile_spline=None
-    run_logistic_example = None
-    run_basic_example = None
 
 # ============ CLASSE PRINCIPALE ============
 class QuantileSplineApp:
