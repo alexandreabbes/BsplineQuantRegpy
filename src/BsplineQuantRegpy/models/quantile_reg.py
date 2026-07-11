@@ -271,7 +271,7 @@ def SplineCubicQuant(xtab, ytab, knots, tau, monot=0, cv=0, der3=0,
     
     """
     Régression quantile avec splines cubiques
-    Les contraintes de monotonie utilisent la même approche matricielle que les quartiques
+    Les contraintes de monotonie utilisent une approche matricielle 
     """
     
     if weight is None:
@@ -471,7 +471,7 @@ def SplineCubicQuant(xtab, ytab, knots, tau, monot=0, cv=0, der3=0,
     
     return polyn
 
-def SplineQuarticQuant(xtab, ytab, knots, tau, monot, cv, d3=None, solver='CLARABEL', weight=None):
+def SplineQuarticQuant(xtab, ytab, knots, tau, monot, cv, der3=None, solver='CLARABEL', weight=None):
     """
     Régression quantile avec B-splines de degré 4 et contraintes de forme
     incluant la dérivée troisième
@@ -488,7 +488,7 @@ def SplineQuarticQuant(xtab, ytab, knots, tau, monot, cv, d3=None, solver='CLARA
         Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)
     cv : int or list  
         Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)
-    d3 : int or list, optional
+    der3 : int or list, optional
         Contrainte sur la dérivée troisième (+1 croissante, -1 décroissante, 0 aucune)
     solver : str
         Solveur CVXPY à utiliser
@@ -540,20 +540,20 @@ def SplineQuarticQuant(xtab, ytab, knots, tau, monot, cv, d3=None, solver='CLARA
             cv_knots = np.concatenate([cv_array, [0]])
     
     # Gestion des contraintes de dérivée troisième
-    if d3 is None:
-        d3 = np.zeros(kn+1)
-    elif np.isscalar(d3):
-        d3 = d3 * np.ones(kn+1)
-    elif len(d3)<(kn+1):
-        d3 = np.array(d3+[0]*(kn+1-len(d3)))
+    if der3 is None:
+        der3 = np.zeros(kn+1)
+    elif np.isscalar(der3):
+        der3 = der3 * np.ones(kn+1)
+    elif len(der3)<(kn+1):
+        der3 = np.array(der3+[0]*(kn+1-len(der3)))
     else:
-        d3 = np.array(d3)
+        der3 = np.array(der3)
     
     print(f"Degré: {degree}, Nœuds: {kn}, Fonctions de base: {N}")
     print(f"Contraintes monotonie: {monot}")
     print(f"Contraintes convexité (intervalles): {cv_array}")
     print(f"Contraintes convexité (nœuds): {cv_knots}")
-    print(f"Contraintes dérivée 3e: {d3}")
+    print(f"Contraintes dérivée 3e: {der3}")
     
     # Construction des B-splines avec dérivée troisième
     List_Bsplines, Der1_array, Der2_array,Der3_array = build_bsplines_and_deriv(knots, degree)
@@ -593,13 +593,13 @@ def SplineQuarticQuant(xtab, ytab, knots, tau, monot, cv, d3=None, solver='CLARA
     
     # Contraintes sur la dérivée troisième (linéaire par morceau)
     for i in range(kn+1):
-        if d3[i] != 0:
+        if der3[i] != 0:
             # Coefficients de la dérivée troisième sur cet intervalle
             coeffs_sum = alpha @ Der3_array[:, i]
             
             # Appliquer contraintes linéaires à chaque noed
-            #lin_constraints = apply_linear_constraints(coeffs_sum, d3[i])
-            val3_constraints = apply_val_constraints(coeffs_sum, d3[i])
+            #lin_constraints = apply_linear_constraints(coeffs_sum, der3[i])
+            val3_constraints = apply_val_constraints(coeffs_sum, der3[i])
             constraints.extend(val3_constraints)
     
     # Contraintes de convexité aux nœuds
@@ -626,10 +626,10 @@ def SplineQuarticQuant(xtab, ytab, knots, tau, monot, cv, d3=None, solver='CLARA
 
 def quantile_spline(xtab, ytab, knots, tau, degree=3, monot=0, cv=0, der3=0, solver='CLARABEL',weight=None):
        if degree==1:
-           return SplineLinearQuant(xtab, ytab, knots, tau, monot, solver, weight)
+           return SplineLinearQuant(xtab, ytab=ytab, knots=knots, tau=tau, monot=monot, solver=solver, weight=weight)
        if degree==2:
-           return SplineQuadraticQuant(xtab, ytab, knots, tau, monot, cv, solver, weight)
+           return SplineQuadraticQuant(xtab, ytab=ytab, knots=knots, tau=tau, monot=monot, cv=cv, solver=solver, weight=weight)
        if degree==3:
-           return SplineCubicQuant(xtab, ytab, knots, tau, monot, cv,der3, solver, weight)
+           return SplineCubicQuant(xtab, ytab=ytab, knots=knots, tau=tau, monot=monot, cv=cv,der3=der3, solver=solver, weight=weight)
        if degree==4:
-           return SplineQuarticQuant(xtab, ytab, knots, tau, monot, cv, der3, solver, weight)
+           return SplineQuarticQuant(xtab, ytab=ytab, knots=knots, tau=tau, monot=monot, cv=cv, der3=der3, solver=solver, weight=weight)

@@ -410,6 +410,9 @@ class QuantileSplineApp:
         # Menu Scripts
         scripts_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Scripts", menu=scripts_menu)
+
+#On peut ajouter ici des scripts     
+
 #        scripts_menu.add_command(label="Exécuter example_basic.py", command=self.load_basic_example)
 #        scripts_menu.add_command(label="Exécuter comparison_example.py", command=self.run_comparison_example)
     

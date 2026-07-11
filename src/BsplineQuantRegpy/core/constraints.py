@@ -9,8 +9,54 @@ __version__ = "1.0.1"
 import numpy as np
 import cvxpy as cp
 
+def apply_karlin_constraints_cubic(coeffs_cubic, sign=1):
+    """
+    Applique les contraintes de Karlin pour un polynôme cubique (dérivée première)
+    selon le théorème 3 de l'article
+    
+    sign > 0 : p(u) >= 0 sur [0,1]
+    sign < 0 : p(u) <= 0 sur [0,1]  (soit -p(u) >= 0)
+    """
+    a, b, c, d = coeffs_cubic
+    
+    constraints = []
+    
+    if sign > 0:
+        # p(u) >= 0
+        coeffs = (a, b, c, d)
+        final_sign = 1
+    else:
+        # p(u) <= 0  <=>  -p(u) >= 0
+        coeffs = (-a, -b, -c, -d)  # Les coefficients de -p(u)
+        final_sign = 1  # On veut -p(u) >= 0, donc signe positif
+    
+    a1, b1, c1, d1 = coeffs
+    
+    # Variables auxiliaires selon le théorème 3
+    y0 = cp.Variable()
+    y1 = cp.Variable()
+    y2 = cp.Variable()
+    x0 = cp.Variable()
+    x1 = cp.Variable()
+    x2 = cp.Variable()
+    
+    # Équations (6a)-(6d) pour le polynôme (p ou -p selon le signe)
+    constraints.append(d1 == y0)
+    constraints.append(c1 == 2*y1 + x0 - y0)
+    constraints.append(b1 == y2 + 2*x1 - 2*y1)
+    constraints.append(a1 == x2 - y2)
+    
+    # Contraintes de cône second-order (6e)-(6f)
+    constraints.append(cp.SOC(x0 + x2, cp.hstack([x0 - x2, 2*x1])))
+    constraints.append(cp.SOC(y0 + y2, cp.hstack([y0 - y2, 2*y1])))
+    
+    # Conditions aux bornes (pour le polynôme transformé)
+    constraints.append(d1 >= 0)
+    constraints.append(a1 + b1 + c1 + d1 >= 0)
+    
+    return constraints
 
-def apply_karlin_constraints_cubic(coeffs_cubic, monot_sign=1):
+def apply_karlin_constraints_cubic_bak(coeffs_cubic, monot_sign=1):
     """
     Applique les contraintes de Karlin pour un polynôme cubique (dérivée première)
     selon le théorème 3 de l'article

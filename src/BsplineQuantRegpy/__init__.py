@@ -30,7 +30,7 @@ from .models.quantile_reg import (
     SplineQuadraticQuant,
     SplineCubicQuant,
     SplineQuarticQuant,
-    quantile_spline,
+    quantile_spline
 )
 
 # ============ CŒUR ============
@@ -43,10 +43,11 @@ from .core.constraints import (
 
 # ============ EXEMPLES ============
 from .examples import (
-    run_logistic_example,
-    generate_comparison_data,
-    run_comparison_analysis,
-    example_temperature
+    logistic_example,
+    example_temperature,
+    example_temperature_basic,
+    quick_start,
+    quick_start2,
 )
 
 # ============ GUI ============
@@ -67,7 +68,7 @@ def run_basic_example():
     """Lance l'analyse des données de température."""
 
 from .examples.example_temperature import run_temperature_analysis
-    
+from .examples.example_temperature_basic import run_temperature_analysis_basic    
 
 
 # ============ EXPORT ============
@@ -85,10 +86,11 @@ __all__ = [
     "apply_val_constraints",
     # Exemples
     "run_logistic_example",
-    "generate_comparison_data",
-    "run_comparison_analysis",
     "run_basic_example",
     "run_temperature_analysis",
+    "run_temperature_analysis_basic"
+    "quick_start"
+    "quick_start2"
     # GUI
     "run_gui",
 ]
