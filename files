@@ -5,7 +5,7 @@ files
 LICENSE
 lisezmoi.txt
 pyprojet.toml
-pyprojet.toml~
+
 readme.txt
 src
 test
@@ -24,17 +24,15 @@ PysplineQuantReg
 core
 gui
 __init__.py
-__init__.py~
+
 models
 __version__.py
 
 ./src/PysplineQuantReg/core:
-bases2.py
-bases2.py~
 bases.py
-build_bspline_deriv_matrix.py~
+
 constraints.py
-constraints.py~
+
 __init__.py
 
 ./src/PysplineQuantReg/gui:
@@ -42,11 +40,8 @@ Quant_reg_tk.py
 
 ./src/PysplineQuantReg/models:
 quantile_reg.py
-quantile_reg.py~
-SplineCubicQuantBspkn3_V3_der3_b.py~
-SplineCubicQuantBspkn3_V4_der3.py~
 
 ./test:
-#Test_global.py#
+
 Test_global.py
-Test_global.py~
+
