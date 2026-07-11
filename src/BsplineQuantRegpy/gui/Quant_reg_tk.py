@@ -18,73 +18,32 @@ from matplotlib.figure import Figure
 import warnings
 import sys
 import os
+from  importlib import resources
 
 warnings.filterwarnings('ignore')
 
-
-# ============ CONFIGURATION DES CHEMINS ============
-def get_project_paths():
-    """Retourne les chemins du projet de manière robuste."""
-    current_file = os.path.abspath(__file__)
-    current_dir = os.path.dirname(current_file)
-    
-    # Remonter jusqu'à la racine du projet (3 niveaux)
-    project_root = current_dir
-    for _ in range(3):
-        project_root = os.path.dirname(project_root)
-    
-    # Vérifier avec un fichier signature
-    signature_files = ['pyproject.toml', 'setup.py', 'README.md']
-    found = False
-    for sig in signature_files:
-        if os.path.exists(os.path.join(project_root, sig)):
-            found = True
-            break
-    
-    if not found:
-        alt_root = os.path.dirname(os.path.dirname(current_dir))
-        for sig in signature_files:
-            if os.path.exists(os.path.join(alt_root, sig)):
-                project_root = alt_root
-                found = True
-                break
-    
-    src_path = os.path.join(project_root, 'src')
-    examples_path = os.path.join(project_root, 'examples')
-    scripts_path = os.path.join(project_root, 'scripts')
-    data_path = os.path.join(project_root, 'data')
-    
-    paths_to_add = [project_root, src_path, examples_path, scripts_path]
-    for path in paths_to_add:
-        if path not in sys.path:
-            sys.path.insert(0, path)
-    
-    return project_root, src_path, examples_path, scripts_path, data_path
-
-
-# Initialiser les chemins
-PROJECT_ROOT, SRC_PATH, EXAMPLES_PATH, SCRIPTS_PATH, DATA_PATH = get_project_paths()
-
-print(f"PROJECT_ROOT: {PROJECT_ROOT}")
-print(f"EXAMPLES_PATH: {EXAMPLES_PATH}")
-
-
-# ============ IMPORTS ============
+# ============ IMPORTS DU PACKAGE ============
 try:
     from BsplineQuantRegpy import (
         SplineLinearQuant,
         SplineQuadraticQuant,
         SplineCubicQuant,
-        SplineQuarticQuant
+        SplineQuarticQuant,
+        quantile_spline,
+        run_logistic_example,
+        run_basic_example,
+        run_temperature_analysis,       
     )
     print("✓ Module spline chargé")
 except ImportError as e:
-    print(f"✗ Erreur chargement: {e}")
+    print(f"✗ Erreur import: {e}")
     SplineLinearQuant = None
     SplineQuadraticQuant = None
     SplineCubicQuant = None
     SplineQuarticQuant = None
-
+    quantile_spline=None
+    run_logistic_example = None
+    run_basic_example = None
 
 # ============ CLASSE PRINCIPALE ============
 class QuantileSplineApp:
@@ -444,7 +403,7 @@ class QuantileSplineApp:
 
         examples_menu.add_separator()
         examples_menu.add_command(label="Load global temperature data ", command=self.load_temperature_example)
-        examples_menu.add_command(label="Analysis  température data (contraints)", command=self.run_temperature_analysis)
+        examples_menu.add_command(label="Analysis  température data (contraints, degré du menu)", command=self.temperature_analysis)
         
         
         
@@ -1026,9 +985,21 @@ class QuantileSplineApp:
         except Exception as e:
             messagebox.showerror("Erreur", f"Erreur lors de l'export: {e}")
     # ============ EXEMPLES ============
-    #def run_logistic_example1(self):
-        
     def run_logistic_example(self):
+        """Lance l'exemple logistique."""
+        try:
+            if run_logistic_example is not None:
+                degree = self.degree_var.get()
+                run_logistic_example(degree=degree)
+                self.status_var.set(f"Test logistique lancé (degré {degree})")
+            else:
+                messagebox.showerror("Erreur", "Module logistic_example non disponible")
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Erreur: {e}")
+            import traceback
+            traceback.print_exc()
+            
+    def run_logistic_example_bak(self):
      """Lance le test avec la fonction logistique."""
      try:
         import subprocess
@@ -1086,70 +1057,42 @@ class QuantileSplineApp:
         traceback.print_exc()
             
     def load_basic_example(self):
-        """Charge et exécute l'exemple basic depuis un script externe."""
+        # ============ IMPORTS DU PACKAGE ============
         try:
-            import subprocess
-            import os
-            
-            # Chercher le script example_basic.py
-            possible_paths = [
-                os.path.join(PROJECT_ROOT, 'examples', 'example_basic.py'),
-                os.path.join(EXAMPLES_PATH, 'example_basic.py'),
-                'examples/example_basic.py',
-            ]
-            
-            script_path = None
-            for p in possible_paths:
-                if os.path.exists(p):
-                    script_path = p
-                    break
-            
-            if script_path is None:
-                messagebox.showerror("Erreur", 
-                    "Fichier example_basic.py non trouvé.\n\n"
-                    "Assurez-vous que le fichier existe dans le dossier examples/")
-                return
-            
-            # Lancer le script
-            self.status_var.set("Lancement de l'exemple basic...")
-            self.root.update()
-            
-            import sys
-            subprocess.Popen([sys.executable, script_path])
-            
-            self.status_var.set("Exemple basic lancé")
-            
-        except Exception as e:
-            messagebox.showerror("Erreur", f"Erreur: {e}")
-            import traceback
-            traceback.print_exc()
+            from BsplineQuantRegpy import (
+                SplineLinearQuant,
+                SplineQuadraticQuant,
+                SplineCubicQuant,
+                SplineQuarticQuant,
+                run_logistic_example,
+                run_basic_example,
+            )
+            print("✓ Module spline chargé")
+        except ImportError as e:
+            print(f"✗ Erreur import: {e}")
+            SplineLinearQuant = None
+            SplineQuadraticQuant = None
+            SplineCubicQuant = None
+            SplineQuarticQuant = None
+            run_logistic_example = None
+            run_basic_example = None
+        run_basic_example()
     
     def load_temperature_example(self):
         """Charge l'exemple des données de température."""
+        """Charge les données de température depuis le package."""
         try:
-            import os
-            import pandas as pd
-            
-            possible_paths = [
-                os.path.join(PROJECT_ROOT, 'examples', 'temp.xls'),
-                os.path.join(PROJECT_ROOT, 'data', 'temp.xls'),
-                os.path.join(os.path.dirname(__file__), '..', '..', '..', 'examples', 'temp.xls'),
-                'examples/temp.xls',
-                'temp.xls',
-            ]
-            
-            file_path = None
-            for p in possible_paths:
-                if os.path.exists(p):
-                    file_path = p
-                    break
-            
-            if file_path is None:
-                file_path = filedialog.askopenfilename(
-                    title="Sélectionner le fichier temp.xls",
-                    filetypes=[("Excel files", "*.xls *.xlsx")]
-                )
-                if not file_path:
+            # Charger les données depuis le package
+            with resources.path('BsplineQuantRegpy.examples', 'temp.xls') as path:
+                file_path = str(path)
+                
+            if not os.path.exists(file_path):
+                # Fallback: chercher dans le dossier examples du projet
+                alt_path = os.path.join(os.path.dirname(__file__), '..', 'examples', 'temp.xls')
+                if os.path.exists(alt_path):
+                    file_path = alt_path
+                else:
+                    messagebox.showerror("Erreur", "Fichier temp.xls non trouvé")
                     return
             
             temp = pd.read_excel(file_path)
@@ -1182,241 +1125,12 @@ class QuantileSplineApp:
             messagebox.showerror("Erreur", f"Impossible de charger l'exemple: {str(e)}")
             import traceback
             traceback.print_exc()
-    def run_temperature_analysis(self):
-     """Lance une analyse complète des données de température avec différentes contraintes."""
-     try:
-        import os
-        import pandas as pd
-        import matplotlib.pyplot as plt
-        from matplotlib.figure import Figure
-        from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+        return temp_val
+
+    def temperature_analysis(self):
+        run_temperature_analysis(degree=self.degree)
         
-        # Chercher le fichier temp.xls
-        possible_paths = [
-            os.path.join(PROJECT_ROOT, 'examples', 'temp.xls'),
-            os.path.join(PROJECT_ROOT, 'data', 'temp.xls'),
-            os.path.join(os.path.dirname(__file__), '..', '..', '..', 'examples', 'temp.xls'),
-            'examples/temp.xls',
-            'temp.xls',
-        ]
-        
-        file_path = None
-        for p in possible_paths:
-            if os.path.exists(p):
-                file_path = p
-                break
-        
-        if file_path is None:
-            file_path = filedialog.askopenfilename(
-                title="Sélectionner le fichier temp.xls",
-                filetypes=[("Excel files", "*.xls *.xlsx")]
-            )
-            if not file_path:
-                return
-        
-        # Charger les données
-        temp = pd.read_excel(file_path)
-        temp_val = temp.values
-        year = temp_val[:, 0]
-        ytab = temp_val[:, 1]
-        
-        # Normalisation
-        xtab = (year - year[0]) / (year[-1] - year[0])
-        
-        # Nœuds spécifiques pour l'étude des tendances
-        year_knots = np.array([1880, 1889, 1900, 1910, 1930, 1940, 1965, 1992])
-        knots = (year_knots - 1880) / (1992 - 1880)
-        kn = len(knots) - 1
-        
-        def yr(x):
-            return 1880 + x * (1992 - 1880)
-        
-        # Créer la figure
-        fig = Figure(figsize=(16, 10), dpi=100)
-        x_eval = np.linspace(0, 1, 500)
-        tau = 0.5
-        solver = 'CLARABEL'
-        
-        # ============================================
-        # 1. Sans contraintes
-        # ============================================
-        ax1 = fig.add_subplot(2, 3, 1)
-        ax1.scatter(yr(xtab), ytab, alpha=0.5, s=15, color='gray', label='Données')
-        ax1.set_title('1. Sans contraintes')
-        ax1.set_xlabel('Année')
-        ax1.set_ylabel('Δ Température (°C)')
-        
-        try:
-            res = SplineCubicQuant(xtab, ytab, knots, tau, monot=0, cv=0, der3=0, solver=solver)
-            if res is not None:
-                ax1.plot(yr(x_eval), res(x_eval), 'b-', linewidth=2, label=f'τ={tau}')
-        except Exception as e:
-            print(f"Erreur: {e}")
-        
-        ax1.plot(yr(knots), np.ones_like(knots)*max(ytab)*0.9, 'r|', markersize=8, label='Nœuds')
-        ax1.legend(fontsize='small')
-        ax1.grid(True, alpha=0.3)
-        
-        # ============================================
-        # 2. Contrainte croissante partout
-        # ============================================
-        ax2 = fig.add_subplot(2, 3, 2)
-        ax2.scatter(yr(xtab), ytab, alpha=0.5, s=15, color='gray', label='Données')
-        ax2.set_title('2. Contrainte croissante')
-        ax2.set_xlabel('Année')
-        ax2.set_ylabel('Δ Température (°C)')
-        
-        try:
-            res = SplineCubicQuant(xtab, ytab, knots, tau, monot=1, cv=0, der3=0, solver=solver)
-            if res is not None:
-                ax2.plot(yr(x_eval), res(x_eval), 'g-', linewidth=2, label='Croissante')
-        except Exception as e:
-            print(f"Erreur: {e}")
-        
-        ax2.plot(yr(knots), np.ones_like(knots)*max(ytab)*0.9, 'r|', markersize=8, label='Nœuds')
-        ax2.legend(fontsize='small')
-        ax2.grid(True, alpha=0.3)
-        
-        # ============================================
-        # 3. Contrainte décroissante (contre-nature)
-        # ============================================
-        ax3 = fig.add_subplot(2, 3, 3)
-        ax3.scatter(yr(xtab), ytab, alpha=0.5, s=15, color='gray', label='Données')
-        ax3.set_title('3. Contrainte décroissante')
-        ax3.set_xlabel('Année')
-        ax3.set_ylabel('Δ Température (°C)')
-        
-        try:
-            res = SplineCubicQuant(xtab, ytab, knots, tau, monot=-1, cv=0, der3=0, solver=solver)
-            if res is not None:
-                ax3.plot(yr(x_eval), res(x_eval), 'r-', linewidth=2, label='Décroissante')
-        except Exception as e:
-            print(f"Erreur: {e}")
-        
-        ax3.plot(yr(knots), np.ones_like(knots)*max(ytab)*0.9, 'r|', markersize=8, label='Nœuds')
-        ax3.legend(fontsize='small')
-        ax3.grid(True, alpha=0.3)
-        
-        # ============================================
-        # 4. Contrainte croissante + convexe
-        # ============================================
-        ax4 = fig.add_subplot(2, 3, 4)
-        ax4.scatter(yr(xtab), ytab, alpha=0.5, s=15, color='gray', label='Données')
-        ax4.set_title('4. Croissante + Convexe')
-        ax4.set_xlabel('Année')
-        ax4.set_ylabel('Δ Température (°C)')
-        
-        try:
-            res = SplineCubicQuant(xtab, ytab, knots, tau, monot=1, cv=1, der3=0, solver=solver)
-            if res is not None:
-                ax4.plot(yr(x_eval), res(x_eval), 'm-', linewidth=2, label='Croissante+Convexe')
-        except Exception as e:
-            print(f"Erreur: {e}")
-        
-        ax4.plot(yr(knots), np.ones_like(knots)*max(ytab)*0.9, 'r|', markersize=8, label='Nœuds')
-        ax4.legend(fontsize='small')
-        ax4.grid(True, alpha=0.3)
-        
-        # ============================================
-        # 5. Contrainte partielle (décroissante sur 1940-1965)
-        # ============================================
-        ax5 = fig.add_subplot(2, 3, 5)
-        ax5.scatter(yr(xtab), ytab, alpha=0.5, s=15, color='gray', label='Données')
-        ax5.set_title('5. Contrainte partielle\n(croissante sauf 1940-1965)')
-        ax5.set_xlabel('Année')
-        ax5.set_ylabel('Δ Température (°C)')
-        
-        # Contrainte: décroissante sur l'intervalle 1940-1965
-        monot_partiel = [1, 1, 1, 1, 1, -1, 1]  # 7 intervalles
-        # correspond aux années: 1880-1889, 1889-1900, 1900-1910, 1910-1930, 
-        # 1930-1940, 1940-1965, 1965-1992
-        
-        try:
-            res = SplineCubicQuant(xtab, ytab, knots, tau, monot=monot_partiel, cv=0, der3=0, solver=solver)
-            if res is not None:
-                ax5.plot(yr(x_eval), res(x_eval), 'c-', linewidth=2, label='Partielle')
-                
-                # Colorier la zone 1940-1965
-                ax5.axvspan(1940, 1965, alpha=0.2, color='yellow', label='Zone décroissante')
-        except Exception as e:
-            print(f"Erreur: {e}")
-        
-        ax5.plot(yr(knots), np.ones_like(knots)*max(ytab)*0.9, 'r|', markersize=8, label='Nœuds')
-        ax5.legend(fontsize='small')
-        ax5.grid(True, alpha=0.3)
-        
-        # ============================================
-        # 6. Comparaison de toutes les contraintes
-        # ============================================
-        ax6 = fig.add_subplot(2, 3, 6)
-        ax6.scatter(yr(xtab), ytab, alpha=0.3, s=10, color='gray', label='Données')
-        ax6.set_title('6. Comparaison des approches')
-        ax6.set_xlabel('Année')
-        ax6.set_ylabel('Δ Température (°C)')
-        
-        colors = ['blue', 'green', 'red', 'magenta', 'cyan']
-        labels = ['Sans', 'Croissante', 'Décroissante', 'C+Convexe', 'Partielle']
-        
-        # Tracer les 5 courbes
-        for i, (monot, cv_val, color, label) in enumerate(zip(
-            [0, 1, -1, 1, monot_partiel],
-            [0, 0, 0, 1, 0],
-            colors, labels
-        )):
-            try:
-                res = SplineCubicQuant(xtab, ytab, knots, tau, monot=monot, cv=cv_val, der3=0, solver=solver)
-                if res is not None:
-                    ax6.plot(yr(x_eval), res(x_eval), color=color, linewidth=1.5, label=label)
-            except Exception as e:
-                print(f"Erreur pour {label}: {e}")
-        
-        ax6.plot(yr(knots), np.ones_like(knots)*max(ytab)*0.9, 'k|', markersize=8, label='Nœuds')
-        ax6.legend(fontsize='small')
-        ax6.grid(True, alpha=0.3)
-        
-        plt.tight_layout()
-        
-        # Créer une fenêtre Tkinter pour la figure
-        fig_window = tk.Toplevel(self.root)
-        fig_window.title("Analyse des températures - Régression quantile contrainte")
-        fig_window.geometry("1200x800")
-        
-        canvas = FigureCanvasTkAgg(fig, master=fig_window)
-        canvas.draw()
-        canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-        
-        toolbar = NavigationToolbar2Tk(canvas, fig_window)
-        toolbar.update()
-        
-        btn_frame = ttk.Frame(fig_window)
-        btn_frame.pack(pady=5)
-        ttk.Button(btn_frame, text="Fermer", command=fig_window.destroy).pack(side=tk.LEFT, padx=5)
-        
-        # Bouton pour charger les données dans la GUI
-        def load_data_to_gui():
-            self.xtab = xtab
-            self.ytab = ytab
-            self.knots = knots
-            self.temperature_years = year
-            self.clear_all()
-            self.plot_data()
-            self.plot_knots()
-            self.ax.set_title('Températures globales (1880-1992)')
-            self.data_info.set(f"{len(xtab)} points (température)")
-            self.status_var.set("Données température chargées depuis l'analyse")
-            self.canvas.draw()
-            fig_window.destroy()
-        
-        ttk.Button(btn_frame, text="Charger ces données dans la GUI", 
-                  command=load_data_to_gui).pack(side=tk.LEFT, padx=5)
-        
-        self.status_var.set("Analyse des températures terminée")
-        
-     except Exception as e:
-        messagebox.showerror("Erreur", f"Erreur lors de l'analyse: {e}")
-        import traceback
-        traceback.print_exc()
-    
+       
     
     def generate_custom_test(self):
         try:
@@ -1526,127 +1240,118 @@ class QuantileSplineApp:
         knots_str = np.array2string(knots, precision=6, separator=', ', max_line_width=100)
 
         # Construction du code
-        code = f'''#!/usr/bin/env python
+        code =f'''
+#!/usr/bin/env python
         # -*- coding: utf-8 -*-
 
-        import numpy as np
-        import matplotlib.pyplot as plt
-        import sys
-        import os
+import numpy as np
+import matplotlib.pyplot as plt
+import sys
+import os
 
-        # Ajouter le chemin du projet si nécessaire
-        try:
-            from BsplineQuantRegpy import SplineCubicQuant, SplineQuarticQuant, SplineLinearQuant, SplineQuadraticQuant
-        except ImportError:
-            try:
-                from PysplineQuantReg import SplineCubicQuant, SplineQuarticQuant, SplineLinearQuant, SplineQuadraticQuant
-            except ImportError:
-                print("Erreur: impossible d'importer les modules spline.")
-                print("Assurez-vous que le package est installé ou dans le PYTHONPATH.")
-                sys.exit(1)
 
-        # ============ PARAMÈTRES ============
-        DEGREE = {degree}
-        TAU = {tau}
-        SOLVER = '{solver}'
-        MONOT = {monot}
-        CONVEX = {convex}
-        DER3 = {der3}
-        COLOR = '{color}'
+# ============ PARAMÈTRES ============
+DEGREE = {degree}
+TAU = {tau}
+SOLVER = '{solver}'
+MONOT = {monot}
+CONVEX = {convex}
+DER3 = {der3}
+COLOR = '{color}'
 
-        # ============ DONNÉES ============
-        x = np.array({xtab_str})
-        y = np.array({ytab_str})
-        knots = np.array({knots_str})
+# ============ DONNÉES ============
+x = np.array({xtab_str})
+y = np.array({ytab_str})
+knots = np.array({knots_str})
 
-        print("=" * 70)
-        print("RÉGRESSION QUANTILE AVEC SPLINES CONTRAINTES")
-        print("=" * 70)
-        print(f"Degré: {{DEGREE}}")
-        print(f"τ: {{TAU}}")
-        print(f"Solveur: {{SOLVER}}")
-        print(f"Monotonie: {{MONOT}}")
-        print(f"Convexité: {{CONVEX}}")
-        print(f"Dérivée 3: {{DER3}}")
-        print(f"Nombre de points: {{len(x)}}")
-        print(f"Nombre de nœuds: {{len(knots)}}")
+print("=" * 70)
+print("RÉGRESSION QUANTILE AVEC SPLINES CONTRAINTES")
+print("=" * 70)
+print(f"Degré: {{DEGREE}}")
+print(f"τ: {{TAU}}")
+print(f"Solveur: {{SOLVER}}")
+print(f"Monotonie: {{MONOT}}")
+print(f"Convexité: {{CONVEX}}")
+print(f"Dérivée 3: {{DER3}}")
+print(f"Nombre de points: {{len(x)}}")
+print(f"Nombre de nœuds: {{len(knots)}}")
 
-        # ============ RÉGRESSION ============
-        # Sélectionner la fonction appropriée selon le degré
-        if DEGREE == 1:
-            from BsplineQuantRegpy import SplineLinearQuant as spline_func
-        elif DEGREE == 2:
-            from BsplineQuantRegpy import SplineQuadraticQuant as spline_func
-        elif DEGREE == 3:
-            from BsplineQuantRegpy import SplineCubicQuant as spline_func
-        else:
-            from BsplineQuantRegpy import SplineQuarticQuant as spline_func
+# ============ RÉGRESSION ============
+# Sélectionner la fonction appropriée selon le degré
+if DEGREE == 1:
+    from BsplineQuantRegpy import SplineLinearQuant as spline_func
+elif DEGREE == 2:
+    from BsplineQuantRegpy import SplineQuadraticQuant as spline_func
+elif DEGREE == 3:
+    from BsplineQuantRegpy import SplineCubicQuant as spline_func
+else:
+    from BsplineQuantRegpy import SplineQuarticQuant as spline_func
 
-        print("\\nLancement de la régression...")
+print("\\nLancement de la régression...")
 
-        try:
-            result = spline_func(
-                x, y, knots, 
-                tau=TAU, 
-                monot=MONOT, 
-                cv=CONVEX, 
-                der3=DER3,
-                solver=SOLVER
-            )
-        except TypeError:
-            # Fallback pour les fonctions qui n'acceptent pas der3
-            try:
-                result = spline_func(
-                    x, y, knots, 
-                    tau=TAU, 
-                    monot=MONOT, 
-                    cv=CONVEX, 
-                    solver=SOLVER
-                )
-            except:
-                result = spline_func(
-                    x, y, knots, 
-                    tau=TAU, 
-                    monot=MONOT, 
-                    solver=SOLVER
-                )
+try:
+    result = spline_func(
+        x, y, knots, 
+        tau=TAU, 
+        monot=MONOT, 
+        cv=CONVEX, 
+        der3=DER3,
+        solver=SOLVER
+    )
+except TypeError:
+    # Fallback pour les fonctions qui n'acceptent pas der3
+    try:
+        result = spline_func(
+            x, y, knots, 
+            tau=TAU, 
+            monot=MONOT, 
+            cv=CONVEX, 
+            solver=SOLVER
+        )
+    except:
+        result = spline_func(
+            x, y, knots, 
+            tau=TAU, 
+            monot=MONOT, 
+            solver=SOLVER
+        )
 
-        if result is None:
-            print("❌ La régression n'a pas convergé.")
-            sys.exit(1)
+if result is None:
+    print("❌ La régression n'a pas convergé.")
+    sys.exit(1)
 
-        print("✅ Régression réussie !")
+print("✅ Régression réussie !")
 
-        # ============ ÉVALUATION ============
-        x_eval = np.linspace(min(x), max(x), 500)
-        y_eval = result(x_eval)
+# ============ ÉVALUATION ============
+x_eval = np.linspace(min(x), max(x), 500)
+y_eval = result(x_eval)
 
-        # ============ VISUALISATION ============
-        fig, ax = plt.subplots(figsize=(10, 6))
+# ============ VISUALISATION ============
+fig, ax = plt.subplots(figsize=(10, 6))
 
-        # Données
-        ax.scatter(x, y, alpha=0.5, s=20, color='gray', label='Données')
+# Données
+ax.scatter(x, y, alpha=0.5, s=20, color='gray', label='Données')
 
-        # Spline
-        ax.plot(x_eval, y_eval, color=COLOR, linewidth=2, 
-                label=f'Spline degré {{DEGREE}}, τ={{TAU}}')
+# Spline
+ax.plot(x_eval, y_eval, color=COLOR, linewidth=2, 
+        label=f'Spline degré {{DEGREE}}, τ={{TAU}}')
 
-        # Nœuds
-        ax.plot(knots, np.ones_like(knots)*max(y)*0.95, 'r|', 
-                markersize=10, label='Nœuds')
+# Nœuds
+ax.plot(knots, np.ones_like(knots)*max(y)*0.95, 'r|', 
+        markersize=10, label='Nœuds')
 
-        ax.set_xlabel('x')
-        ax.set_ylabel('y')
-        ax.set_title(f'Régression quantile avec splines (degré {{DEGREE}}, τ={{TAU}})')
-        ax.legend()
-        ax.grid(True, alpha=0.3)
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_title(f'Régression quantile avec splines (degré {{DEGREE}}, τ={{TAU}})')
+ax.legend()
+ax.grid(True, alpha=0.3)
 
-        plt.tight_layout()
-        plt.show()
+plt.tight_layout()
+plt.show()
 
-        print("\\n" + "=" * 70)
-        print("EXÉCUTION TERMINÉE")
-        print("=" * 70)
+print("\\n" + "=" * 70)
+print("EXÉCUTION TERMINÉE")
+print("=" * 70)
         '''
 
         return code

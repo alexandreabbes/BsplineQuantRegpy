@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 """
-GUI module - Interface graphique pour la régression quantile
+Interface graphique pour BsplineQuantRegpy.
 """
 
-from .Quant_reg_tk import *
+from .Quant_reg_tk import main, QuantileSplineApp
 
-__all__ = []
+__all__ = ["main", "QuantileSplineApp"]
