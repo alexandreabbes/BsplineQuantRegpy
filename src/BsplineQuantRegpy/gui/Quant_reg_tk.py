@@ -31,6 +31,7 @@ from BsplineQuantRegpy import (
         quantile_spline,
         run_logistic_example,
         run_basic_example,
+        comparison_example,
         run_temperature_analysis,       
     )
 
@@ -388,8 +389,7 @@ class QuantileSplineApp:
         examples_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Exemples", menu=examples_menu)
         examples_menu.add_command(label="Basic", command=self.load_basic_example)
-        examples_menu.add_command(label="Exemple courbe logistique (degré du menu) ", command=self.run_logistic_example)
-
+        examples_menu.add_command(label="Exemple courbe logistique (degré du menu) ", command=self.logistic)
         examples_menu.add_separator()
         examples_menu.add_command(label="Load global temperature data ", command=self.load_temperature_example)
         examples_menu.add_command(label="Analysis  température data (contraints, degré du menu)", command=self.temperature_analysis)
@@ -401,7 +401,7 @@ class QuantileSplineApp:
         menubar.add_cascade(label="Scripts", menu=scripts_menu)
 
 #On peut ajouter ici des scripts     
-
+         scripts_menu.add_command(label="Exemple comparatif ", command=self.comparison)
 #        scripts_menu.add_command(label="Exécuter example_basic.py", command=self.load_basic_example)
 #        scripts_menu.add_command(label="Exécuter comparison_example.py", command=self.run_comparison_example)
     
@@ -977,97 +977,17 @@ class QuantileSplineApp:
         except Exception as e:
             messagebox.showerror("Erreur", f"Erreur lors de l'export: {e}")
     # ============ EXEMPLES ============
-    def run_logistic_example(self):
+    def logistic(self):
         """Lance l'exemple logistique."""
-        try:
-            if run_logistic_example is not None:
-                degree = self.degree_var.get()
-                run_logistic_example(degree=degree)
-                self.status_var.set(f"Test logistique lancé (degré {degree})")
-            else:
-                messagebox.showerror("Erreur", "Module logistic_example non disponible")
-        except Exception as e:
-            messagebox.showerror("Erreur", f"Erreur: {e}")
-            import traceback
-            traceback.print_exc()
-            
-    def run_logistic_example_bak(self):
-     """Lance le test avec la fonction logistique."""
-     try:
-        import subprocess
-        import os
         
-        # Chercher le script example_logistic.py
-        possible_paths = [
-            os.path.join(PROJECT_ROOT, 'examples', 'logistic_example.py'),
-            os.path.join(EXAMPLES_PATH, 'logistic_example.py'),
-            'examples/logistic_example.py',
-        ]
+        run_logistic_example(degree=self.degree)
+        self.status_var.set(f"Test logistique lancé (degré {degree})")
         
-        script_path = None
-        for p in possible_paths:
-            if os.path.exists(p):
-                script_path = p
-                break
+    def comparison(self):
+        comparison_example.main()
         
-        if script_path is None:
-            messagebox.showerror("Erreur", 
-                "Fichier example_logistic.py non trouvé.\n\n"
-                "Assurez-vous que le fichier existe dans le dossier examples/")
-            return
-        
-        # Lancer le script
-        self.status_var.set("Lancement du test logistique...")
-        self.root.update()
-        #Entrer la fonction logistique dans le champ de variables"
-        
-        self.test_function_var.set("exp(-5 + 10*x) / (1 + exp(-5 + 10*x)) + 0.2 * randn(n)")
-        
-        # Mettre à jour le nombre de points
-        self.test_npoints_var.set(100)
-        
-        # Générer les données automatiquement
-        self.generate_custom_test()
-        
-        # Mettre à jour le titre du graphique
-        self.ax.set_title('Fonction logistique avec bruit')
-        self.canvas.draw()
-        
-        #Charger le test tout fait
-        
-        #import sys #méthode subprocess
-        #subprocess.Popen([sys.executable, script_path])
-        
-        import logistic_example # methode directe
-        deg=self.degree
-        logistic_example.run_logistic_example(degree=deg)
-        self.status_var.set("Test logistique lancé")
-
-     except Exception as e:
-        messagebox.showerror("Erreur", f"Erreur: {e}")
-        import traceback
-        traceback.print_exc()
-            
     def load_basic_example(self):
         # ============ IMPORTS DU PACKAGE ============
-        try:
-            from BsplineQuantRegpy import (
-                SplineLinearQuant,
-                SplineQuadraticQuant,
-                SplineCubicQuant,
-                SplineQuarticQuant,
-                run_logistic_example,
-                run_basic_example,
-            )
-
-        except ImportError as e:
-            print(f"✗ Erreur import: {e}")
-            SplineLinearQuant = None
-            SplineQuadraticQuant = None
-            SplineCubicQuant = None
-            SplineQuarticQuant = None
-            run_logistic_example = None
-            run_basic_example = None
         run_basic_example()
     
     def load_temperature_example(self):

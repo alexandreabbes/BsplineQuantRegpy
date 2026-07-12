@@ -22,10 +22,73 @@ from ..core.constraints import (
 
 
 def rhotau(u, tau):
-    """Fonction de perte quantile"""
+
+    """  
+    Fonction de perte quantile (check function).
+    
+    La fonction de perte quantile, également appelée fonction de vérification,
+    est définie par ρ_τ(u) = u * (τ - 1_{u < 0}). Elle est utilisée comme
+    fonction objectif en régression quantile.
+    
+    Parameters
+    ----------
+    u : cvxpy.Expression
+        Résidus (valeurs réelles ou expressions CVXPY)
+    tau : float, 0 < tau < 1
+        Paramètre quantile
+    
+    Returns
+    -------
+    cvxpy.Expression
+        Somme des pertes quantiles
+    
+    Notes
+    -----
+    La fonction est convexe et linéaire par morceaux.
+    Pour τ = 0.5, elle correspond à l'erreur absolue médiane.
+    """
     return cp.sum(cp.maximum(tau * u, (tau - 1) * u))
 
+
 def SplineLinearQuant(xtab, ytab, knots, tau, monot=0, solver='CLARABEL', weight=None):
+        """
+    Régression quantile avec B-splines de degré 1 (affines par morceaux)
+    et contraintes de monotonie.
+    
+    Les splines linéaires sont des fonctions continues et linéaires sur chaque
+    intervalle entre les nœuds. La monotonie est contrôlée par le signe de
+    la dérivée (constante par morceaux).
+    
+    Parameters
+    ----------
+    xtab, ytab : array-like
+        Données x et y
+    knots : int or list
+        Nombre de nœuds ou liste des nœuds
+    tau : float
+        Paramètre quantile (entre 0 et 1)
+    monot : int or list, default=0
+        Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)
+    solver : str, default='CLARABEL'
+        Solveur CVXPY à utiliser
+    weight : array-like, optional
+        Poids des observations
+        
+    Returns
+    -------
+    polyn : BSpline object
+        Fonction spline résultante (degré 1)
+    
+    Examples
+    --------
+    >>> import numpy as np
+    >>> from BsplineQuantRegpy import SplineLinearQuant
+    >>> x = np.linspace(0, 1, 50)
+    >>> y = 2*x + 0.1*np.random.randn(50)
+    >>> knots = np.quantile(x, np.linspace(0, 1, 6))
+    >>> result = SplineLinearQuant(x, y, knots, tau=0.5, monot=1)
+    >>> y_pred = result(np.linspace(0, 1, 100))
+    """
     """
     Régression quantile avec B-splines de degré 1 (affines par morceaux)
     et contraintes de monotonie
@@ -131,32 +194,52 @@ def SplineLinearQuant(xtab, ytab, knots, tau, monot=0, solver='CLARABEL', weight
     return polyn
 
 def SplineQuadraticQuant(xtab, ytab, knots, tau, monot=0, cv=0, solver='CLARABEL', weight=None):
+
     """
-    Régression quantile avec B-splines de degré 2 et contraintes de forme
+    Régression quantile avec B-splines de degré 2 et contraintes de forme.
     
-    Parameters:
-    -----------
+    Les splines quadratiques sont des fonctions continues, dérivables une fois,
+    et quadratiques sur chaque intervalle entre les nœuds.
+    
+    Parameters
+    ----------
     xtab, ytab : array-like
         Données x et y
     knots : int or list
         Nombre de nœuds ou liste des nœuds
     tau : float
         Paramètre quantile (entre 0 et 1)
-    monot : int or list
+    monot : int or list, default=0
         Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)
-        Pour une spline quadratique, la monotonie s'applique à la dérivée première
-    cv : int or list  
+    cv : int or list, default=0
         Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)
-        Pour une spline quadratique, la convexité s'applique à la dérivée seconde
-    solver : str
+    solver : str, default='CLARABEL'
         Solveur CVXPY à utiliser
     weight : array-like, optional
         Poids des observations
         
-    Returns:
-    --------
+    Returns
+    -------
     polyn : BSpline object
         Fonction spline résultante (degré 2)
+    
+    Notes
+    -----
+    -Pour une spline quadratique, la monotonie sur chaque intervalle est
+    implémentée par des contraintes suffisantes et nécessaires aux noeuds
+    de la dérivée affine par morceaux.
+    -La convexité est contrôlée par le signe d'un point quelconque de
+    chaque intervalle (la dérivée seconde est constante par morceaux).
+    L'ensemble des contraintes est un problème linéaire.
+    
+    Examples
+    --------
+    >>> import numpy as np
+    >>> from BsplineQuantRegpy import SplineQuadraticQuant
+    >>> x = np.linspace(0, 1, 50)
+    >>> y = 2*x**2 + 0.1*np.random.randn(50)
+    >>> knots = np.quantile(x, np.linspace(0, 1, 6))
+    >>> result = SplineQuadraticQuant(x, y, knots, tau=0.5, cv=1)
     """
     
     if weight is None:
@@ -269,9 +352,52 @@ def SplineQuadraticQuant(xtab, ytab, knots, tau, monot=0, cv=0, solver='CLARABEL
 def SplineCubicQuant(xtab, ytab, knots, tau, monot=0, cv=0, der3=0, 
                                    solver='CLARABEL', weight=None):
     
+
     """
-    Régression quantile avec splines cubiques
-    Les contraintes de monotonie utilisent une approche matricielle 
+    Régression quantile avec B-splines cubiques et contraintes de forme.
+    Les splines cubiques sont des fonctions continues, deux fois dérivables,
+    et cubiques sur chaque intervalle entre les nœuds.    
+    Parameters
+    ----------
+    xtab, ytab : array-like
+        Données x et y
+    knots : int or list
+        Nombre de nœuds ou liste des nœuds
+    tau : float
+        Paramètre quantile
+    monot : int or list, default=0
+        Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)
+    cv : int or list, default=0
+        Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)
+    der3 : int or list, default=0
+        Contrainte sur la dérivée troisième (+1 positive, -1 négative, 0 aucune)
+    solver : str, default='CLARABEL'
+        Solveur CVXPY à utiliser
+    weight : array-like, optional
+        Poids des observations
+        
+    Returns
+    -------
+    polyn : BSpline object
+        Fonction spline résultante (degré 3)
+    
+    Notes
+    -----
+    - Les contraintes de monotonie sont implémentées via la caractérisation de Karlin-Studden (1966)
+    du signe des polynômes positifs de degré 2.
+    - Les contraintes de convexité sont implémentéee par le signe de la dérivée seconde affine
+    par morceaux aux noeud.
+    - Les contraintes de dérivée troisième (constante par morceaux) sont implémentées par
+    le signe d'un point quelconque de chque intervalle.
+    
+    Exemples
+    --------
+    >>> import numpy as np
+    >>> from BsplineQuantRegpy import SplineCubicQuant
+    >>> x = np.linspace(0, 1, 50)
+    >>> y = 3*x + 0.1*np.random.randn(50)
+    >>> knots = np.quantile(x, np.linspace(0, 1, 6))
+    >>> result = SplineCubicQuant(x, y, knots, tau=0.5, monot=1, cv=1)
     """
     
     if weight is None:
@@ -473,6 +599,56 @@ def SplineCubicQuant(xtab, ytab, knots, tau, monot=0, cv=0, der3=0,
 
 def SplineQuarticQuant(xtab, ytab, knots, tau, monot, cv, der3=None, solver='CLARABEL', weight=None):
     """
+    Régression quantile avec B-splines de degré 4 et contraintes de forme.
+    
+    Les splines quartiques sont des fonctions continues, trois fois dérivables,
+    et quartiques sur chaque intervalle entre les nœuds.
+    
+    Parameters
+    ----------
+    xtab, ytab : array-like
+        Données x et y
+    knots : int or list
+        Nombre de nœuds ou liste des nœuds
+    tau : float
+        Paramètre quantile
+    monot : int or list
+        Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)
+    cv : int or list  
+        Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)
+    der3 : int or list, optional
+        Contrainte sur la dérivée troisième (+1 positive, -1 négative, 0 aucune)
+    solver : str, default='CLARABEL'
+        Solveur CVXPY à utiliser
+    weight : array-like, optional
+        Poids des observations
+        
+    Returns
+    -------
+    polyn : BSpline object
+        Fonction spline résultante (degré 4)
+    
+    Notes
+    -----
+    -Les contraintes monotones (resp. convexes) sont implémentées
+    via la caractérisation de Karlin-Studden (1966) pour les polynômes
+    positifs de degré 3 (resp degré 2). Le problème d'optimisation est formulé comme un problème
+    de programmation conique du second ordre (SOCP) et résolu avec CVXPY.
+
+    - La dérivée troisième étant affine par morceaux, les contraintes sont
+    implémentées aux noeuds (problèmes linéaire).
+    
+    Examples
+    --------
+    >>> import numpy as np
+    >>> from BsplineQuantRegpy import SplineQuarticQuant
+    >>> x = np.linspace(0, 1, 50)
+    >>> y = 4*x**3 + 0.1*np.random.randn(50)
+    >>> knots = np.quantile(x, np.linspace(0, 1, 6))
+    >>> result = SplineQuarticQuant(x, y, knots, tau=0.5, monot=1, cv=1)
+    """
+    
+    """
     Régression quantile avec B-splines de degré 4 et contraintes de forme
     incluant la dérivée troisième
     
@@ -494,7 +670,13 @@ def SplineQuarticQuant(xtab, ytab, knots, tau, monot, cv, der3=None, solver='CLA
         Solveur CVXPY à utiliser
     weight : array-like, optional
         Poids des observations
-        
+
+    Notes
+    -----
+    Les contraintes monotones (resp. convexes) sont implémentées
+    via la caractérisation de Karlin-Studden (1966) pour les polynômes
+    positifs de degré 3 (resp degré 2). Le problème d'optimisation est formulé comme un problème
+    de programmation conique du second ordre (SOCP) et résolu avec CVXPY.
     Returns:
     --------
     polyn : BSpline object
@@ -624,12 +806,162 @@ def SplineQuarticQuant(xtab, ytab, knots, tau, monot, cv, der3=None, solver='CLA
     polyn = BSpline(s, alpha.value, degree)    
     return polyn
 
-def quantile_spline(xtab, ytab, knots, tau, degree=3, monot=0, cv=0, der3=0, solver='CLARABEL',weight=None):
-       if degree==1:
+def quantile_spline(xtab, ytab, knots, tau, degree=3, monot=0, cv=0, der3=0, solver='CLARABEL',weight=None):  
+
+    """
+    Cette fonction permet d'appeler la régression quantile pour tous les degrés
+    de splines (1 à 4) avec une interface unique. Elle redirige vers la fonction
+    appropriée selon le degré choisi.
+    
+    Paramètres
+    ----------
+    xtab : array-like, shape (n,)
+        Variables indépendantes (abscisses). Doivent être dans l'intervalle [0, 1].
+    
+    ytab : array-like, shape (n,)
+        Variables dépendantes (ordonnées).
+    
+    knots : array-like
+        Positions des nœuds pour la base B-spline.
+        Si un entier est fourni, il est interprété comme le nombre de nœuds.
+    
+    tau : float, 0 < tau < 1
+        Quantile à estimer. Par exemple:
+        - tau = 0.5 : médiane
+        - tau = 0.1 : quantile inférieur
+        - tau = 0.9 : quantile supérieur
+    
+    degree : int, default=3
+        Degré de la spline :
+        - 1 : linéaire (affine par morceaux)
+        - 2 : quadratique
+        - 3 : cubique
+        - 4 : quartique
+    
+    monot : int ou list, default=0
+        Contrainte de monotonie :
+        - 1 : fonction croissante
+        - -1 : fonction décroissante
+        - 0 : aucune contrainte
+        Si une liste est fournie, chaque élément correspond à un intervalle.
+    
+    cv : int ou list, default=0
+        Contrainte de convexité :
+        - 1 : fonction convexe
+        - -1 : fonction concave
+        - 0 : aucune contrainte
+        Si une liste est fournie, chaque élément correspond à un intervalle.
+    
+    der3 : int ou list, default=0
+        Contrainte sur la dérivée troisième :
+        - 1 : dérivée troisième positive
+        - -1 : dérivée troisième négative
+        - 0 : aucune contrainte
+        (Uniquement pour les splines de degré 3 et 4)
+    
+    solver : str, default='CLARABEL'
+        Solveur CVXPY à utiliser. Options disponibles :
+        - 'CLARABEL' (recommandé, gratuit)
+        - 'ECOS'
+        - 'SCS'
+        - 'GUROBI' (payant, nécessite une licence)
+        - 'MOSEK' (payant, nécessite une licence)
+        - 'CVXOPT'
+    
+    weight : array-like, optional
+        Poids des observations pour la régression pondérée.
+        Si None, tous les poids sont égaux à 1.
+    Raises
+    ------
+    ValueError
+        Si le degré n'est pas compris entre 1 et 4.
+    
+    Returns
+    -------
+    callable
+        Fonction spline résultante. Elle peut être évaluée en tout point x :
+        >>> y_eval = spline_result(x_eval)
+    
+       
+    Exemples
+    --------
+    >>> import numpy as np
+    >>> from BsplineQuantRegpy import quantile_spline
+    >>> 
+    >>> # Générer des données
+    >>> x = np.linspace(0, 1, 100)
+    >>> y = 2*x + 0.2*np.sin(10*np.pi*x) + 0.05*np.random.randn(100)
+    >>> knots = np.quantile(x, np.linspace(0, 1, 11))
+    >>> 
+    >>> # Régression avec spline cubique et contrainte croissante
+    >>> result = quantile_spline(x, y, knots, tau=0.5, degree=3, monot=1)
+    >>> 
+    >>> # Régression avec spline quadratique et contrainte convexe
+    >>> result = quantile_spline(x, y, knots, tau=0.5, degree=2, cv=1)
+    >>> 
+    >>> # Régression avec spline quartique et toutes les contraintes
+    >>> result = quantile_spline(x, y, knots, tau=0.5, degree=4, 
+    ...                          monot=1, cv=1, der3=1)
+    >>> 
+    >>> # Évaluer la spline
+    >>> x_eval = np.linspace(0, 1, 200)
+    >>> y_eval = result(x_eval)
+    
+    Notes
+    -----
+    Les contraintes de monotonie pour les degrés 3 et 4 sont implémentées
+    via la caractérisation de Karlin-Studden (1966) pour les polynômes
+    positifs de degrés 2 et 3, ce sont des contraintes quadratiques.
+    Les autres contraintes sont lineaires.
+    Le problème d'optimisation est formulé comme un problème
+    de programmation conique du second ordre (SOCP) et résolu avec CVXPY.
+    
+    Références
+    ----------
+    Karlin, S., & Studden, W.J. (1966). Tchebycheff Systems:
+    With Applications in Analysis and Statistics. Interscience Publishers.
+    
+    He, X., & Shi, P. (1998). Monotone B-spline smoothing.
+    Journal of the American Statistical Association, 93(442), 643-650.
+
+    Abbes, A. (2025). Quantile regression with cubic polynomial splines 
+    under shape constraints with applications. 
+    doi:10.5281/zenodo.17427913
+    See Also
+    --------
+    SplineLinearQuant, SplineQuadraticQuant, SplineCubicQuant, SplineQuarticQuant
+
+    statsmodels.regression.quantile_regression.QuantReg (Python)
+    
+    BsplineQuantReg (R) : https://cran.r-project.org/package=BsplineQuantReg
+    cobs (R) : https://cran.r-project.org/package=cobs
+    
+    
+    """
+    
+    if degree == 1:
+        return SplineLinearQuant(xtab, ytab=ytab, knots=knots, tau=tau, 
+                                 monot=monot, solver=solver, weight=weight)
+    elif degree == 2:
+        return SplineQuadraticQuant(xtab, ytab=ytab, knots=knots, tau=tau, 
+                                    monot=monot, cv=cv, solver=solver, weight=weight)
+    elif degree == 3:
+        return SplineCubicQuant(xtab, ytab=ytab, knots=knots, tau=tau, 
+                                monot=monot, cv=cv, der3=der3, 
+                                solver=solver, weight=weight)
+    elif degree == 4:
+        return SplineQuarticQuant(xtab, ytab=ytab, knots=knots, tau=tau, 
+                                  monot=monot, cv=cv, der3=der3, 
+                                  solver=solver, weight=weight)
+    else:
+        raise ValueError(f"Le degré doit être compris entre 1 et 4. Reçu: {degree}")
+
+
+    if degree==1:
            return SplineLinearQuant(xtab, ytab=ytab, knots=knots, tau=tau, monot=monot, solver=solver, weight=weight)
-       if degree==2:
+    if degree==2:
            return SplineQuadraticQuant(xtab, ytab=ytab, knots=knots, tau=tau, monot=monot, cv=cv, solver=solver, weight=weight)
-       if degree==3:
+    if degree==3:
            return SplineCubicQuant(xtab, ytab=ytab, knots=knots, tau=tau, monot=monot, cv=cv,der3=der3, solver=solver, weight=weight)
-       if degree==4:
+    if degree==4:
            return SplineQuarticQuant(xtab, ytab=ytab, knots=knots, tau=tau, monot=monot, cv=cv, der3=der3, solver=solver, weight=weight)
