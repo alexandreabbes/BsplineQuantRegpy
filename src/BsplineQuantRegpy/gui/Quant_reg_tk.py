@@ -1,6 +1,58 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+BsplineQuantRegpy.gui - Interface graphique pour la régression quantile
+=======================================================================
+
+Interface graphique Tkinter pour la régression quantile avec splines
+contraintes de forme (monotonie, convexité, dérivée troisième).
+
+FONCTIONNALITÉS
+---------------
+- Import de données (CSV, Excel)
+- Génération de données de test personnalisées
+- Configuration des splines (degré 1 à 4)
+- Placement automatique ou manuel des nœuds
+- Contraintes uniformes ou par région
+- Sélection du solveur CVXPY
+- Visualisation interactive avec matplotlib
+- Gestion des courbes (couleur, effacement)
+- Export des résultats (code Python, CSV, PNG)
+- Exemples intégrés (température, logistique, comparaison)
+
+UTILISATION
+-----------
+Depuis la ligne de commande :
+    $ python -m BsplineQuantRegpy.gui.Quant_reg_tk
+
+Depuis Python :
+    >>> from BsplineQuantRegpy import run_gui
+    >>> run_gui()
+
+OU
+    >>> from BsplineQuantRegpy.gui.Quant_reg_tk import main
+    >>> main()
+
+EXEMPLES INTÉGRÉS
+-----------------
+- Données de test personnalisables
+- Données température globale (1880-1992)
+- Fonction logistique
+- Comparaison des degrés
+
+RACCOURCIS CLAVIER
+------------------
+- Aucun pour l'instant (interface à la souris)
+
+VOIR AUSSI
+----------
+BsplineQuantRegpy : Package principal
+BsplineQuantRegpy.models : Fonctions de régression
+BsplineQuantRegpy.core : Construction des B-splines
+BsplineQuantRegpy.examples : Exemples d'utilisation
+"""
+
 __author__ = "Alexandre Abbes"
 __copyright__ = "Copyright 2026, Alexandre Adel Abbes"
 __credits__ = ["Alexandre Abbes"]
@@ -31,12 +83,67 @@ from BsplineQuantRegpy import (
         quantile_spline,
         run_logistic_example,
         run_basic_example,
-        comparison_example,
+        run_comparison_example,
         run_temperature_analysis,       
     )
 
 # ============ CLASSE PRINCIPALE ============
 class QuantileSplineApp:
+   
+    """
+    Application principale de régression quantile avec splines contraintes.
+    
+    Cette classe gère l'interface graphique Tkinter complète. Elle organise
+    les trois onglets principaux :
+    
+    1. Données & Spline : Import, paramètres spline, ajustement des axes
+    2. Contraintes : Uniformes ou par région
+    3. Exécution & Export : Solveur, lancement, gestion des courbes, export
+    
+    Attributes
+    ----------
+    root : tk.Tk
+        Fenêtre principale Tkinter
+    xtab, ytab : array-like
+        Données courantes
+    knots : array-like
+        Nœuds courants
+    spline_result : callable
+        Fonction spline résultante
+    degree : int
+        Degré de la spline (1-4)
+    constraints_mode : str
+        'uniform' ou 'region'
+    regions : list
+        Liste des régions pour les contraintes par région
+    
+    Methods
+    -------
+    load_csv() / load_excel()
+        Importe des données depuis un fichier
+    generate_test_data()
+        Génère des données de test
+    define_knots()
+        Définit les nœuds (auto ou manuel)
+    run_regression()
+        Lance la régression quantile
+    export_results()
+        Exporte les résultats (PNG, CSV, code Python)
+    adjust_axes()
+        Ajuste automatiquement les axes
+    apply_axes_limits()
+        Applique les limites d'axes définies par l'utilisateur
+    
+    Examples
+    --------
+    >>> from BsplineQuantRegpy.gui.Quant_reg_tk import main
+    >>> main()
+    
+    See Also
+    --------
+    BsplineQuantRegpy : Package principal
+    """
+
     def __init__(self, root):
         self.root = root
         self.root.title("Régression Quantile avec Splines Contraintes")
@@ -401,7 +508,7 @@ class QuantileSplineApp:
         menubar.add_cascade(label="Scripts", menu=scripts_menu)
 
 #On peut ajouter ici des scripts     
-         scripts_menu.add_command(label="Exemple comparatif ", command=self.comparison)
+        scripts_menu.add_command(label="Exemple comparatif ", command=self.comparison)
 #        scripts_menu.add_command(label="Exécuter example_basic.py", command=self.load_basic_example)
 #        scripts_menu.add_command(label="Exécuter comparison_example.py", command=self.run_comparison_example)
     
@@ -984,7 +1091,7 @@ class QuantileSplineApp:
         self.status_var.set(f"Test logistique lancé (degré {degree})")
         
     def comparison(self):
-        comparison_example.main()
+        run_comparison_example()
         
     def load_basic_example(self):
         # ============ IMPORTS DU PACKAGE ============
@@ -1276,6 +1383,24 @@ print("=" * 70)
 
 
 def main():
+    """
+    Point d'entrée de l'interface graphique.
+    
+    Crée la fenêtre Tkinter et lance l'application.
+    
+    Examples
+    --------
+    >>> from BsplineQuantRegpy.gui.Quant_reg_tk import main
+    >>> main()
+    
+    Ou depuis la ligne de commande :
+    $ python -m BsplineQuantRegpy.gui.Quant_reg_tk
+    
+    See Also
+    --------
+    run_gui : Fonction équivalente dans le package principal
+    """
+
     root = tk.Tk()
     app = QuantileSplineApp(root)
     root.mainloop()

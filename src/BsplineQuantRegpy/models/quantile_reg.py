@@ -51,7 +51,7 @@ def rhotau(u, tau):
 
 
 def SplineLinearQuant(xtab, ytab, knots, tau, monot=0, solver='CLARABEL', weight=None):
-        """
+    """
     Régression quantile avec B-splines de degré 1 (affines par morceaux)
     et contraintes de monotonie.
     
@@ -89,32 +89,7 @@ def SplineLinearQuant(xtab, ytab, knots, tau, monot=0, solver='CLARABEL', weight
     >>> result = SplineLinearQuant(x, y, knots, tau=0.5, monot=1)
     >>> y_pred = result(np.linspace(0, 1, 100))
     """
-    """
-    Régression quantile avec B-splines de degré 1 (affines par morceaux)
-    et contraintes de monotonie
-    
-    Parameters:
-    -----------
-    xtab, ytab : array-like
-        Données x et y
-    knots : int or list
-        Nombre de nœuds ou liste des nœuds
-    tau : float
-        Paramètre quantile (entre 0 et 1)
-    monot : int or list
-        Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)
-        Pour une spline linéaire, la monotonie s'applique à la dérivée (constante)
-    solver : str
-        Solveur CVXPY à utiliser
-    weight : array-like, optional
-        Poids des observations
-        
-    Returns:
-    --------
-    polyn : BSpline object
-        Fonction spline résultante (degré 1)
-    """
-    
+     
     if weight is None:
         weight = np.ones(len(xtab))
     

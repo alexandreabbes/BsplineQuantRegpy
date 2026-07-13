@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 """
 BsplineQuantRegpy - Quantile Regression with Constrained B-Splines
@@ -135,29 +133,54 @@ from .core.constraints import (
 
 # ============ EXEMPLES ============
 from .examples import (
-    run_logistic_example,
-    comparison_example)
+    run_logistic_example)
 
-#def run_comparison_example():
-#    from .example.comparison_example import main
-#    main()
+from    .examples.quick_start import main as quick_start
+from    .examples.quick_start2 import main as quick_start2
 
 
+from .examples.comparison_example import main as run_comparison_example
+
+from .examples.example_temperature import run_temperature_analysis 
 
 def run_basic_example():
     """Lance l'exemple basique."""
     from .examples.example_basic import test_all_degrees
     test_all_degrees()
 
-def run_temperature_analysis(degree=3, tau=0.5, solver='CLARABEL'):
-    """Lance l'analyse des données de température."""
-    from .examples.example_temperature import run_temperature_analysis
-    run_temperature_analysis(degree=degree, tau=tau, solver=solver)
+#def run_temperature_analysis(degree=3, tau=[0.1, 0.25, 0.5, 0.75, 0.9], solver=#'CLARABEL'):
+#    """Lance l'analyse des données de température."""
+#    from .examples.example_temperature import run_temperature_analysis
+#    run_temperature_analysis(degree=degree, tau=tau, solver=solver)
 
 
 # ============ GUI ============
 def run_gui():
-    """Lance l'interface graphique."""
+    """
+    Lance l'interface graphique Tkinter.
+    
+    Cette fonction est le point d'entrée principal pour l'interface
+    graphique. Elle ouvre une fenêtre interactive permettant de :
+    - Charger des données
+    - Configurer les splines et les contraintes
+    - Lancer des régressions
+    - Visualiser et exporter les résultats
+    
+    Returns
+    -------
+    None
+        La fonction lance l'interface et ne retourne rien.
+    
+    Examples
+    --------
+    >>> from BsplineQuantRegpy import run_gui
+    >>> run_gui()
+    
+    See Also
+    --------
+    BsplineQuantRegpy.gui.Quant_reg_tk : Module GUI complet
+    """
+
     from .gui.Quant_reg_tk import main
     main()
 
@@ -178,9 +201,11 @@ __all__ = [
     "apply_val_constraints",
     # Exemples
     "run_logistic_example",
-    "comparison_example",
+    "run_comparison_example",
     "run_basic_example",
     "run_temperature_analysis",
+    "quick_start",
+    "quick_start2",
     # GUI
     "run_gui",
 ]
