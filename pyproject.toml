@@ -1,3 +1,17 @@
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[project.urls]
+Homepage = "https://github.com/AlexandreAbbes/BsplineQuantRegpy"
+Repository = "https://github.com/AlexandreAbbes/BsplineQuantRegpy.git"
+Issues = "https://github.com/AlexandreAbbes/BsplineQuantRegpy/issues"
+Documentation = "https://bsplinequantregpy.readthedocs.io/"  # <-- Lien vers ReadTheDocs
+
+[project.optional-dependencies]
+docs = [
+    "sphinx>=7.0.0",
+    "sphinx-rtd-theme>=2.0.0",
+    "numpydoc>=1.6.0",
+    "myst-parser>=3.0.0",
+]
