@@ -1,0 +1,924 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BsplineQuantRegpy package &mdash; Documentation BsplineQuantRegpy 1.0.1</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/documentation_options.js?v=a1a25f23"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=e6b791cb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="BsplineQuantRegpy.core package" href="BsplineQuantRegpy.core.html" />
+    <link rel="prev" title="BsplineQuantRegpy" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            BsplineQuantRegpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">BsplineQuantRegpy</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">BsplineQuantRegpy package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.core.html">BsplineQuantRegpy.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.examples.html">BsplineQuantRegpy.examples package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html">BsplineQuantRegpy.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.models.html">BsplineQuantRegpy.models package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-BsplineQuantRegpy">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bsplinequantregpy-quantile-regression-with-constrained-b-splines">BsplineQuantRegpy - Quantile Regression with Constrained B-Splines</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BsplineQuantRegpy.SplineLinearQuant"><code class="docutils literal notranslate"><span class="pre">SplineLinearQuant()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BsplineQuantRegpy.SplineQuadraticQuant"><code class="docutils literal notranslate"><span class="pre">SplineQuadraticQuant()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BsplineQuantRegpy.SplineCubicQuant"><code class="docutils literal notranslate"><span class="pre">SplineCubicQuant()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BsplineQuantRegpy.SplineQuarticQuant"><code class="docutils literal notranslate"><span class="pre">SplineQuarticQuant()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BsplineQuantRegpy.quantile_spline"><code class="docutils literal notranslate"><span class="pre">quantile_spline()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BsplineQuantRegpy.build_bsplines_and_deriv"><code class="docutils literal notranslate"><span class="pre">build_bsplines_and_deriv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BsplineQuantRegpy.apply_karlin_constraints_cubic"><code class="docutils literal notranslate"><span class="pre">apply_karlin_constraints_cubic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BsplineQuantRegpy.apply_karlin_constraints_quadratic"><code class="docutils literal notranslate"><span class="pre">apply_karlin_constraints_quadratic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BsplineQuantRegpy.apply_val_constraints"><code class="docutils literal notranslate"><span class="pre">apply_val_constraints()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BsplineQuantRegpy.run_logistic_example"><code class="docutils literal notranslate"><span class="pre">run_logistic_example()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BsplineQuantRegpy.run_comparison_example"><code class="docutils literal notranslate"><span class="pre">run_comparison_example()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BsplineQuantRegpy.run_basic_example"><code class="docutils literal notranslate"><span class="pre">run_basic_example()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BsplineQuantRegpy.run_temperature_analysis"><code class="docutils literal notranslate"><span class="pre">run_temperature_analysis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BsplineQuantRegpy.quick_start"><code class="docutils literal notranslate"><span class="pre">quick_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BsplineQuantRegpy.quick_start2"><code class="docutils literal notranslate"><span class="pre">quick_start2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#BsplineQuantRegpy.run_gui"><code class="docutils literal notranslate"><span class="pre">run_gui()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BsplineQuantRegpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">BsplineQuantRegpy</a></li>
+      <li class="breadcrumb-item active">BsplineQuantRegpy package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/BsplineQuantRegpy.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="bsplinequantregpy-package">
+<h1>BsplineQuantRegpy package<a class="headerlink" href="#bsplinequantregpy-package" title="Lien vers cette rubrique">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Lien vers cette rubrique">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="BsplineQuantRegpy.core.html">BsplineQuantRegpy.core package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.core.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.core.html#module-BsplineQuantRegpy.core.bases">BsplineQuantRegpy.core.bases module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.core.html#BsplineQuantRegpy.core.bases.build_bsplines_and_deriv"><code class="docutils literal notranslate"><span class="pre">build_bsplines_and_deriv()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.core.html#module-BsplineQuantRegpy.core.constraints">BsplineQuantRegpy.core.constraints module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.core.html#BsplineQuantRegpy.core.constraints.apply_karlin_constraints_cubic"><code class="docutils literal notranslate"><span class="pre">apply_karlin_constraints_cubic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.core.html#BsplineQuantRegpy.core.constraints.apply_karlin_constraints_cubic_bak"><code class="docutils literal notranslate"><span class="pre">apply_karlin_constraints_cubic_bak()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.core.html#BsplineQuantRegpy.core.constraints.apply_karlin_constraints_quadratic"><code class="docutils literal notranslate"><span class="pre">apply_karlin_constraints_quadratic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.core.html#BsplineQuantRegpy.core.constraints.apply_val_constraints"><code class="docutils literal notranslate"><span class="pre">apply_val_constraints()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.core.html#module-BsplineQuantRegpy.core">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.core.html#BsplineQuantRegpy.core.build_bsplines_and_deriv"><code class="docutils literal notranslate"><span class="pre">build_bsplines_and_deriv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.core.html#BsplineQuantRegpy.core.apply_karlin_constraints_cubic"><code class="docutils literal notranslate"><span class="pre">apply_karlin_constraints_cubic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.core.html#BsplineQuantRegpy.core.apply_karlin_constraints_quadratic"><code class="docutils literal notranslate"><span class="pre">apply_karlin_constraints_quadratic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.core.html#BsplineQuantRegpy.core.apply_val_constraints"><code class="docutils literal notranslate"><span class="pre">apply_val_constraints()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="BsplineQuantRegpy.examples.html">BsplineQuantRegpy.examples package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.examples.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.examples.html#module-BsplineQuantRegpy.examples.comparison_example">BsplineQuantRegpy.examples.comparison_example module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.comparison_example.generate_comparison_data"><code class="docutils literal notranslate"><span class="pre">generate_comparison_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.comparison_example.run_comparison_analysis"><code class="docutils literal notranslate"><span class="pre">run_comparison_analysis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.comparison_example.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.examples.html#module-BsplineQuantRegpy.examples.example_basic">BsplineQuantRegpy.examples.example_basic module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.example_basic.generate_test_data"><code class="docutils literal notranslate"><span class="pre">generate_test_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.example_basic.generate_piecewise_data"><code class="docutils literal notranslate"><span class="pre">generate_piecewise_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.example_basic.generate_convex_data"><code class="docutils literal notranslate"><span class="pre">generate_convex_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.example_basic.generate_concave_data"><code class="docutils literal notranslate"><span class="pre">generate_concave_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.example_basic.test_all_degrees"><code class="docutils literal notranslate"><span class="pre">test_all_degrees()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.example_basic.test_with_different_quantiles"><code class="docutils literal notranslate"><span class="pre">test_with_different_quantiles()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.examples.html#module-BsplineQuantRegpy.examples.example_temperature">BsplineQuantRegpy.examples.example_temperature module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.example_temperature.load_temperature_data"><code class="docutils literal notranslate"><span class="pre">load_temperature_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.example_temperature.run_temperature_analysis"><code class="docutils literal notranslate"><span class="pre">run_temperature_analysis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.example_temperature.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.examples.html#module-BsplineQuantRegpy.examples.logistic_example">BsplineQuantRegpy.examples.logistic_example module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.logistic_example.run_logistic_example"><code class="docutils literal notranslate"><span class="pre">run_logistic_example()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.logistic_example.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.examples.html#module-BsplineQuantRegpy.examples.quick_start">BsplineQuantRegpy.examples.quick_start module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.quick_start.quick_start"><code class="docutils literal notranslate"><span class="pre">quick_start()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.quick_start.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.examples.html#module-BsplineQuantRegpy.examples.quick_start2">BsplineQuantRegpy.examples.quick_start2 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.quick_start2.quick_start2"><code class="docutils literal notranslate"><span class="pre">quick_start2()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.quick_start2.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.examples.html#module-BsplineQuantRegpy.examples">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.run_logistic_example"><code class="docutils literal notranslate"><span class="pre">run_logistic_example()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.run_basic_example"><code class="docutils literal notranslate"><span class="pre">run_basic_example()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.run_temperature_analysis"><code class="docutils literal notranslate"><span class="pre">run_temperature_analysis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.examples.html#BsplineQuantRegpy.examples.run_comparison_example"><code class="docutils literal notranslate"><span class="pre">run_comparison_example()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="BsplineQuantRegpy.gui.html">BsplineQuantRegpy.gui package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.gui.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.gui.html#module-BsplineQuantRegpy.gui.Quant_reg_tk">BsplineQuantRegpy.gui.Quant_reg_tk module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.gui.html#bsplinequantregpy-gui-interface-graphique-pour-la-regression-quantile">BsplineQuantRegpy.gui - Interface graphique pour la régression quantile</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#fonctionnalites">FONCTIONNALITÉS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#utilisation">UTILISATION</a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#exemples-integres">EXEMPLES INTÉGRÉS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#raccourcis-clavier">RACCOURCIS CLAVIER</a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#voir-aussi">VOIR AUSSI</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.root"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.root</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.knots"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.knots</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.spline_result"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.spline_result</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.degree"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.degree</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.constraints_mode"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.constraints_mode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.regions"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.regions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.load_csv"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.load_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.generate_test_data"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.generate_test_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.define_knots"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.define_knots()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.run_regression"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.run_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.export_results"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.export_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.adjust_axes"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.adjust_axes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.apply_axes_limits"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.apply_axes_limits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.__init__"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.quit_app"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.quit_app()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.setup_ui"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.setup_ui()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.setup_menu"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.setup_menu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.check_modules"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.check_modules()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.toggle_constraint_mode"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.toggle_constraint_mode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.update_degree"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.update_degree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.knot_mode_changed"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.knot_mode_changed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#id0"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.load_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.load_excel"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.load_excel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#id1"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.generate_test_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#id2"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.define_knots()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.validate_manual_knots"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.validate_manual_knots()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_knots"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.clear_knots()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.plot_knots"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.plot_knots()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.start_region_selection"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.start_region_selection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_regions"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.clear_regions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_results"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.clear_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_all"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.clear_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#id3"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.apply_axes_limits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#id4"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.adjust_axes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.plot_data"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.plot_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.plot_data_back"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.plot_data_back()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.plot_result"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.plot_result()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.apply_color"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.apply_color()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_last_curve"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.clear_last_curve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_all_curves"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.clear_all_curves()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.on_click"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.on_click()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.on_motion"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.on_motion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.on_release"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.on_release()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.show_region_dialog"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.show_region_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.build_constraints_arrays"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.build_constraints_arrays()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#id5"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.run_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#id6"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.export_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.export_data_csv"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.export_data_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.logistic"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.logistic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.comparison"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.comparison()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.load_basic_example"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.load_basic_example()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.load_temperature_example"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.load_temperature_example()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.temperature_analysis"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.temperature_analysis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.generate_custom_test"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.generate_custom_test()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.export_standalone_code"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.export_standalone_code()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.Quant_reg_tk.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.gui.html#module-BsplineQuantRegpy.gui">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.root"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.root</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.knots"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.knots</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.spline_result"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.spline_result</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.degree"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.degree</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.constraints_mode"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.constraints_mode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.regions"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.regions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.load_csv"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.load_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.generate_test_data"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.generate_test_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.define_knots"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.define_knots()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.run_regression"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.run_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.export_results"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.export_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.adjust_axes"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.adjust_axes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.apply_axes_limits"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.apply_axes_limits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.__init__"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.quit_app"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.quit_app()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.setup_ui"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.setup_ui()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.setup_menu"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.setup_menu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.check_modules"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.check_modules()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.toggle_constraint_mode"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.toggle_constraint_mode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.update_degree"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.update_degree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.knot_mode_changed"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.knot_mode_changed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#id7"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.load_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.load_excel"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.load_excel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#id8"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.generate_test_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#id9"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.define_knots()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.validate_manual_knots"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.validate_manual_knots()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.clear_knots"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.clear_knots()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.plot_knots"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.plot_knots()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.start_region_selection"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.start_region_selection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.clear_regions"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.clear_regions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.clear_results"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.clear_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.clear_all"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.clear_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#id10"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.apply_axes_limits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#id11"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.adjust_axes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.plot_data"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.plot_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.plot_data_back"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.plot_data_back()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.plot_result"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.plot_result()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.apply_color"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.apply_color()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.clear_last_curve"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.clear_last_curve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.clear_all_curves"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.clear_all_curves()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.on_click"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.on_click()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.on_motion"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.on_motion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.on_release"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.on_release()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.show_region_dialog"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.show_region_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.build_constraints_arrays"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.build_constraints_arrays()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#id12"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.run_regression()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#id13"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.export_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.export_data_csv"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.export_data_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.logistic"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.logistic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.comparison"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.comparison()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.load_basic_example"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.load_basic_example()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.load_temperature_example"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.load_temperature_example()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.temperature_analysis"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.temperature_analysis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.generate_custom_test"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.generate_custom_test()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html#BsplineQuantRegpy.gui.QuantileSplineApp.export_standalone_code"><code class="docutils literal notranslate"><span class="pre">QuantileSplineApp.export_standalone_code()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="BsplineQuantRegpy.models.html">BsplineQuantRegpy.models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.models.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.models.html#module-BsplineQuantRegpy.models.quantile_reg">BsplineQuantRegpy.models.quantile_reg module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.models.html#BsplineQuantRegpy.models.quantile_reg.rhotau"><code class="docutils literal notranslate"><span class="pre">rhotau()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.models.html#BsplineQuantRegpy.models.quantile_reg.SplineLinearQuant"><code class="docutils literal notranslate"><span class="pre">SplineLinearQuant()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.models.html#BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant"><code class="docutils literal notranslate"><span class="pre">SplineQuadraticQuant()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.models.html#BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant"><code class="docutils literal notranslate"><span class="pre">SplineCubicQuant()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.models.html#BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant"><code class="docutils literal notranslate"><span class="pre">SplineQuarticQuant()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.models.html#BsplineQuantRegpy.models.quantile_reg.quantile_spline"><code class="docutils literal notranslate"><span class="pre">quantile_spline()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="BsplineQuantRegpy.models.html#module-BsplineQuantRegpy.models">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.models.html#BsplineQuantRegpy.models.SplineLinearQuant"><code class="docutils literal notranslate"><span class="pre">SplineLinearQuant()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.models.html#BsplineQuantRegpy.models.SplineQuadraticQuant"><code class="docutils literal notranslate"><span class="pre">SplineQuadraticQuant()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.models.html#BsplineQuantRegpy.models.SplineCubicQuant"><code class="docutils literal notranslate"><span class="pre">SplineCubicQuant()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.models.html#BsplineQuantRegpy.models.SplineQuarticQuant"><code class="docutils literal notranslate"><span class="pre">SplineQuarticQuant()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.models.html#BsplineQuantRegpy.models.rhotau"><code class="docutils literal notranslate"><span class="pre">rhotau()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-BsplineQuantRegpy">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-BsplineQuantRegpy" title="Lien vers cette rubrique">¶</a></h2>
+<section id="bsplinequantregpy-quantile-regression-with-constrained-b-splines">
+<h3>BsplineQuantRegpy - Quantile Regression with Constrained B-Splines<a class="headerlink" href="#bsplinequantregpy-quantile-regression-with-constrained-b-splines" title="Lien vers cette rubrique">¶</a></h3>
+<p>Package pour la régression quantile avec splines sous contraintes
+de forme (monotonie, convexité, dérivée troisième).</p>
+<p>Auteur: Alexandre Abbes
+Version: 1.0.1
+Licence: GPLv3</p>
+<section id="description">
+<h4>DESCRIPTION<a class="headerlink" href="#description" title="Lien vers cette rubrique">¶</a></h4>
+<p>Ce package implémente la régression quantile avec des B-splines
+de degrés 1 à 4, sous contraintes de forme (monotonie, convexité,
+dérivée troisième). Les contraintes sont appliquées via la
+caractérisation de Karlin-Studden, formulée comme un problème
+de programmation conique du second ordre (SOCP).</p>
+<p>Ce package utilise les bibliothèques B-spline de SciPy pour la
+construction des splines et CVXPY pour l’optimisation SOCP.</p>
+</section>
+<section id="packages-relies">
+<h4>PACKAGES RELIÉS<a class="headerlink" href="#packages-relies" title="Lien vers cette rubrique">¶</a></h4>
+<p>Ce package est le l’équivalent Python de <strong>BsplineQuantReg</strong> (R),
+disponible sur le CRAN (<a class="reference external" href="https://cran.r-project.org/package=BsplineQuantReg">https://cran.r-project.org/package=BsplineQuantReg</a>).</p>
+<p>Le package R <strong>BsplineQuantReg</strong> propose des splines cubiques
+avec contraintes et est entièrement self-contained (calculs de
+splines et polynômes intégrés). Il est lui-même complémentaire
+de <strong>cobs</strong> (Constrained B-Splines) qui traite les splines
+linéaires et quadratiques.</p>
+<p>Contrairement à cobs (R) qui ne traite que des splines quadratiques,
+ce package (Python)  étend la méthode aux splines cubiques et quartiques avec des contraintes exactes sur tout l’intervalle (pas seulement aux nœuds).</p>
+<p>Packages R associés :
+- <strong>BsplineQuantReg</strong> (R) : Splines cubiques contraintes, self-contained</p>
+<blockquote>
+<div><p><a class="reference external" href="https://cran.r-project.org/package=BsplineQuantReg">https://cran.r-project.org/package=BsplineQuantReg</a></p>
+</div></blockquote>
+<ul class="simple">
+<li><p><strong>cobs</strong> (R) : Constrained B-Splines Smoothing (linéaires et quadratiques)
+<a class="reference external" href="https://cran.r-project.org/package=cobs">https://cran.r-project.org/package=cobs</a></p></li>
+<li><p><strong>quantreg</strong> (R) : Quantile Regression (splines linéaires uniquement)
+<a class="reference external" href="https://cran.r-project.org/package=quantreg">https://cran.r-project.org/package=quantreg</a></p></li>
+</ul>
+</section>
+<section id="fonctionnalites">
+<h4>FONCTIONNALITÉS<a class="headerlink" href="#fonctionnalites" title="Lien vers cette rubrique">¶</a></h4>
+<ul class="simple">
+<li><p>Régression quantile avec splines de degré 1 à 4</p></li>
+<li><p>Contraintes de monotonie (croissant/décroissant)</p></li>
+<li><p>Contraintes de convexité (convexe/concave)</p></li>
+<li><p>Contraintes sur la dérivée troisième</p></li>
+<li><p>Contraintes uniformes ou par région</p></li>
+<li><p>Interface graphique (Tkinter)</p></li>
+<li><p>Multiples solveurs supportés (CLARABEL, ECOS, SCS, MOSEK)</p></li>
+</ul>
+</section>
+<section id="modules">
+<h4>MODULES<a class="headerlink" href="#modules" title="Lien vers cette rubrique">¶</a></h4>
+<p>core/           - Construction des B-splines et contraintes de Karlin
+models/         - Fonctions de régression quantile (degrés 1 à 4)
+gui/            - Interface graphique Tkinter
+examples/       - Exemples d’utilisation</p>
+</section>
+<section id="fonctions-principales">
+<h4>FONCTIONS PRINCIPALES<a class="headerlink" href="#fonctions-principales" title="Lien vers cette rubrique">¶</a></h4>
+<p>SplineLinearQuant      - Régression avec splines linéaires (degré 1)
+SplineQuadraticQuant   - Régression avec splines quadratiques (degré 2)
+SplineCubicQuant       - Régression avec splines cubiques (degré 3)
+SplineQuarticQuant     - Régression avec splines quartiques (degré 4)
+quantile_spline        - Interface unifiée pour tous les degrés
+run_gui                - Lance l’interface graphique</p>
+</section>
+<section id="exemples">
+<h4>EXEMPLES<a class="headerlink" href="#exemples" title="Lien vers cette rubrique">¶</a></h4>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy</span> <span class="kn">import</span> <span class="n">SplineCubicQuant</span><span class="p">,</span> <span class="n">run_gui</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Générer des données</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">10</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.05</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Régression avec contrainte croissante</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">SplineCubicQuant</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Évaluer la spline</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x_eval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_eval</span> <span class="o">=</span> <span class="n">result</span><span class="p">(</span><span class="n">x_eval</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Lancer l&#39;interface graphique</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">run_gui</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="references-bibliographiques">
+<h4>RÉFÉRENCES BIBLIOGRAPHIQUES<a class="headerlink" href="#references-bibliographiques" title="Lien vers cette rubrique">¶</a></h4>
+<p>Abbes, A. (2025). Quantile regression with cubic polynomial splines
+under shape constraints with applications.
+doi:10.5281/zenodo.17427913</p>
+<p>He, X., &amp; Shi, P. (1998). Monotone B-spline smoothing.
+Journal of the American Statistical Association, 93(442), 643-650.</p>
+<p>Karlin, S., &amp; Studden, W.J. (1966). Tchebycheff Systems:
+With Applications in Analysis and Statistics. Interscience Publishers.</p>
+<p>Papp, D., &amp; Alizadeh, F. (2014). Shape-Constrained Estimation
+Using Nonnegative Splines. Journal of Computational and Graphical
+Statistics, 23(1), 211-231.</p>
+</section>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.SplineLinearQuant">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.</span></span><span class="sig-name descname"><span class="pre">SplineLinearQuant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xtab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/models/quantile_reg.html#SplineLinearQuant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.SplineLinearQuant" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Régression quantile avec B-splines de degré 1 (affines par morceaux)
+et contraintes de monotonie.</p>
+<p>Les splines linéaires sont des fonctions continues et linéaires sur chaque
+intervalle entre les nœuds. La monotonie est contrôlée par le signe de
+la dérivée (constante par morceaux).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xtab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>ytab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>knots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(dans Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(dans Python v3.14)"><em>list</em></a>) – Nombre de nœuds ou liste des nœuds</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(dans Python v3.14)"><em>float</em></a>) – Paramètre quantile (entre 0 et 1)</p></li>
+<li><p><strong>monot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(dans Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(dans Python v3.14)"><em>list</em></a><em>, </em><em>default=0</em>) – Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)</p></li>
+<li><p><strong>solver</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(dans Python v3.14)"><em>str</em></a><em>, </em><em>default='CLARABEL'</em>) – Solveur CVXPY à utiliser</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Poids des observations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>polyn</strong> – Fonction spline résultante (degré 1)</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>BSpline object</p>
+</dd>
+</dl>
+<p class="rubric">Exemples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy</span> <span class="kn">import</span> <span class="n">SplineLinearQuant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">SplineLinearQuant</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">result</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.SplineQuadraticQuant">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.</span></span><span class="sig-name descname"><span class="pre">SplineQuadraticQuant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xtab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/models/quantile_reg.html#SplineQuadraticQuant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.SplineQuadraticQuant" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Régression quantile avec B-splines de degré 2 et contraintes de forme.</p>
+<p>Les splines quadratiques sont des fonctions continues, dérivables une fois,
+et quadratiques sur chaque intervalle entre les nœuds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xtab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>ytab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>knots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(dans Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(dans Python v3.14)"><em>list</em></a>) – Nombre de nœuds ou liste des nœuds</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(dans Python v3.14)"><em>float</em></a>) – Paramètre quantile (entre 0 et 1)</p></li>
+<li><p><strong>monot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(dans Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(dans Python v3.14)"><em>list</em></a><em>, </em><em>default=0</em>) – Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)</p></li>
+<li><p><strong>cv</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(dans Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(dans Python v3.14)"><em>list</em></a><em>, </em><em>default=0</em>) – Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)</p></li>
+<li><p><strong>solver</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(dans Python v3.14)"><em>str</em></a><em>, </em><em>default='CLARABEL'</em>) – Solveur CVXPY à utiliser</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Poids des observations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>polyn</strong> – Fonction spline résultante (degré 2)</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>BSpline object</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>-Pour une spline quadratique, la monotonie sur chaque intervalle est
+implémentée par des contraintes suffisantes et nécessaires aux noeuds
+de la dérivée affine par morceaux.
+-La convexité est contrôlée par le signe d’un point quelconque de
+chaque intervalle (la dérivée seconde est constante par morceaux).
+L’ensemble des contraintes est un problème linéaire.</p>
+<p class="rubric">Exemples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy</span> <span class="kn">import</span> <span class="n">SplineQuadraticQuant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">SplineQuadraticQuant</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.SplineCubicQuant">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.</span></span><span class="sig-name descname"><span class="pre">SplineCubicQuant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xtab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">der3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/models/quantile_reg.html#SplineCubicQuant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.SplineCubicQuant" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Régression quantile avec B-splines cubiques et contraintes de forme.
+Les splines cubiques sont des fonctions continues, deux fois dérivables,
+et cubiques sur chaque intervalle entre les nœuds.
+:param xtab: Données x et y
+:type xtab: array-like
+:param ytab: Données x et y
+:type ytab: array-like
+:param knots: Nombre de nœuds ou liste des nœuds
+:type knots: int or list
+:param tau: Paramètre quantile
+:type tau: float
+:param monot: Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)
+:type monot: int or list, default=0
+:param cv: Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)
+:type cv: int or list, default=0
+:param der3: Contrainte sur la dérivée troisième (+1 positive, -1 négative, 0 aucune)
+:type der3: int or list, default=0
+:param solver: Solveur CVXPY à utiliser
+:type solver: str, default=”CLARABEL”
+:param weight: Poids des observations
+:type weight: array-like, optional</p>
+<dl class="field-list simple">
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>polyn</strong> – Fonction spline résultante (degré 3)</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p>BSpline object</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Les contraintes de monotonie sont implémentées via la caractérisation de Karlin-Studden (1966)</p></li>
+</ul>
+<p>du signe des polynômes positifs de degré 2.
+- Les contraintes de convexité sont implémentéee par le signe de la dérivée seconde affine
+par morceaux aux noeud.
+- Les contraintes de dérivée troisième (constante par morceaux) sont implémentées par
+le signe d’un point quelconque de chque intervalle.</p>
+<section id="id1">
+<h3>Exemples<a class="headerlink" href="#id1" title="Lien vers cette rubrique">¶</a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy</span> <span class="kn">import</span> <span class="n">SplineCubicQuant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">SplineCubicQuant</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.SplineQuarticQuant">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.</span></span><span class="sig-name descname"><span class="pre">SplineQuarticQuant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xtab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">der3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/models/quantile_reg.html#SplineQuarticQuant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.SplineQuarticQuant" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Régression quantile avec B-splines de degré 4 et contraintes de forme.</p>
+<p>Les splines quartiques sont des fonctions continues, trois fois dérivables,
+et quartiques sur chaque intervalle entre les nœuds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xtab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>ytab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>knots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(dans Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(dans Python v3.14)"><em>list</em></a>) – Nombre de nœuds ou liste des nœuds</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(dans Python v3.14)"><em>float</em></a>) – Paramètre quantile</p></li>
+<li><p><strong>monot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(dans Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(dans Python v3.14)"><em>list</em></a>) – Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)</p></li>
+<li><p><strong>cv</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(dans Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(dans Python v3.14)"><em>list</em></a>) – Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)</p></li>
+<li><p><strong>der3</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(dans Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(dans Python v3.14)"><em>list</em></a><em>, </em><em>optional</em>) – Contrainte sur la dérivée troisième (+1 positive, -1 négative, 0 aucune)</p></li>
+<li><p><strong>solver</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(dans Python v3.14)"><em>str</em></a><em>, </em><em>default='CLARABEL'</em>) – Solveur CVXPY à utiliser</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Poids des observations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>polyn</strong> – Fonction spline résultante (degré 4)</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>BSpline object</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>-Les contraintes monotones (resp. convexes) sont implémentées
+via la caractérisation de Karlin-Studden (1966) pour les polynômes
+positifs de degré 3 (resp degré 2). Le problème d’optimisation est formulé comme un problème
+de programmation conique du second ordre (SOCP) et résolu avec CVXPY.</p>
+<ul class="simple">
+<li><p>La dérivée troisième étant affine par morceaux, les contraintes sont</p></li>
+</ul>
+<p>implémentées aux noeuds (problèmes linéaire).</p>
+<p class="rubric">Exemples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy</span> <span class="kn">import</span> <span class="n">SplineQuarticQuant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">SplineQuarticQuant</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.quantile_spline">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.</span></span><span class="sig-name descname"><span class="pre">quantile_spline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xtab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">der3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/models/quantile_reg.html#quantile_spline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.quantile_spline" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Cette fonction permet d’appeler la régression quantile pour tous les degrés
+de splines (1 à 4) avec une interface unique. Elle redirige vers la fonction
+appropriée selon le degré choisi.</p>
+<section id="parametres">
+<h3>Paramètres<a class="headerlink" href="#parametres" title="Lien vers cette rubrique">¶</a></h3>
+<dl class="simple">
+<dt>xtab<span class="classifier">array-like, shape (n,)</span></dt><dd><p>Variables indépendantes (abscisses). Doivent être dans l’intervalle [0, 1].</p>
+</dd>
+<dt>ytab<span class="classifier">array-like, shape (n,)</span></dt><dd><p>Variables dépendantes (ordonnées).</p>
+</dd>
+<dt>knots<span class="classifier">array-like</span></dt><dd><p>Positions des nœuds pour la base B-spline.
+Si un entier est fourni, il est interprété comme le nombre de nœuds.</p>
+</dd>
+<dt>tau<span class="classifier">float, 0 &lt; tau &lt; 1</span></dt><dd><p>Quantile à estimer. Par exemple:
+- tau = 0.5 : médiane
+- tau = 0.1 : quantile inférieur
+- tau = 0.9 : quantile supérieur</p>
+</dd>
+<dt>degree<span class="classifier">int, default=3</span></dt><dd><p>Degré de la spline :
+- 1 : linéaire (affine par morceaux)
+- 2 : quadratique
+- 3 : cubique
+- 4 : quartique</p>
+</dd>
+<dt>monot<span class="classifier">int ou list, default=0</span></dt><dd><p>Contrainte de monotonie :
+- 1 : fonction croissante
+- -1 : fonction décroissante
+- 0 : aucune contrainte
+Si une liste est fournie, chaque élément correspond à un intervalle.</p>
+</dd>
+<dt>cv<span class="classifier">int ou list, default=0</span></dt><dd><p>Contrainte de convexité :
+- 1 : fonction convexe
+- -1 : fonction concave
+- 0 : aucune contrainte
+Si une liste est fournie, chaque élément correspond à un intervalle.</p>
+</dd>
+<dt>der3<span class="classifier">int ou list, default=0</span></dt><dd><p>Contrainte sur la dérivée troisième :
+- 1 : dérivée troisième positive
+- -1 : dérivée troisième négative
+- 0 : aucune contrainte
+(Uniquement pour les splines de degré 3 et 4)</p>
+</dd>
+<dt>solver<span class="classifier">str, default=”CLARABEL”</span></dt><dd><p>Solveur CVXPY à utiliser. Options disponibles :
+- “CLARABEL” (recommandé, gratuit)
+- “ECOS”
+- “SCS”
+- “GUROBI” (payant, nécessite une licence)
+- “MOSEK” (payant, nécessite une licence)
+- “CVXOPT”</p>
+</dd>
+<dt>weight<span class="classifier">array-like, optional</span></dt><dd><p>Poids des observations pour la régression pondérée.
+Si None, tous les poids sont égaux à 1.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">raises ValueError<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Si le degré n’est pas compris entre 1 et 4.</p>
+</dd>
+<dt class="field-even">returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Fonction spline résultante. Elle peut être évaluée en tout point x :
+&gt;&gt;&gt; y_eval = spline_result(x_eval)</p>
+</dd>
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>callable</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h3>Exemples<a class="headerlink" href="#id2" title="Lien vers cette rubrique">¶</a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy</span> <span class="kn">import</span> <span class="n">quantile_spline</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Générer des données</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">10</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.05</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Régression avec spline cubique et contrainte croissante</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">quantile_spline</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Régression avec spline quadratique et contrainte convexe</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">quantile_spline</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Régression avec spline quartique et toutes les contraintes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">quantile_spline</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="gp">... </span>                         <span class="n">monot</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">der3</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Évaluer la spline</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x_eval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_eval</span> <span class="o">=</span> <span class="n">result</span><span class="p">(</span><span class="n">x_eval</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>Les contraintes de monotonie pour les degrés 3 et 4 sont implémentées
+via la caractérisation de Karlin-Studden (1966) pour les polynômes
+positifs de degrés 2 et 3, ce sont des contraintes quadratiques.
+Les autres contraintes sont lineaires.
+Le problème d’optimisation est formulé comme un problème
+de programmation conique du second ordre (SOCP) et résolu avec CVXPY.</p>
+</section>
+<section id="references">
+<h3>Références<a class="headerlink" href="#references" title="Lien vers cette rubrique">¶</a></h3>
+<p>Karlin, S., &amp; Studden, W.J. (1966). Tchebycheff Systems:
+With Applications in Analysis and Statistics. Interscience Publishers.</p>
+<p>He, X., &amp; Shi, P. (1998). Monotone B-spline smoothing.
+Journal of the American Statistical Association, 93(442), 643-650.</p>
+<p>Abbes, A. (2025). Quantile regression with cubic polynomial splines
+under shape constraints with applications.
+doi:10.5281/zenodo.17427913</p>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<p><a class="reference internal" href="../bsplinequantregpy.html#BsplineQuantRegpy.SplineLinearQuant" title="BsplineQuantRegpy.SplineLinearQuant"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplineLinearQuant</span></code></a>, <a class="reference internal" href="../bsplinequantregpy.html#BsplineQuantRegpy.SplineQuadraticQuant" title="BsplineQuantRegpy.SplineQuadraticQuant"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplineQuadraticQuant</span></code></a>, <a class="reference internal" href="../bsplinequantregpy.html#BsplineQuantRegpy.SplineCubicQuant" title="BsplineQuantRegpy.SplineCubicQuant"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplineCubicQuant</span></code></a>, <a class="reference internal" href="../bsplinequantregpy.html#BsplineQuantRegpy.SplineQuarticQuant" title="BsplineQuantRegpy.SplineQuarticQuant"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplineQuarticQuant</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">statsmodels.regression.quantile_regression.QuantReg</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">BsplineQuantReg</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">cobs</span></code></p>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.build_bsplines_and_deriv">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.</span></span><span class="sig-name descname"><span class="pre">build_bsplines_and_deriv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">knots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/core/bases.html#build_bsplines_and_deriv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.build_bsplines_and_deriv" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Returns the derivatives of the B-spline according to the degree.</p>
+<p>For linear and constant derivatives returns a vector of values at knots.
+When derivatives are splines of degree 2 or 3, returns a matrix
+of normalised coefficients on the local power basis, i.e. the PP-form
+of the derivative of the spline prepared for applying Karlin-Studden constraints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>knots</strong> (<em>array-like</em>) – Knots positions</p></li>
+<li><p><strong>degree</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(dans Python v3.14)"><em>int</em></a>) – Degree of the spline (1, 2, 3, or 4)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>List_Bsplines</strong> (<em>list</em>) – List of B-spline basis functions</p></li>
+<li><p><strong>Der1_array</strong> (<em>ndarray</em>) – First derivative coefficients or values</p></li>
+<li><p><strong>Der2_array</strong> (<em>ndarray, optional</em>) – Second derivative coefficients or values</p></li>
+<li><p><strong>Der3_array</strong> (<em>ndarray, optional</em>) – Third derivative coefficients or values</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.apply_karlin_constraints_cubic">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.</span></span><span class="sig-name descname"><span class="pre">apply_karlin_constraints_cubic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coeffs_cubic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sign</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/core/constraints.html#apply_karlin_constraints_cubic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.apply_karlin_constraints_cubic" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Applique les contraintes de Karlin pour un polynôme cubique (dérivée première)
+selon le théorème 3 de l’article</p>
+<p>sign &gt; 0 : p(u) &gt;= 0 sur [0,1]
+sign &lt; 0 : p(u) &lt;= 0 sur [0,1]  (soit -p(u) &gt;= 0)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.apply_karlin_constraints_quadratic">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.</span></span><span class="sig-name descname"><span class="pre">apply_karlin_constraints_quadratic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coeffs_quad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const_sign</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/core/constraints.html#apply_karlin_constraints_quadratic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.apply_karlin_constraints_quadratic" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Applique les contraintes de Karlin pour un polynôme quadratique (dérivée seconde)
+selon la Proposition 5 du document PDF</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.apply_val_constraints">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.</span></span><span class="sig-name descname"><span class="pre">apply_val_constraints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">const</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sign</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/core/constraints.html#apply_val_constraints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.apply_val_constraints" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Applique les contraintes pour un polynôme linéaire (dérivée troisième)
+p(u) = a*u + b &gt;= 0 (ou &lt;= 0) pour u ∈ [0,1]</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.run_logistic_example">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.</span></span><span class="sig-name descname"><span class="pre">run_logistic_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show_plots</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/logistic_example.html#run_logistic_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.run_logistic_example" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Exécute le test avec la fonction logistique.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>show_plots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(dans Python v3.14)"><em>bool</em></a>) – Afficher les graphiques</p></li>
+<li><p><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(dans Python v3.14)"><em>bool</em></a>) – Retourner les données générées</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Données si return_data=True</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(dans Python v3.14)">dict</a> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.run_comparison_example">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.</span></span><span class="sig-name descname"><span class="pre">run_comparison_example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BsplineQuantRegpy.run_comparison_example" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Fonction principale pour exécution indépendante.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.run_basic_example">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.</span></span><span class="sig-name descname"><span class="pre">run_basic_example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy.html#run_basic_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.run_basic_example" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Lance l’exemple basique.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.run_temperature_analysis">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.</span></span><span class="sig-name descname"><span class="pre">run_temperature_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">degree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.1,</span> <span class="pre">0.25,</span> <span class="pre">0.5,</span> <span class="pre">0.75,</span> <span class="pre">0.9]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/example_temperature.html#run_temperature_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.run_temperature_analysis" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Lance une analyse complète des données de température avec différentes contraintes
+pour plusieurs quantiles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>degree</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(dans Python v3.14)"><em>int</em></a>) – Degré de la spline (1, 2, 3, 4)</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(dans Python v3.14)"><em>list</em></a><em> of </em><em>floats</em>) – Les quantiles à évaluer.</p></li>
+<li><p><strong>solver</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(dans Python v3.14)"><em>str</em></a>) – Solveur à utiliser</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.quick_start">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.</span></span><span class="sig-name descname"><span class="pre">quick_start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/quick_start.html#quick_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.quick_start" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.quick_start2">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.</span></span><span class="sig-name descname"><span class="pre">quick_start2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/quick_start2.html#quick_start2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.quick_start2" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.run_gui">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.</span></span><span class="sig-name descname"><span class="pre">run_gui</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy.html#run_gui"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.run_gui" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Lance l’interface graphique Tkinter.</p>
+<p>Cette fonction est le point d’entrée principal pour l’interface
+graphique. Elle ouvre une fenêtre interactive permettant de :
+- Charger des données
+- Configurer les splines et les contraintes
+- Lancer des régressions
+- Visualiser et exporter les résultats</p>
+<dl class="field-list simple">
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>La fonction lance l’interface et ne retourne rien.</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Exemples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy</span> <span class="kn">import</span> <span class="n">run_gui</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">run_gui</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">Voir aussi</p>
+<dl class="simple">
+<dt><a class="reference internal" href="BsplineQuantRegpy.gui.html#module-BsplineQuantRegpy.gui.Quant_reg_tk" title="BsplineQuantRegpy.gui.Quant_reg_tk"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BsplineQuantRegpy.gui.Quant_reg_tk</span></code></a></dt><dd><p>Module GUI complet</p>
+</dd>
+</dl>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="BsplineQuantRegpy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="BsplineQuantRegpy.core.html" class="btn btn-neutral float-right" title="BsplineQuantRegpy.core package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Alexandre Abbes.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

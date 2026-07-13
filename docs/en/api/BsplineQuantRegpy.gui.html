@@ -1,0 +1,965 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BsplineQuantRegpy.gui package &mdash; BsplineQuantRegpy 1.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/documentation_options.js?v=292eb321"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="BsplineQuantRegpy.models package" href="BsplineQuantRegpy.models.html" />
+    <link rel="prev" title="BsplineQuantRegpy.examples package" href="BsplineQuantRegpy.examples.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            BsplineQuantRegpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">BsplineQuantRegpy</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="BsplineQuantRegpy.html">BsplineQuantRegpy package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="BsplineQuantRegpy.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.core.html">BsplineQuantRegpy.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.examples.html">BsplineQuantRegpy.examples package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">BsplineQuantRegpy.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.models.html">BsplineQuantRegpy.models package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.html#module-BsplineQuantRegpy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BsplineQuantRegpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">BsplineQuantRegpy</a></li>
+          <li class="breadcrumb-item"><a href="BsplineQuantRegpy.html">BsplineQuantRegpy package</a></li>
+      <li class="breadcrumb-item active">BsplineQuantRegpy.gui package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/BsplineQuantRegpy.gui.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="bsplinequantregpy-gui-package">
+<h1>BsplineQuantRegpy.gui package<a class="headerlink" href="#bsplinequantregpy-gui-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-BsplineQuantRegpy.gui.Quant_reg_tk">
+<span id="bsplinequantregpy-gui-quant-reg-tk-module"></span><h2>BsplineQuantRegpy.gui.Quant_reg_tk module<a class="headerlink" href="#module-BsplineQuantRegpy.gui.Quant_reg_tk" title="Link to this heading">¶</a></h2>
+<section id="bsplinequantregpy-gui-interface-graphique-pour-la-regression-quantile">
+<h3>BsplineQuantRegpy.gui - Interface graphique pour la régression quantile<a class="headerlink" href="#bsplinequantregpy-gui-interface-graphique-pour-la-regression-quantile" title="Link to this heading">¶</a></h3>
+<p>Interface graphique Tkinter pour la régression quantile avec splines
+contraintes de forme (monotonie, convexité, dérivée troisième).</p>
+<section id="fonctionnalites">
+<h4>FONCTIONNALITÉS<a class="headerlink" href="#fonctionnalites" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Import de données (CSV, Excel)</p></li>
+<li><p>Génération de données de test personnalisées</p></li>
+<li><p>Configuration des splines (degré 1 à 4)</p></li>
+<li><p>Placement automatique ou manuel des nœuds</p></li>
+<li><p>Contraintes uniformes ou par région</p></li>
+<li><p>Sélection du solveur CVXPY</p></li>
+<li><p>Visualisation interactive avec matplotlib</p></li>
+<li><p>Gestion des courbes (couleur, effacement)</p></li>
+<li><p>Export des résultats (code Python, CSV, PNG)</p></li>
+<li><p>Exemples intégrés (température, logistique, comparaison)</p></li>
+</ul>
+</section>
+<section id="utilisation">
+<h4>UTILISATION<a class="headerlink" href="#utilisation" title="Link to this heading">¶</a></h4>
+<dl>
+<dt>Depuis la ligne de commande :</dt><dd><p>$ python -m BsplineQuantRegpy.gui.Quant_reg_tk</p>
+</dd>
+<dt>Depuis Python :</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy</span> <span class="kn">import</span> <span class="n">run_gui</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">run_gui</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd>
+<dt>OU</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy.gui.Quant_reg_tk</span> <span class="kn">import</span> <span class="n">main</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</section>
+<section id="exemples-integres">
+<h4>EXEMPLES INTÉGRÉS<a class="headerlink" href="#exemples-integres" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Données de test personnalisables</p></li>
+<li><p>Données température globale (1880-1992)</p></li>
+<li><p>Fonction logistique</p></li>
+<li><p>Comparaison des degrés</p></li>
+</ul>
+</section>
+<section id="raccourcis-clavier">
+<h4>RACCOURCIS CLAVIER<a class="headerlink" href="#raccourcis-clavier" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Aucun pour l’instant (interface à la souris)</p></li>
+</ul>
+</section>
+<section id="voir-aussi">
+<h4>VOIR AUSSI<a class="headerlink" href="#voir-aussi" title="Link to this heading">¶</a></h4>
+<p>BsplineQuantRegpy : Package principal
+BsplineQuantRegpy.models : Fonctions de régression
+BsplineQuantRegpy.core : Construction des B-splines
+BsplineQuantRegpy.examples : Exemples d’utilisation</p>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.gui.Quant_reg_tk.</span></span><span class="sig-name descname"><span class="pre">QuantileSplineApp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Application principale de régression quantile avec splines contraintes.</p>
+<p>Cette classe gère l’interface graphique Tkinter complète. Elle organise
+les trois onglets principaux :</p>
+<ol class="arabic simple">
+<li><p>Données &amp; Spline : Import, paramètres spline, ajustement des axes</p></li>
+<li><p>Contraintes : Uniformes ou par région</p></li>
+<li><p>Exécution &amp; Export : Solveur, lancement, gestion des courbes, export</p></li>
+</ol>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.root">
+<span class="sig-name descname"><span class="pre">root</span></span><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.root" title="Link to this definition">¶</a></dt>
+<dd><p>Fenêtre principale Tkinter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tk.Tk</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">xtab,</span> <span class="pre">ytab</span></span></dt>
+<dd><p>Données courantes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array-like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.knots">
+<span class="sig-name descname"><span class="pre">knots</span></span><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.knots" title="Link to this definition">¶</a></dt>
+<dd><p>Nœuds courants</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array-like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.spline_result">
+<span class="sig-name descname"><span class="pre">spline_result</span></span><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.spline_result" title="Link to this definition">¶</a></dt>
+<dd><p>Fonction spline résultante</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.degree">
+<span class="sig-name descname"><span class="pre">degree</span></span><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.degree" title="Link to this definition">¶</a></dt>
+<dd><p>Degré de la spline (1-4)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.constraints_mode">
+<span class="sig-name descname"><span class="pre">constraints_mode</span></span><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.constraints_mode" title="Link to this definition">¶</a></dt>
+<dd><p>‘uniform’ ou ‘region’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.regions">
+<span class="sig-name descname"><span class="pre">regions</span></span><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.regions" title="Link to this definition">¶</a></dt>
+<dd><p>Liste des régions pour les contraintes par région</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.load_csv">
+<span class="sig-name descname"><span class="pre">load_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">)</span> <span class="pre">/</span> <span class="pre">load_excel(</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.load_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.load_csv" title="Link to this definition">¶</a></dt>
+<dd><p>Importe des données depuis un fichier</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.generate_test_data">
+<span class="sig-name descname"><span class="pre">generate_test_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.generate_test_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.generate_test_data" title="Link to this definition">¶</a></dt>
+<dd><p>Génère des données de test</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.define_knots">
+<span class="sig-name descname"><span class="pre">define_knots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.define_knots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.define_knots" title="Link to this definition">¶</a></dt>
+<dd><p>Définit les nœuds (auto ou manuel)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.run_regression">
+<span class="sig-name descname"><span class="pre">run_regression</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.run_regression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.run_regression" title="Link to this definition">¶</a></dt>
+<dd><p>Lance la régression quantile</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.export_results">
+<span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.export_results" title="Link to this definition">¶</a></dt>
+<dd><p>Exporte les résultats (PNG, CSV, code Python)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.adjust_axes">
+<span class="sig-name descname"><span class="pre">adjust_axes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.adjust_axes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.adjust_axes" title="Link to this definition">¶</a></dt>
+<dd><p>Ajuste automatiquement les axes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.apply_axes_limits">
+<span class="sig-name descname"><span class="pre">apply_axes_limits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.apply_axes_limits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.apply_axes_limits" title="Link to this definition">¶</a></dt>
+<dd><p>Applique les limites d’axes définies par l’utilisateur</p>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy.gui.Quant_reg_tk</span> <span class="kn">import</span> <span class="n">main</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="../bsplinequantregpy.html#module-BsplineQuantRegpy" title="BsplineQuantRegpy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BsplineQuantRegpy</span></code></a></dt><dd><p>Package principal</p>
+</dd>
+</dl>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.quit_app">
+<span class="sig-name descname"><span class="pre">quit_app</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.quit_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.quit_app" title="Link to this definition">¶</a></dt>
+<dd><p>Quitte l’application proprement.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.setup_ui">
+<span class="sig-name descname"><span class="pre">setup_ui</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.setup_ui"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.setup_ui" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration de l’interface</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.setup_menu">
+<span class="sig-name descname"><span class="pre">setup_menu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.setup_menu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.setup_menu" title="Link to this definition">¶</a></dt>
+<dd><p>Configure le menu de l’application.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.check_modules">
+<span class="sig-name descname"><span class="pre">check_modules</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.check_modules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.check_modules" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.toggle_constraint_mode">
+<span class="sig-name descname"><span class="pre">toggle_constraint_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.toggle_constraint_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.toggle_constraint_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.update_degree">
+<span class="sig-name descname"><span class="pre">update_degree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.update_degree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.update_degree" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.knot_mode_changed">
+<span class="sig-name descname"><span class="pre">knot_mode_changed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.knot_mode_changed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.knot_mode_changed" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">load_csv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.load_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.load_excel">
+<span class="sig-name descname"><span class="pre">load_excel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.load_excel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.load_excel" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">generate_test_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.generate_test_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">define_knots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.define_knots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.validate_manual_knots">
+<span class="sig-name descname"><span class="pre">validate_manual_knots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.validate_manual_knots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.validate_manual_knots" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_knots">
+<span class="sig-name descname"><span class="pre">clear_knots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.clear_knots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_knots" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.plot_knots">
+<span class="sig-name descname"><span class="pre">plot_knots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.plot_knots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.plot_knots" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.start_region_selection">
+<span class="sig-name descname"><span class="pre">start_region_selection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.start_region_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.start_region_selection" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_regions">
+<span class="sig-name descname"><span class="pre">clear_regions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.clear_regions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_regions" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_results">
+<span class="sig-name descname"><span class="pre">clear_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.clear_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_results" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_all">
+<span class="sig-name descname"><span class="pre">clear_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.clear_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_all" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">apply_axes_limits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.apply_axes_limits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Link to this definition">¶</a></dt>
+<dd><p>Applique les limites d’axes définies par l’utilisateur.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">adjust_axes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.adjust_axes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Link to this definition">¶</a></dt>
+<dd><p>Ajuste automatiquement les axes en fonction des données.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.plot_data">
+<span class="sig-name descname"><span class="pre">plot_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.plot_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.plot_data" title="Link to this definition">¶</a></dt>
+<dd><p>Affiche les données avec les bons axes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.plot_data_back">
+<span class="sig-name descname"><span class="pre">plot_data_back</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.plot_data_back"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.plot_data_back" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.plot_result">
+<span class="sig-name descname"><span class="pre">plot_result</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.plot_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.plot_result" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.apply_color">
+<span class="sig-name descname"><span class="pre">apply_color</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.apply_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.apply_color" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_last_curve">
+<span class="sig-name descname"><span class="pre">clear_last_curve</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.clear_last_curve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_last_curve" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_all_curves">
+<span class="sig-name descname"><span class="pre">clear_all_curves</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.clear_all_curves"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.clear_all_curves" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.on_click">
+<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.on_click"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.on_click" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.on_motion">
+<span class="sig-name descname"><span class="pre">on_motion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.on_motion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.on_motion" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.on_release">
+<span class="sig-name descname"><span class="pre">on_release</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.on_release"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.on_release" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.show_region_dialog">
+<span class="sig-name descname"><span class="pre">show_region_dialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.show_region_dialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.show_region_dialog" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.build_constraints_arrays">
+<span class="sig-name descname"><span class="pre">build_constraints_arrays</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.build_constraints_arrays"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.build_constraints_arrays" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">run_regression</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.run_regression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id6" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.export_data_csv">
+<span class="sig-name descname"><span class="pre">export_data_csv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.export_data_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.export_data_csv" title="Link to this definition">¶</a></dt>
+<dd><p>Exporte les données et la spline en CSV.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.logistic">
+<span class="sig-name descname"><span class="pre">logistic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.logistic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.logistic" title="Link to this definition">¶</a></dt>
+<dd><p>Lance l’exemple logistique.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.comparison">
+<span class="sig-name descname"><span class="pre">comparison</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.comparison"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.comparison" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.load_basic_example">
+<span class="sig-name descname"><span class="pre">load_basic_example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.load_basic_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.load_basic_example" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.load_temperature_example">
+<span class="sig-name descname"><span class="pre">load_temperature_example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.load_temperature_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.load_temperature_example" title="Link to this definition">¶</a></dt>
+<dd><p>Charge l’exemple des données de température.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.temperature_analysis">
+<span class="sig-name descname"><span class="pre">temperature_analysis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.temperature_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.temperature_analysis" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.generate_custom_test">
+<span class="sig-name descname"><span class="pre">generate_custom_test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.generate_custom_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.generate_custom_test" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.export_standalone_code">
+<span class="sig-name descname"><span class="pre">export_standalone_code</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.export_standalone_code"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.QuantileSplineApp.export_standalone_code" title="Link to this definition">¶</a></dt>
+<dd><p>Exporte un code Python autonome pour reproduire la courbe actuelle.
+Inclut les données (CSV), la fonction de test, et tous les paramètres.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.Quant_reg_tk.main">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.gui.Quant_reg_tk.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.Quant_reg_tk.main" title="Link to this definition">¶</a></dt>
+<dd><p>Point d’entrée de l’interface graphique.</p>
+<p>Crée la fenêtre Tkinter et lance l’application.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy.gui.Quant_reg_tk</span> <span class="kn">import</span> <span class="n">main</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Ou depuis la ligne de commande :
+$ python -m BsplineQuantRegpy.gui.Quant_reg_tk</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_gui</span></code></dt><dd><p>Fonction équivalente dans le package principal</p>
+</dd>
+</dl>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-BsplineQuantRegpy.gui">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-BsplineQuantRegpy.gui" title="Link to this heading">¶</a></h2>
+<p>Interface graphique pour BsplineQuantRegpy.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.main">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.gui.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.main" title="Link to this definition">¶</a></dt>
+<dd><p>Point d’entrée de l’interface graphique.</p>
+<p>Crée la fenêtre Tkinter et lance l’application.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy.gui.Quant_reg_tk</span> <span class="kn">import</span> <span class="n">main</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Ou depuis la ligne de commande :
+$ python -m BsplineQuantRegpy.gui.Quant_reg_tk</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_gui</span></code></dt><dd><p>Fonction équivalente dans le package principal</p>
+</dd>
+</dl>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.gui.</span></span><span class="sig-name descname"><span class="pre">QuantileSplineApp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Application principale de régression quantile avec splines contraintes.</p>
+<p>Cette classe gère l’interface graphique Tkinter complète. Elle organise
+les trois onglets principaux :</p>
+<ol class="arabic simple">
+<li><p>Données &amp; Spline : Import, paramètres spline, ajustement des axes</p></li>
+<li><p>Contraintes : Uniformes ou par région</p></li>
+<li><p>Exécution &amp; Export : Solveur, lancement, gestion des courbes, export</p></li>
+</ol>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.root">
+<span class="sig-name descname"><span class="pre">root</span></span><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.root" title="Link to this definition">¶</a></dt>
+<dd><p>Fenêtre principale Tkinter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tk.Tk</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">xtab,</span> <span class="pre">ytab</span></span></dt>
+<dd><p>Données courantes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array-like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.knots">
+<span class="sig-name descname"><span class="pre">knots</span></span><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.knots" title="Link to this definition">¶</a></dt>
+<dd><p>Nœuds courants</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array-like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.spline_result">
+<span class="sig-name descname"><span class="pre">spline_result</span></span><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.spline_result" title="Link to this definition">¶</a></dt>
+<dd><p>Fonction spline résultante</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.degree">
+<span class="sig-name descname"><span class="pre">degree</span></span><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.degree" title="Link to this definition">¶</a></dt>
+<dd><p>Degré de la spline (1-4)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.constraints_mode">
+<span class="sig-name descname"><span class="pre">constraints_mode</span></span><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.constraints_mode" title="Link to this definition">¶</a></dt>
+<dd><p>‘uniform’ ou ‘region’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.regions">
+<span class="sig-name descname"><span class="pre">regions</span></span><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.regions" title="Link to this definition">¶</a></dt>
+<dd><p>Liste des régions pour les contraintes par région</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.load_csv">
+<span class="sig-name descname"><span class="pre">load_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">)</span> <span class="pre">/</span> <span class="pre">load_excel(</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.load_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.load_csv" title="Link to this definition">¶</a></dt>
+<dd><p>Importe des données depuis un fichier</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.generate_test_data">
+<span class="sig-name descname"><span class="pre">generate_test_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.generate_test_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.generate_test_data" title="Link to this definition">¶</a></dt>
+<dd><p>Génère des données de test</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.define_knots">
+<span class="sig-name descname"><span class="pre">define_knots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.define_knots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.define_knots" title="Link to this definition">¶</a></dt>
+<dd><p>Définit les nœuds (auto ou manuel)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.run_regression">
+<span class="sig-name descname"><span class="pre">run_regression</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.run_regression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.run_regression" title="Link to this definition">¶</a></dt>
+<dd><p>Lance la régression quantile</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.export_results">
+<span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.export_results" title="Link to this definition">¶</a></dt>
+<dd><p>Exporte les résultats (PNG, CSV, code Python)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.adjust_axes">
+<span class="sig-name descname"><span class="pre">adjust_axes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.adjust_axes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.adjust_axes" title="Link to this definition">¶</a></dt>
+<dd><p>Ajuste automatiquement les axes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.apply_axes_limits">
+<span class="sig-name descname"><span class="pre">apply_axes_limits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.apply_axes_limits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.apply_axes_limits" title="Link to this definition">¶</a></dt>
+<dd><p>Applique les limites d’axes définies par l’utilisateur</p>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy.gui.Quant_reg_tk</span> <span class="kn">import</span> <span class="n">main</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="../bsplinequantregpy.html#module-BsplineQuantRegpy" title="BsplineQuantRegpy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BsplineQuantRegpy</span></code></a></dt><dd><p>Package principal</p>
+</dd>
+</dl>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.quit_app">
+<span class="sig-name descname"><span class="pre">quit_app</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.quit_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.quit_app" title="Link to this definition">¶</a></dt>
+<dd><p>Quitte l’application proprement.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.setup_ui">
+<span class="sig-name descname"><span class="pre">setup_ui</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.setup_ui"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.setup_ui" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration de l’interface</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.setup_menu">
+<span class="sig-name descname"><span class="pre">setup_menu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.setup_menu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.setup_menu" title="Link to this definition">¶</a></dt>
+<dd><p>Configure le menu de l’application.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.check_modules">
+<span class="sig-name descname"><span class="pre">check_modules</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.check_modules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.check_modules" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.toggle_constraint_mode">
+<span class="sig-name descname"><span class="pre">toggle_constraint_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.toggle_constraint_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.toggle_constraint_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.update_degree">
+<span class="sig-name descname"><span class="pre">update_degree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.update_degree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.update_degree" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.knot_mode_changed">
+<span class="sig-name descname"><span class="pre">knot_mode_changed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.knot_mode_changed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.knot_mode_changed" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">load_csv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.load_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id7" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.load_excel">
+<span class="sig-name descname"><span class="pre">load_excel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.load_excel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.load_excel" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">generate_test_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.generate_test_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id8" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">define_knots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.define_knots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id9" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.validate_manual_knots">
+<span class="sig-name descname"><span class="pre">validate_manual_knots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.validate_manual_knots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.validate_manual_knots" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.clear_knots">
+<span class="sig-name descname"><span class="pre">clear_knots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.clear_knots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.clear_knots" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.plot_knots">
+<span class="sig-name descname"><span class="pre">plot_knots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.plot_knots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.plot_knots" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.start_region_selection">
+<span class="sig-name descname"><span class="pre">start_region_selection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.start_region_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.start_region_selection" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.clear_regions">
+<span class="sig-name descname"><span class="pre">clear_regions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.clear_regions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.clear_regions" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.clear_results">
+<span class="sig-name descname"><span class="pre">clear_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.clear_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.clear_results" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.clear_all">
+<span class="sig-name descname"><span class="pre">clear_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.clear_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.clear_all" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">apply_axes_limits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.apply_axes_limits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id10" title="Link to this definition">¶</a></dt>
+<dd><p>Applique les limites d’axes définies par l’utilisateur.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">adjust_axes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.adjust_axes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id11" title="Link to this definition">¶</a></dt>
+<dd><p>Ajuste automatiquement les axes en fonction des données.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.plot_data">
+<span class="sig-name descname"><span class="pre">plot_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.plot_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.plot_data" title="Link to this definition">¶</a></dt>
+<dd><p>Affiche les données avec les bons axes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.plot_data_back">
+<span class="sig-name descname"><span class="pre">plot_data_back</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.plot_data_back"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.plot_data_back" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.plot_result">
+<span class="sig-name descname"><span class="pre">plot_result</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.plot_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.plot_result" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.apply_color">
+<span class="sig-name descname"><span class="pre">apply_color</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.apply_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.apply_color" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.clear_last_curve">
+<span class="sig-name descname"><span class="pre">clear_last_curve</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.clear_last_curve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.clear_last_curve" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.clear_all_curves">
+<span class="sig-name descname"><span class="pre">clear_all_curves</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.clear_all_curves"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.clear_all_curves" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.on_click">
+<span class="sig-name descname"><span class="pre">on_click</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.on_click"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.on_click" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.on_motion">
+<span class="sig-name descname"><span class="pre">on_motion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.on_motion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.on_motion" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.on_release">
+<span class="sig-name descname"><span class="pre">on_release</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.on_release"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.on_release" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.show_region_dialog">
+<span class="sig-name descname"><span class="pre">show_region_dialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.show_region_dialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.show_region_dialog" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.build_constraints_arrays">
+<span class="sig-name descname"><span class="pre">build_constraints_arrays</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.build_constraints_arrays"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.build_constraints_arrays" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">run_regression</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.run_regression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id12" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id13" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.export_data_csv">
+<span class="sig-name descname"><span class="pre">export_data_csv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.export_data_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.export_data_csv" title="Link to this definition">¶</a></dt>
+<dd><p>Exporte les données et la spline en CSV.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.logistic">
+<span class="sig-name descname"><span class="pre">logistic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.logistic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.logistic" title="Link to this definition">¶</a></dt>
+<dd><p>Lance l’exemple logistique.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.comparison">
+<span class="sig-name descname"><span class="pre">comparison</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.comparison"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.comparison" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.load_basic_example">
+<span class="sig-name descname"><span class="pre">load_basic_example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.load_basic_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.load_basic_example" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.load_temperature_example">
+<span class="sig-name descname"><span class="pre">load_temperature_example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.load_temperature_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.load_temperature_example" title="Link to this definition">¶</a></dt>
+<dd><p>Charge l’exemple des données de température.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.temperature_analysis">
+<span class="sig-name descname"><span class="pre">temperature_analysis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.temperature_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.temperature_analysis" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.generate_custom_test">
+<span class="sig-name descname"><span class="pre">generate_custom_test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.generate_custom_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.generate_custom_test" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.gui.QuantileSplineApp.export_standalone_code">
+<span class="sig-name descname"><span class="pre">export_standalone_code</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/gui/Quant_reg_tk.html#QuantileSplineApp.export_standalone_code"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.gui.QuantileSplineApp.export_standalone_code" title="Link to this definition">¶</a></dt>
+<dd><p>Exporte un code Python autonome pour reproduire la courbe actuelle.
+Inclut les données (CSV), la fonction de test, et tous les paramètres.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="BsplineQuantRegpy.examples.html" class="btn btn-neutral float-left" title="BsplineQuantRegpy.examples package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="BsplineQuantRegpy.models.html" class="btn btn-neutral float-right" title="BsplineQuantRegpy.models package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Alexandre Abbes.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

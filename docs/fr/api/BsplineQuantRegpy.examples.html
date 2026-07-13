@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BsplineQuantRegpy.examples package &mdash; Documentation BsplineQuantRegpy 1.0.1</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/documentation_options.js?v=a1a25f23"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/translations.js?v=e6b791cb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="BsplineQuantRegpy.gui package" href="BsplineQuantRegpy.gui.html" />
+    <link rel="prev" title="BsplineQuantRegpy.core package" href="BsplineQuantRegpy.core.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            BsplineQuantRegpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">BsplineQuantRegpy</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="BsplineQuantRegpy.html">BsplineQuantRegpy package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="BsplineQuantRegpy.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.core.html">BsplineQuantRegpy.core package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">BsplineQuantRegpy.examples package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html">BsplineQuantRegpy.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.models.html">BsplineQuantRegpy.models package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.html#module-BsplineQuantRegpy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BsplineQuantRegpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">BsplineQuantRegpy</a></li>
+          <li class="breadcrumb-item"><a href="BsplineQuantRegpy.html">BsplineQuantRegpy package</a></li>
+      <li class="breadcrumb-item active">BsplineQuantRegpy.examples package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/BsplineQuantRegpy.examples.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="bsplinequantregpy-examples-package">
+<h1>BsplineQuantRegpy.examples package<a class="headerlink" href="#bsplinequantregpy-examples-package" title="Lien vers cette rubrique">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Lien vers cette rubrique">¶</a></h2>
+</section>
+<section id="module-BsplineQuantRegpy.examples.comparison_example">
+<span id="bsplinequantregpy-examples-comparison-example-module"></span><h2>BsplineQuantRegpy.examples.comparison_example module<a class="headerlink" href="#module-BsplineQuantRegpy.examples.comparison_example" title="Lien vers cette rubrique">¶</a></h2>
+<p>Script de comparaison des différents degrés de splines avec contraintes.
+Peut être exécuté indépendamment ou appelé depuis la GUI.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.comparison_example.generate_comparison_data">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.comparison_example.</span></span><span class="sig-name descname"><span class="pre">generate_comparison_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/comparison_example.html#generate_comparison_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.comparison_example.generate_comparison_data" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Génère des données de test pour la comparaison.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>x</strong> (<em>array</em>) – Données x</p></li>
+<li><p><strong>y</strong> (<em>array</em>) – Données y</p></li>
+<li><p><strong>knots</strong> (<em>array</em>) – Nœuds pour les splines</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.comparison_example.run_comparison_analysis">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.comparison_example.</span></span><span class="sig-name descname"><span class="pre">run_comparison_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_plots</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/comparison_example.html#run_comparison_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.comparison_example.run_comparison_analysis" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Exécute un test de comparaison des degrés.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>array</em>) – Données</p></li>
+<li><p><strong>y</strong> (<em>array</em>) – Données</p></li>
+<li><p><strong>knots</strong> (<em>array</em>) – Nœuds</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(dans Python v3.14)"><em>float</em></a>) – Quantile</p></li>
+<li><p><strong>solver</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(dans Python v3.14)"><em>str</em></a>) – Solveur à utiliser</p></li>
+<li><p><strong>show_plots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(dans Python v3.14)"><em>bool</em></a>) – Afficher les graphiques</p></li>
+<li><p><strong>return_results</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(dans Python v3.14)"><em>bool</em></a>) – Retourner les résultats</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Résultats si return_results=True</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(dans Python v3.14)">dict</a> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.comparison_example.main">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.comparison_example.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/comparison_example.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.comparison_example.main" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Fonction principale pour exécution indépendante.</p>
+</dd></dl>
+
+</section>
+<section id="module-BsplineQuantRegpy.examples.example_basic">
+<span id="bsplinequantregpy-examples-example-basic-module"></span><h2>BsplineQuantRegpy.examples.example_basic module<a class="headerlink" href="#module-BsplineQuantRegpy.examples.example_basic" title="Lien vers cette rubrique">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.example_basic.generate_test_data">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.example_basic.</span></span><span class="sig-name descname"><span class="pre">generate_test_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/example_basic.html#generate_test_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.example_basic.generate_test_data" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Génère des données de test avec différentes caractéristiques.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.example_basic.generate_piecewise_data">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.example_basic.</span></span><span class="sig-name descname"><span class="pre">generate_piecewise_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/example_basic.html#generate_piecewise_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.example_basic.generate_piecewise_data" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Génère des données avec des changements de pente.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.example_basic.generate_convex_data">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.example_basic.</span></span><span class="sig-name descname"><span class="pre">generate_convex_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/example_basic.html#generate_convex_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.example_basic.generate_convex_data" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Génère des données convexes (parabole).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.example_basic.generate_concave_data">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.example_basic.</span></span><span class="sig-name descname"><span class="pre">generate_concave_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/example_basic.html#generate_concave_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.example_basic.generate_concave_data" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Génère des données concaves.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.example_basic.test_all_degrees">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.example_basic.</span></span><span class="sig-name descname"><span class="pre">test_all_degrees</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/example_basic.html#test_all_degrees"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.example_basic.test_all_degrees" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Teste toutes les fonctions de régression avec différentes données.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.example_basic.test_with_different_quantiles">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.example_basic.</span></span><span class="sig-name descname"><span class="pre">test_with_different_quantiles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/example_basic.html#test_with_different_quantiles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.example_basic.test_with_different_quantiles" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Test avec différents quantiles.</p>
+</dd></dl>
+
+</section>
+<section id="module-BsplineQuantRegpy.examples.example_temperature">
+<span id="bsplinequantregpy-examples-example-temperature-module"></span><h2>BsplineQuantRegpy.examples.example_temperature module<a class="headerlink" href="#module-BsplineQuantRegpy.examples.example_temperature" title="Lien vers cette rubrique">¶</a></h2>
+<p>Script d’analyse des données de température avec différentes contraintes et quantiles.
+Peut être exécuté indépendamment ou appelé depuis la GUI.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.example_temperature.load_temperature_data">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.example_temperature.</span></span><span class="sig-name descname"><span class="pre">load_temperature_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/example_temperature.html#load_temperature_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.example_temperature.load_temperature_data" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Charge les données de température.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.example_temperature.run_temperature_analysis">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.example_temperature.</span></span><span class="sig-name descname"><span class="pre">run_temperature_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">degree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.1,</span> <span class="pre">0.25,</span> <span class="pre">0.5,</span> <span class="pre">0.75,</span> <span class="pre">0.9]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/example_temperature.html#run_temperature_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.example_temperature.run_temperature_analysis" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Lance une analyse complète des données de température avec différentes contraintes
+pour plusieurs quantiles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>degree</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(dans Python v3.14)"><em>int</em></a>) – Degré de la spline (1, 2, 3, 4)</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(dans Python v3.14)"><em>list</em></a><em> of </em><em>floats</em>) – Les quantiles à évaluer.</p></li>
+<li><p><strong>solver</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(dans Python v3.14)"><em>str</em></a>) – Solveur à utiliser</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.example_temperature.main">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.example_temperature.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/example_temperature.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.example_temperature.main" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Fonction principale pour exécution indépendante.</p>
+</dd></dl>
+
+</section>
+<section id="module-BsplineQuantRegpy.examples.logistic_example">
+<span id="bsplinequantregpy-examples-logistic-example-module"></span><h2>BsplineQuantRegpy.examples.logistic_example module<a class="headerlink" href="#module-BsplineQuantRegpy.examples.logistic_example" title="Lien vers cette rubrique">¶</a></h2>
+<p>Script de test avec la fonction logistique et différentes contraintes.
+Peut être exécuté indépendamment ou appelé depuis la GUI.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.logistic_example.run_logistic_example">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.logistic_example.</span></span><span class="sig-name descname"><span class="pre">run_logistic_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show_plots</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/logistic_example.html#run_logistic_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.logistic_example.run_logistic_example" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Exécute le test avec la fonction logistique.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>show_plots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(dans Python v3.14)"><em>bool</em></a>) – Afficher les graphiques</p></li>
+<li><p><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(dans Python v3.14)"><em>bool</em></a>) – Retourner les données générées</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Données si return_data=True</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(dans Python v3.14)">dict</a> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.logistic_example.main">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.logistic_example.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/logistic_example.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.logistic_example.main" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Fonction principale pour exécution indépendante.</p>
+</dd></dl>
+
+</section>
+<section id="module-BsplineQuantRegpy.examples.quick_start">
+<span id="bsplinequantregpy-examples-quick-start-module"></span><h2>BsplineQuantRegpy.examples.quick_start module<a class="headerlink" href="#module-BsplineQuantRegpy.examples.quick_start" title="Lien vers cette rubrique">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.quick_start.quick_start">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.quick_start.</span></span><span class="sig-name descname"><span class="pre">quick_start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/quick_start.html#quick_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.quick_start.quick_start" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.quick_start.main">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.quick_start.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/quick_start.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.quick_start.main" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-BsplineQuantRegpy.examples.quick_start2">
+<span id="bsplinequantregpy-examples-quick-start2-module"></span><h2>BsplineQuantRegpy.examples.quick_start2 module<a class="headerlink" href="#module-BsplineQuantRegpy.examples.quick_start2" title="Lien vers cette rubrique">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.quick_start2.quick_start2">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.quick_start2.</span></span><span class="sig-name descname"><span class="pre">quick_start2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/quick_start2.html#quick_start2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.quick_start2.quick_start2" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.quick_start2.main">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.quick_start2.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/quick_start2.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.quick_start2.main" title="Lien vers cette définition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-BsplineQuantRegpy.examples">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-BsplineQuantRegpy.examples" title="Lien vers cette rubrique">¶</a></h2>
+<p>Exemples pour l’utilisation du package BsplineQuantRegpy.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.run_logistic_example">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.</span></span><span class="sig-name descname"><span class="pre">run_logistic_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show_plots</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/logistic_example.html#run_logistic_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.run_logistic_example" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Exécute le test avec la fonction logistique.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>show_plots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(dans Python v3.14)"><em>bool</em></a>) – Afficher les graphiques</p></li>
+<li><p><strong>return_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(dans Python v3.14)"><em>bool</em></a>) – Retourner les données générées</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Données si return_data=True</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(dans Python v3.14)">dict</a> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.run_basic_example">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.</span></span><span class="sig-name descname"><span class="pre">run_basic_example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples.html#run_basic_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.run_basic_example" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Lance l’exemple basique.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.run_temperature_analysis">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.</span></span><span class="sig-name descname"><span class="pre">run_temperature_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">degree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.1,</span> <span class="pre">0.25,</span> <span class="pre">0.5,</span> <span class="pre">0.75,</span> <span class="pre">0.9]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/examples/example_temperature.html#run_temperature_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.examples.run_temperature_analysis" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Lance une analyse complète des données de température avec différentes contraintes
+pour plusieurs quantiles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>degree</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(dans Python v3.14)"><em>int</em></a>) – Degré de la spline (1, 2, 3, 4)</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(dans Python v3.14)"><em>list</em></a><em> of </em><em>floats</em>) – Les quantiles à évaluer.</p></li>
+<li><p><strong>solver</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(dans Python v3.14)"><em>str</em></a>) – Solveur à utiliser</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.examples.run_comparison_example">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.examples.</span></span><span class="sig-name descname"><span class="pre">run_comparison_example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BsplineQuantRegpy.examples.run_comparison_example" title="Lien vers cette définition">¶</a></dt>
+<dd><p>Fonction principale pour exécution indépendante.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="BsplineQuantRegpy.core.html" class="btn btn-neutral float-left" title="BsplineQuantRegpy.core package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="BsplineQuantRegpy.gui.html" class="btn btn-neutral float-right" title="BsplineQuantRegpy.gui package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Alexandre Abbes.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

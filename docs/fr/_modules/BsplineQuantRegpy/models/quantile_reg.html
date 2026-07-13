@@ -1,0 +1,1061 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BsplineQuantRegpy.models.quantile_reg &mdash; Documentation BsplineQuantRegpy 1.0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../../_static/documentation_options.js?v=a1a25f23"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/translations.js?v=e6b791cb"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Recherche" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            BsplineQuantRegpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">BsplineQuantRegpy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">BsplineQuantRegpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Code du module</a></li>
+          <li class="breadcrumb-item"><a href="../../BsplineQuantRegpy.html">BsplineQuantRegpy</a></li>
+      <li class="breadcrumb-item active">BsplineQuantRegpy.models.quantile_reg</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Code source de BsplineQuantRegpy.models.quantile_reg</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Alexandre Abbes&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright 2026, Alexandre Adel Abbes&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;GPL&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;1.0.1&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">BSpline</span><span class="p">,</span> <span class="n">PPoly</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cvxpy</span> <span class="k">as</span> <span class="nn">cp</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">from</span> <span class="nn">..core.bases</span> <span class="kn">import</span> <span class="n">build_bsplines_and_deriv</span>
+<span class="kn">from</span> <span class="nn">..core.constraints</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">apply_karlin_constraints_cubic</span><span class="p">,</span>
+    <span class="n">apply_karlin_constraints_quadratic</span><span class="p">,</span>
+    <span class="n">apply_val_constraints</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="rhotau">
+<a class="viewcode-back" href="../../../api/BsplineQuantRegpy.models.html#BsplineQuantRegpy.rhotau">[docs]</a>
+<span class="k">def</span> <span class="nf">rhotau</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">tau</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;  </span>
+<span class="sd">    Fonction de perte quantile (check function).</span>
+<span class="sd">    </span>
+<span class="sd">    La fonction de perte quantile, également appelée fonction de vérification,</span>
+<span class="sd">    est définie par ρ_τ(u) = u * (τ - 1_{u &lt; 0}). Elle est utilisée comme</span>
+<span class="sd">    fonction objectif en régression quantile.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    u : cvxpy.Expression</span>
+<span class="sd">        Résidus (valeurs réelles ou expressions CVXPY)</span>
+<span class="sd">    tau : float, 0 &lt; tau &lt; 1</span>
+<span class="sd">        Paramètre quantile</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    cvxpy.Expression</span>
+<span class="sd">        Somme des pertes quantiles</span>
+<span class="sd">    </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    La fonction est convexe et linéaire par morceaux.</span>
+<span class="sd">    Pour τ = 0.5, elle correspond à l&#39;erreur absolue médiane.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">cp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">tau</span> <span class="o">*</span> <span class="n">u</span><span class="p">,</span> <span class="p">(</span><span class="n">tau</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">u</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="SplineLinearQuant">
+<a class="viewcode-back" href="../../../bsplinequantregpy.html#BsplineQuantRegpy.SplineLinearQuant">[docs]</a>
+<span class="k">def</span> <span class="nf">SplineLinearQuant</span><span class="p">(</span><span class="n">xtab</span><span class="p">,</span> <span class="n">ytab</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;CLARABEL&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Régression quantile avec B-splines de degré 1 (affines par morceaux)</span>
+<span class="sd">    et contraintes de monotonie.</span>
+<span class="sd">    </span>
+<span class="sd">    Les splines linéaires sont des fonctions continues et linéaires sur chaque</span>
+<span class="sd">    intervalle entre les nœuds. La monotonie est contrôlée par le signe de</span>
+<span class="sd">    la dérivée (constante par morceaux).</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    xtab, ytab : array-like</span>
+<span class="sd">        Données x et y</span>
+<span class="sd">    knots : int or list</span>
+<span class="sd">        Nombre de nœuds ou liste des nœuds</span>
+<span class="sd">    tau : float</span>
+<span class="sd">        Paramètre quantile (entre 0 et 1)</span>
+<span class="sd">    monot : int or list, default=0</span>
+<span class="sd">        Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)</span>
+<span class="sd">    solver : str, default=&#39;CLARABEL&#39;</span>
+<span class="sd">        Solveur CVXPY à utiliser</span>
+<span class="sd">    weight : array-like, optional</span>
+<span class="sd">        Poids des observations</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    polyn : BSpline object</span>
+<span class="sd">        Fonction spline résultante (degré 1)</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from BsplineQuantRegpy import SplineLinearQuant</span>
+<span class="sd">    &gt;&gt;&gt; x = np.linspace(0, 1, 50)</span>
+<span class="sd">    &gt;&gt;&gt; y = 2*x + 0.1*np.random.randn(50)</span>
+<span class="sd">    &gt;&gt;&gt; knots = np.quantile(x, np.linspace(0, 1, 6))</span>
+<span class="sd">    &gt;&gt;&gt; result = SplineLinearQuant(x, y, knots, tau=0.5, monot=1)</span>
+<span class="sd">    &gt;&gt;&gt; y_pred = result(np.linspace(0, 1, 100))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+     
+    <span class="k">if</span> <span class="n">weight</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xtab</span><span class="p">))</span>
+    
+    <span class="c1"># Tri des données</span>
+    <span class="n">sort_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">xtab</span><span class="p">)</span>
+    <span class="n">xtab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xtab</span><span class="p">)[</span><span class="n">sort_idx</span><span class="p">]</span>
+    <span class="n">ytab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ytab</span><span class="p">)[</span><span class="n">sort_idx</span><span class="p">]</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">weight</span><span class="p">)[</span><span class="n">sort_idx</span><span class="p">]</span>
+    
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xtab</span><span class="p">)</span>
+    
+    <span class="c1"># Gestion des nœuds</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">knots</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">kn</span> <span class="o">=</span> <span class="n">knots</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">xtab</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">kn</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    
+    <span class="n">kn</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">knots</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">degree</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">kn</span> <span class="o">+</span> <span class="n">degree</span>  <span class="c1"># Nombre de fonctions de base = kn + 1</span>
+    
+    <span class="c1"># Gestion des contraintes de monotonie</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">monot</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">monot</span> <span class="o">=</span> <span class="n">monot</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">kn</span><span class="p">)</span>  <span class="c1"># Une contrainte par intervalle</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">monot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">monot</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;=== Régression quantile avec splines linéaires (degré 1) ===&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Nœuds: </span><span class="si">{</span><span class="n">kn</span><span class="si">}</span><span class="s2">, Fonctions de base: </span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Contraintes monotonie (dérivée): </span><span class="si">{</span><span class="n">monot</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Construction des B-splines linéaires</span>
+    <span class="n">List_Bsplines</span><span class="p">,</span> <span class="n">Der1_array</span> <span class="o">=</span> <span class="n">build_bsplines_and_deriv</span><span class="p">(</span><span class="n">knots</span><span class="p">,</span><span class="n">degree</span><span class="p">)</span>
+    
+    <span class="c1"># Matrice de design</span>
+    <span class="n">env_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">env_array</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">List_Bsplines</span><span class="p">[</span><span class="n">j</span><span class="p">](</span><span class="n">xtab</span><span class="p">)</span>
+    
+    <span class="c1"># Variables d&#39;optimisation</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># Coefficients des B-splines</span>
+    
+    <span class="c1"># Fonction objectif</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">ytab</span> <span class="o">-</span> <span class="n">env_array</span> <span class="o">@</span> <span class="n">alpha</span>
+    <span class="n">objective</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Minimize</span><span class="p">(</span><span class="n">rhotau</span><span class="p">(</span><span class="n">residuals</span><span class="p">,</span> <span class="n">tau</span><span class="p">))</span>
+    
+    <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># Contraintes de monotonie via la dérivée (constante sur chaque intervalle)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kn</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">monot</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Dérivée sur l&#39;intervalle i = somme pondérée des dérivées constantes</span>
+            <span class="n">deriv_sum</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">@</span> <span class="n">Der1_array</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+            
+            <span class="c1"># Appliquer contrainte sur la constante</span>
+            <span class="n">deriv_constraints</span> <span class="o">=</span> <span class="n">apply_val_constraints</span><span class="p">(</span><span class="n">deriv_sum</span><span class="p">,</span> <span class="n">monot</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">constraints</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">deriv_constraints</span><span class="p">)</span>
+    
+    <span class="c1"># Alternative: contraindre directement la fonction (plus fort)</span>
+    <span class="c1"># Mais les contraintes sur la dérivée sont plus naturelles pour la monotonie</span>
+    
+    <span class="c1"># Résolution</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="n">objective</span><span class="p">,</span> <span class="n">constraints</span><span class="p">)</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">alpha</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;L&#39;optimisation n&#39;a pas convergé, essayer un autre solveur&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Statut: </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2">, Valeur objectif: </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">value</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Construction de la spline résultante</span>
+    <span class="n">l_end</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">knots</span><span class="p">)</span>
+    <span class="n">r_end</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">knots</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="n">l_end</span><span class="p">]</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="p">[</span><span class="n">r_end</span><span class="p">]</span> <span class="o">*</span> <span class="n">degree</span><span class="p">])</span>
+    <span class="n">polyn</span> <span class="o">=</span> <span class="n">BSpline</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">alpha</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">degree</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">polyn</span></div>
+
+
+<div class="viewcode-block" id="SplineQuadraticQuant">
+<a class="viewcode-back" href="../../../bsplinequantregpy.html#BsplineQuantRegpy.SplineQuadraticQuant">[docs]</a>
+<span class="k">def</span> <span class="nf">SplineQuadraticQuant</span><span class="p">(</span><span class="n">xtab</span><span class="p">,</span> <span class="n">ytab</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;CLARABEL&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Régression quantile avec B-splines de degré 2 et contraintes de forme.</span>
+<span class="sd">    </span>
+<span class="sd">    Les splines quadratiques sont des fonctions continues, dérivables une fois,</span>
+<span class="sd">    et quadratiques sur chaque intervalle entre les nœuds.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    xtab, ytab : array-like</span>
+<span class="sd">        Données x et y</span>
+<span class="sd">    knots : int or list</span>
+<span class="sd">        Nombre de nœuds ou liste des nœuds</span>
+<span class="sd">    tau : float</span>
+<span class="sd">        Paramètre quantile (entre 0 et 1)</span>
+<span class="sd">    monot : int or list, default=0</span>
+<span class="sd">        Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)</span>
+<span class="sd">    cv : int or list, default=0</span>
+<span class="sd">        Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)</span>
+<span class="sd">    solver : str, default=&#39;CLARABEL&#39;</span>
+<span class="sd">        Solveur CVXPY à utiliser</span>
+<span class="sd">    weight : array-like, optional</span>
+<span class="sd">        Poids des observations</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    polyn : BSpline object</span>
+<span class="sd">        Fonction spline résultante (degré 2)</span>
+<span class="sd">    </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    -Pour une spline quadratique, la monotonie sur chaque intervalle est</span>
+<span class="sd">    implémentée par des contraintes suffisantes et nécessaires aux noeuds</span>
+<span class="sd">    de la dérivée affine par morceaux.</span>
+<span class="sd">    -La convexité est contrôlée par le signe d&#39;un point quelconque de</span>
+<span class="sd">    chaque intervalle (la dérivée seconde est constante par morceaux).</span>
+<span class="sd">    L&#39;ensemble des contraintes est un problème linéaire.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from BsplineQuantRegpy import SplineQuadraticQuant</span>
+<span class="sd">    &gt;&gt;&gt; x = np.linspace(0, 1, 50)</span>
+<span class="sd">    &gt;&gt;&gt; y = 2*x**2 + 0.1*np.random.randn(50)</span>
+<span class="sd">    &gt;&gt;&gt; knots = np.quantile(x, np.linspace(0, 1, 6))</span>
+<span class="sd">    &gt;&gt;&gt; result = SplineQuadraticQuant(x, y, knots, tau=0.5, cv=1)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="n">weight</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xtab</span><span class="p">))</span>
+    
+    <span class="c1"># Tri des données</span>
+    <span class="n">sort_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">xtab</span><span class="p">)</span>
+    <span class="n">xtab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xtab</span><span class="p">)[</span><span class="n">sort_idx</span><span class="p">]</span>
+    <span class="n">ytab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ytab</span><span class="p">)[</span><span class="n">sort_idx</span><span class="p">]</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">weight</span><span class="p">)[</span><span class="n">sort_idx</span><span class="p">]</span>
+    
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xtab</span><span class="p">)</span>
+    
+    <span class="c1"># Gestion des nœuds</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">knots</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">kn</span> <span class="o">=</span> <span class="n">knots</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">xtab</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">kn</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    
+    <span class="n">kn</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">knots</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">degree</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">kn</span> <span class="o">+</span> <span class="n">degree</span>  <span class="c1"># Nombre de fonctions de base</span>
+    
+    <span class="c1"># Gestion des contraintes</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">monot</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">monot</span> <span class="o">=</span> <span class="n">monot</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">kn</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">monot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">monot</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">cv</span><span class="p">):</span>
+        <span class="n">cv_array</span> <span class="o">=</span> <span class="n">cv</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">kn</span><span class="p">)</span>      <span class="c1"># Contraintes par intervalle pour la convexité</span>
+        <span class="n">cv_knots</span> <span class="o">=</span> <span class="n">cv</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">kn</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Contraintes aux nœuds</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">cv_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cv</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cv_array</span><span class="p">)</span> <span class="o">==</span> <span class="n">kn</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">cv_knots</span> <span class="o">=</span> <span class="n">cv_array</span>
+            <span class="n">cv_array</span> <span class="o">=</span> <span class="n">cv_array</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cv_array</span> <span class="o">=</span> <span class="n">cv_array</span>
+            <span class="n">cv_knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">cv_array</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;=== Régression quantile avec splines quadratiques (degré 2) ===&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Nœuds: </span><span class="si">{</span><span class="n">kn</span><span class="si">}</span><span class="s2">, Fonctions de base: </span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Contraintes monotonie (dérivée 1): </span><span class="si">{</span><span class="n">monot</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Contraintes convexité (dérivée 2) - intervalles: </span><span class="si">{</span><span class="n">cv_array</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Contraintes convexité (dérivée 2) - nœuds: </span><span class="si">{</span><span class="n">cv_knots</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Construction des B-splines quadratiques</span>
+    <span class="n">List_Bsplines</span><span class="p">,</span> <span class="n">Der1_array</span><span class="p">,</span> <span class="n">Der2_array</span> <span class="o">=</span>  <span class="n">build_bsplines_and_deriv</span><span class="p">(</span><span class="n">knots</span><span class="p">,</span><span class="n">degree</span><span class="p">)</span>
+    
+    <span class="c1"># Matrice de design</span>
+    <span class="n">env_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">env_array</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">List_Bsplines</span><span class="p">[</span><span class="n">j</span><span class="p">](</span><span class="n">xtab</span><span class="p">)</span>
+    
+    <span class="c1"># Variables d&#39;optimisation</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># Coefficients des B-splines</span>
+    
+    <span class="c1"># Fonction objectif</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">ytab</span> <span class="o">-</span> <span class="n">env_array</span> <span class="o">@</span> <span class="n">alpha</span>
+    <span class="n">objective</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Minimize</span><span class="p">(</span><span class="n">rhotau</span><span class="p">(</span><span class="n">residuals</span><span class="p">,</span> <span class="n">tau</span><span class="p">))</span>
+    
+    <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># Contraintes de monotonie (sur la dérivée première, linéaire)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kn</span><span class="p">):</span> <span class="c1">#tous les intervallesq</span>
+        <span class="k">if</span> <span class="n">monot</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Coefficients de la dérivée première sur cet intervalle</span>
+            <span class="n">coeffs_sum</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">@</span> <span class="n">Der1_array</span><span class="p">[:,</span>  <span class="n">i</span><span class="p">]</span>  <span class="c1"># [a, b] pour a*u + b</span>
+            
+            <span class="c1"># Appliquer contraintes linéaires</span>
+            <span class="n">lin_constraints</span> <span class="o">=</span> <span class="n">apply_val_constraints</span><span class="p">(</span><span class="n">coeffs_sum</span><span class="p">,</span> <span class="n">monot</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">constraints</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">lin_constraints</span><span class="p">)</span>
+    
+    <span class="c1"># Contraintes de convexité (sur la dérivée seconde, constante)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kn</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cv_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># La dérivée seconde est constante = 2*a (où a est le coeff de u^2)</span>
+            <span class="c1"># Mais on peut utiliser directement les valeurs aux nœuds</span>
+            <span class="c1"># Pour chaque intervalle, on peut aussi contraindre les dérivées secondes aux nœuds</span>
+            
+            <span class="c1"># Option 1: Contraindre aux nœuds (plus simple)</span>
+            <span class="c1"># On le fait dans la boucle suivante</span>
+            <span class="k">pass</span>
+    
+    <span class="c1"># Contraintes de convexité sur les itervalles (derivee seconde constante par morceaux</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kn</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cv_knots</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># La dérivée seconde au nœud j</span>
+            <span class="n">const_constraints</span> <span class="o">=</span> <span class="n">apply_val_constraints</span><span class="p">(</span><span class="n">Der2_array</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">@</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">cv_knots</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">constraints</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">const_constraints</span><span class="p">)</span>
+    
+    <span class="c1"># Résolution</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="n">objective</span><span class="p">,</span> <span class="n">constraints</span><span class="p">)</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">alpha</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;L&#39;optimisation n&#39;a pas convergé, essayer un autre solveur&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Statut: </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2">, Valeur objectif: </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">value</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Construction de la spline résultante</span>
+    <span class="n">l_end</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">knots</span><span class="p">)</span>
+    <span class="n">r_end</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">knots</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="n">l_end</span><span class="p">]</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="p">[</span><span class="n">r_end</span><span class="p">]</span> <span class="o">*</span> <span class="n">degree</span><span class="p">])</span>
+    <span class="n">polyn</span> <span class="o">=</span> <span class="n">BSpline</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">alpha</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">degree</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">polyn</span></div>
+
+
+<div class="viewcode-block" id="SplineCubicQuant">
+<a class="viewcode-back" href="../../../bsplinequantregpy.html#BsplineQuantRegpy.SplineCubicQuant">[docs]</a>
+<span class="k">def</span> <span class="nf">SplineCubicQuant</span><span class="p">(</span><span class="n">xtab</span><span class="p">,</span> <span class="n">ytab</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">der3</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+                                   <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;CLARABEL&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Régression quantile avec B-splines cubiques et contraintes de forme.</span>
+<span class="sd">    Les splines cubiques sont des fonctions continues, deux fois dérivables,</span>
+<span class="sd">    et cubiques sur chaque intervalle entre les nœuds.    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    xtab, ytab : array-like</span>
+<span class="sd">        Données x et y</span>
+<span class="sd">    knots : int or list</span>
+<span class="sd">        Nombre de nœuds ou liste des nœuds</span>
+<span class="sd">    tau : float</span>
+<span class="sd">        Paramètre quantile</span>
+<span class="sd">    monot : int or list, default=0</span>
+<span class="sd">        Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)</span>
+<span class="sd">    cv : int or list, default=0</span>
+<span class="sd">        Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)</span>
+<span class="sd">    der3 : int or list, default=0</span>
+<span class="sd">        Contrainte sur la dérivée troisième (+1 positive, -1 négative, 0 aucune)</span>
+<span class="sd">    solver : str, default=&#39;CLARABEL&#39;</span>
+<span class="sd">        Solveur CVXPY à utiliser</span>
+<span class="sd">    weight : array-like, optional</span>
+<span class="sd">        Poids des observations</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    polyn : BSpline object</span>
+<span class="sd">        Fonction spline résultante (degré 3)</span>
+<span class="sd">    </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    - Les contraintes de monotonie sont implémentées via la caractérisation de Karlin-Studden (1966)</span>
+<span class="sd">    du signe des polynômes positifs de degré 2.</span>
+<span class="sd">    - Les contraintes de convexité sont implémentéee par le signe de la dérivée seconde affine</span>
+<span class="sd">    par morceaux aux noeud.</span>
+<span class="sd">    - Les contraintes de dérivée troisième (constante par morceaux) sont implémentées par</span>
+<span class="sd">    le signe d&#39;un point quelconque de chque intervalle.</span>
+<span class="sd">    </span>
+<span class="sd">    Exemples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from BsplineQuantRegpy import SplineCubicQuant</span>
+<span class="sd">    &gt;&gt;&gt; x = np.linspace(0, 1, 50)</span>
+<span class="sd">    &gt;&gt;&gt; y = 3*x + 0.1*np.random.randn(50)</span>
+<span class="sd">    &gt;&gt;&gt; knots = np.quantile(x, np.linspace(0, 1, 6))</span>
+<span class="sd">    &gt;&gt;&gt; result = SplineCubicQuant(x, y, knots, tau=0.5, monot=1, cv=1)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="n">weight</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xtab</span><span class="p">))</span>
+    
+    <span class="c1"># Tri des données</span>
+    <span class="n">sort_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">xtab</span><span class="p">)</span>
+    <span class="n">xtab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xtab</span><span class="p">)[</span><span class="n">sort_idx</span><span class="p">]</span>
+    <span class="n">ytab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ytab</span><span class="p">)[</span><span class="n">sort_idx</span><span class="p">]</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">weight</span><span class="p">)[</span><span class="n">sort_idx</span><span class="p">]</span>
+    
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xtab</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">knots</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">kn</span> <span class="o">=</span> <span class="n">knots</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">xtab</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">kn</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    
+    <span class="n">kn</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">knots</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">degree</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">kn</span> <span class="o">+</span> <span class="n">degree</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Degré: </span><span class="si">{</span><span class="n">degree</span><span class="si">}</span><span class="s2">, Nœuds: </span><span class="si">{</span><span class="n">kn</span><span class="si">}</span><span class="s2">, Fonctions de base: </span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Gestion des contraintes</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">monot</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">monot</span> <span class="o">=</span> <span class="n">monot</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">kn</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">monot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">monot</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Contraintes monotonie: </span><span class="si">{</span><span class="n">monot</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">cv</span><span class="p">):</span>
+        <span class="n">cv</span> <span class="o">=</span> <span class="n">cv</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">kn</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">cv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cv</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Contraintes convexité: </span><span class="si">{</span><span class="n">cv</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">der3</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">der3</span> <span class="o">=</span> <span class="n">der3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">kn</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">der3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">der3</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Contraintes dérivée 3: </span><span class="si">{</span><span class="n">der3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># === CONSTRUCTION DES B-SPLINES ===</span>
+    <span class="c1"># Construction des B-splines avec les dérivées</span>
+    <span class="n">l_end</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">knots</span><span class="p">)</span>
+    <span class="n">r_end</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">knots</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="n">l_end</span><span class="p">]</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="p">[</span><span class="n">r_end</span><span class="p">]</span> <span class="o">*</span> <span class="n">degree</span><span class="p">])</span>
+    
+    <span class="n">List_Bsplines</span><span class="p">,</span> <span class="n">Der1_array</span> <span class="p">,</span>    <span class="n">Der2_array</span><span class="p">,</span> <span class="n">Der3_array</span> <span class="o">=</span> <span class="n">build_bsplines_and_deriv</span><span class="p">(</span><span class="n">knots</span><span class="p">,</span><span class="n">degree</span><span class="p">)</span>
+    <span class="c1"># === MATRICE DE DESIGN ===</span>
+    <span class="n">env_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">env_array</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">List_Bsplines</span><span class="p">[</span><span class="n">j</span><span class="p">](</span><span class="n">xtab</span><span class="p">)</span>
+    
+    <span class="c1"># === OPTIMISATION ===</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">kn</span><span class="p">)</span>  <span class="c1"># Variables auxiliaires pour les contraintes</span>
+    
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">ytab</span> <span class="o">-</span> <span class="n">env_array</span> <span class="o">@</span> <span class="n">alpha</span>
+    <span class="n">objective</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Minimize</span><span class="p">(</span><span class="n">rhotau</span><span class="p">(</span><span class="n">residuals</span><span class="p">,</span> <span class="n">tau</span><span class="p">))</span>
+    
+    <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># === CONTRAINTES DE MONOTONIE ===</span>
+    <span class="c1"># Utilise la même approche matricielle que les quartiques</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kn</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">monot</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Coefficients de la dérivée première sur l&#39;intervalle i</span>
+            <span class="c1"># Der1_array[:, :, i] est (N, 3) : [a, b, c] pour a*u^2 + b*u + c</span>
+            <span class="n">coeffs_sum</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">@</span> <span class="n">Der1_array</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span>
+            
+            <span class="c1"># Appliquer les contraintes de Karlin pour quadratique (comme pour les quartiques)</span>
+            <span class="n">quad_constraints</span> <span class="o">=</span> <span class="n">apply_karlin_constraints_quadratic</span><span class="p">(</span><span class="n">coeffs_sum</span><span class="p">,</span> <span class="n">monot</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">constraints</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">quad_constraints</span><span class="p">)</span>
+    
+    <span class="c1"># === CONTRAINTES DE CONVEXITÉ ===</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kn</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cv</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">coeffs_sum</span><span class="o">=</span><span class="n">Der2_array</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">@</span> <span class="n">alpha</span>
+            <span class="n">cv_constraints</span> <span class="o">=</span> <span class="n">apply_val_constraints</span><span class="p">(</span><span class="n">coeffs_sum</span><span class="p">,</span> <span class="n">cv</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">constraints</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">cv_constraints</span><span class="p">)</span>
+    
+<span class="c1">#            constraints.append(cv[j] * (Der2_array[:, j] @ alpha) &gt;= 0)</span>
+    
+    <span class="c1"># === CONTRAINTES SUR DÉRIVÉE TROISIÈME ===</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kn</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">der3</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">coeffs_sum</span><span class="o">=</span><span class="n">Der3_array</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">@</span> <span class="n">alpha</span>
+            <span class="n">d3_constraints</span> <span class="o">=</span> <span class="n">apply_val_constraints</span><span class="p">(</span><span class="n">coeffs_sum</span><span class="p">,</span> <span class="n">der3</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">constraints</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">d3_constraints</span><span class="p">)</span>
+    
+            <span class="c1">#constraints.append(der3[i] * (Der3_array[:, i] @ alpha) &gt;= 0)</span>
+    
+    <span class="c1"># === RÉSOLUTION ===</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="n">objective</span><span class="p">,</span> <span class="n">constraints</span><span class="p">)</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">alpha</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;L&#39;optimisation n&#39;a pas convergé&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Statut: </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2">, Valeur objectif: </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">value</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Construction de la spline résultante</span>
+    <span class="n">polyn</span> <span class="o">=</span> <span class="n">BSpline</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">alpha</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">degree</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">polyn</span>
+    
+    <span class="c1"># Der3_array: dérivée troisième (constante par intervalle)</span>
+    <span class="n">Der3_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">kn</span><span class="p">))</span>
+    
+    <span class="c1"># Création des B-splines de base</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">coefs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+        <span class="n">coefs</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">spline_j</span> <span class="o">=</span> <span class="n">BSpline</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">coefs</span><span class="p">,</span> <span class="n">degree</span><span class="p">)</span>
+        <span class="n">List_Bsplines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">spline_j</span><span class="p">)</span>
+        
+        <span class="c1"># Convertir en PPoly pour obtenir les coefficients</span>
+        <span class="n">ppoly</span> <span class="o">=</span> <span class="n">PPoly</span><span class="o">.</span><span class="n">from_spline</span><span class="p">(</span><span class="n">spline_j</span><span class="p">)</span>
+        <span class="n">ppoly_der1</span> <span class="o">=</span> <span class="n">ppoly</span><span class="o">.</span><span class="n">derivative</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ppoly_der2</span> <span class="o">=</span> <span class="n">ppoly</span><span class="o">.</span><span class="n">derivative</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">ppoly_der3</span> <span class="o">=</span> <span class="n">ppoly</span><span class="o">.</span><span class="n">derivative</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        
+        <span class="c1"># Pour chaque intervalle</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">degree</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">nu</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="n">l</span> <span class="o">+</span> <span class="n">degree</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">nu</span> <span class="o">&gt;=</span> <span class="n">degree</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">nu</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">):</span>
+                <span class="n">t_k</span><span class="p">,</span> <span class="n">t_k1</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">nu</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">nu</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="n">h</span> <span class="o">=</span> <span class="n">t_k1</span> <span class="o">-</span> <span class="n">t_k</span>
+                
+                <span class="c1"># Coefficients de la dérivée première dans la base locale</span>
+                <span class="c1"># ppoly_der1.c[:, nu] = [c0, c1, c2] pour c0 + c1*(x-tk) + c2*(x-tk)^2</span>
+                <span class="n">F1</span> <span class="o">=</span> <span class="n">ppoly_der1</span><span class="o">.</span><span class="n">c</span><span class="p">[:,</span> <span class="n">nu</span><span class="p">]</span>
+                
+                <span class="c1"># Normalisation en u = (x-tk)/h</span>
+                <span class="c1"># f&#39;(x) = c0 + c1*h*u + c2*h^2*u^2</span>
+                <span class="c1"># Coefficients dans [u^2, u, 1] : [c2*h^2, c1*h, c0]</span>
+                <span class="n">Der1_array</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:,</span> <span class="n">nu</span> <span class="o">-</span> <span class="n">degree</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">F1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">F1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">,</span> <span class="n">F1</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+        
+        <span class="c1"># Dérivée seconde aux nœuds (pour convexité)</span>
+        <span class="n">Der2_array</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">ppoly_der2</span><span class="p">(</span><span class="n">knots</span><span class="p">)</span>
+        
+        <span class="c1"># Dérivée troisième aux nœuds (constante par intervalle)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kn</span><span class="p">):</span>
+            <span class="n">x_mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">knots</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">knots</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="n">Der3_array</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ppoly_der3</span><span class="p">(</span><span class="n">x_mid</span><span class="p">)</span>
+    
+    <span class="c1"># === MATRICE DE DESIGN ===</span>
+    <span class="n">env_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">env_array</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">List_Bsplines</span><span class="p">[</span><span class="n">j</span><span class="p">](</span><span class="n">xtab</span><span class="p">)</span>
+    
+    <span class="c1"># === OPTIMISATION ===</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">kn</span><span class="p">)</span>  <span class="c1"># Variables auxiliaires pour les contraintes</span>
+    
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">ytab</span> <span class="o">-</span> <span class="n">env_array</span> <span class="o">@</span> <span class="n">alpha</span>
+    <span class="n">objective</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Minimize</span><span class="p">(</span><span class="n">rhotau</span><span class="p">(</span><span class="n">residuals</span><span class="p">,</span> <span class="n">tau</span><span class="p">))</span>
+    
+    <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># === CONTRAINTES DE MONOTONIE ===</span>
+    <span class="c1"># Utilise la même approche matricielle que les quartiques</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kn</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">monot</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Coefficients de la dérivée première sur l&#39;intervalle i</span>
+            <span class="c1"># Der1_array[:, :, i] est (N, 3) : [a, b, c] pour a*u^2 + b*u + c</span>
+            <span class="n">coeffs_sum</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">@</span> <span class="n">Der1_array</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span>
+            
+            <span class="c1"># Appliquer les contraintes de Karlin pour quadratique (comme pour les quartiques)</span>
+            <span class="n">quad_constraints</span> <span class="o">=</span> <span class="n">apply_karlin_constraints_quadratic</span><span class="p">(</span><span class="n">coeffs_sum</span><span class="p">,</span> <span class="n">monot</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">constraints</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">quad_constraints</span><span class="p">)</span>
+    
+    <span class="c1"># === CONTRAINTES DE CONVEXITÉ ===</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kn</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cv</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cv</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">Der2_array</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">@</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+    
+    <span class="c1"># === CONTRAINTES SUR DÉRIVÉE TROISIÈME ===</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kn</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">der3</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">der3</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">Der3_array</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">@</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+    
+    <span class="c1"># === RÉSOLUTION ===</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="n">objective</span><span class="p">,</span> <span class="n">constraints</span><span class="p">)</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">alpha</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;L&#39;optimisation n&#39;a pas convergé&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Statut: </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2">, Valeur objectif: </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">value</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Construction de la spline résultante</span>
+    <span class="n">polyn</span> <span class="o">=</span> <span class="n">BSpline</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">alpha</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">degree</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">polyn</span></div>
+
+
+<div class="viewcode-block" id="SplineQuarticQuant">
+<a class="viewcode-back" href="../../../bsplinequantregpy.html#BsplineQuantRegpy.SplineQuarticQuant">[docs]</a>
+<span class="k">def</span> <span class="nf">SplineQuarticQuant</span><span class="p">(</span><span class="n">xtab</span><span class="p">,</span> <span class="n">ytab</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">monot</span><span class="p">,</span> <span class="n">cv</span><span class="p">,</span> <span class="n">der3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;CLARABEL&#39;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Régression quantile avec B-splines de degré 4 et contraintes de forme.</span>
+<span class="sd">    </span>
+<span class="sd">    Les splines quartiques sont des fonctions continues, trois fois dérivables,</span>
+<span class="sd">    et quartiques sur chaque intervalle entre les nœuds.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    xtab, ytab : array-like</span>
+<span class="sd">        Données x et y</span>
+<span class="sd">    knots : int or list</span>
+<span class="sd">        Nombre de nœuds ou liste des nœuds</span>
+<span class="sd">    tau : float</span>
+<span class="sd">        Paramètre quantile</span>
+<span class="sd">    monot : int or list</span>
+<span class="sd">        Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)</span>
+<span class="sd">    cv : int or list  </span>
+<span class="sd">        Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)</span>
+<span class="sd">    der3 : int or list, optional</span>
+<span class="sd">        Contrainte sur la dérivée troisième (+1 positive, -1 négative, 0 aucune)</span>
+<span class="sd">    solver : str, default=&#39;CLARABEL&#39;</span>
+<span class="sd">        Solveur CVXPY à utiliser</span>
+<span class="sd">    weight : array-like, optional</span>
+<span class="sd">        Poids des observations</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    polyn : BSpline object</span>
+<span class="sd">        Fonction spline résultante (degré 4)</span>
+<span class="sd">    </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    -Les contraintes monotones (resp. convexes) sont implémentées</span>
+<span class="sd">    via la caractérisation de Karlin-Studden (1966) pour les polynômes</span>
+<span class="sd">    positifs de degré 3 (resp degré 2). Le problème d&#39;optimisation est formulé comme un problème</span>
+<span class="sd">    de programmation conique du second ordre (SOCP) et résolu avec CVXPY.</span>
+
+<span class="sd">    - La dérivée troisième étant affine par morceaux, les contraintes sont</span>
+<span class="sd">    implémentées aux noeuds (problèmes linéaire).</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from BsplineQuantRegpy import SplineQuarticQuant</span>
+<span class="sd">    &gt;&gt;&gt; x = np.linspace(0, 1, 50)</span>
+<span class="sd">    &gt;&gt;&gt; y = 4*x**3 + 0.1*np.random.randn(50)</span>
+<span class="sd">    &gt;&gt;&gt; knots = np.quantile(x, np.linspace(0, 1, 6))</span>
+<span class="sd">    &gt;&gt;&gt; result = SplineQuarticQuant(x, y, knots, tau=0.5, monot=1, cv=1)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Régression quantile avec B-splines de degré 4 et contraintes de forme</span>
+<span class="sd">    incluant la dérivée troisième</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    xtab, ytab : array-like</span>
+<span class="sd">        Données x et y</span>
+<span class="sd">    knots : int or list</span>
+<span class="sd">        Nombre de nœuds ou liste des nœuds</span>
+<span class="sd">    tau : float</span>
+<span class="sd">        Paramètre quantile</span>
+<span class="sd">    monot : int or list</span>
+<span class="sd">        Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)</span>
+<span class="sd">    cv : int or list  </span>
+<span class="sd">        Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)</span>
+<span class="sd">    der3 : int or list, optional</span>
+<span class="sd">        Contrainte sur la dérivée troisième (+1 croissante, -1 décroissante, 0 aucune)</span>
+<span class="sd">    solver : str</span>
+<span class="sd">        Solveur CVXPY à utiliser</span>
+<span class="sd">    weight : array-like, optional</span>
+<span class="sd">        Poids des observations</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Les contraintes monotones (resp. convexes) sont implémentées</span>
+<span class="sd">    via la caractérisation de Karlin-Studden (1966) pour les polynômes</span>
+<span class="sd">    positifs de degré 3 (resp degré 2). Le problème d&#39;optimisation est formulé comme un problème</span>
+<span class="sd">    de programmation conique du second ordre (SOCP) et résolu avec CVXPY.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    polyn : BSpline object</span>
+<span class="sd">        Fonction spline résultante</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="n">weight</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xtab</span><span class="p">))</span>
+    
+    <span class="c1"># Tri des données</span>
+    <span class="n">sort_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">xtab</span><span class="p">)</span>
+    <span class="n">xtab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xtab</span><span class="p">)[</span><span class="n">sort_idx</span><span class="p">]</span>
+    <span class="n">ytab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ytab</span><span class="p">)[</span><span class="n">sort_idx</span><span class="p">]</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">weight</span><span class="p">)[</span><span class="n">sort_idx</span><span class="p">]</span>
+    
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xtab</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">knots</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">kn</span> <span class="o">=</span> <span class="n">knots</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">xtab</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">kn</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    
+    <span class="n">kn</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">knots</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">degree</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">kn</span> <span class="o">+</span> <span class="n">degree</span>  <span class="c1"># Nombre de fonctions de base</span>
+    
+    <span class="c1"># Gestion des contraintes</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">monot</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">monot</span> <span class="o">=</span> <span class="n">monot</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">kn</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">monot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">monot</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">cv</span><span class="p">):</span>
+        <span class="n">cv_array</span> <span class="o">=</span> <span class="n">cv</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">kn</span><span class="p">)</span>  <span class="c1"># Contraintes par intervalle</span>
+        <span class="n">cv_knots</span> <span class="o">=</span> <span class="n">cv</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">kn</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Contraintes aux nœuds</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">cv_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cv</span><span class="p">)</span>
+        <span class="c1"># Si cv a kn+1 éléments, les premiers kn sont pour les intervalles</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cv_array</span><span class="p">)</span> <span class="o">==</span> <span class="n">kn</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">cv_knots</span> <span class="o">=</span> <span class="n">cv_array</span>
+            <span class="n">cv_array</span> <span class="o">=</span> <span class="n">cv_array</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cv_array</span> <span class="o">=</span> <span class="n">cv_array</span>
+            <span class="n">cv_knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">cv_array</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+    
+    <span class="c1"># Gestion des contraintes de dérivée troisième</span>
+    <span class="k">if</span> <span class="n">der3</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">der3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">kn</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">der3</span><span class="p">):</span>
+        <span class="n">der3</span> <span class="o">=</span> <span class="n">der3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">kn</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">der3</span><span class="p">)</span><span class="o">&lt;</span><span class="p">(</span><span class="n">kn</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">der3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">der3</span><span class="o">+</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">kn</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">der3</span><span class="p">)))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">der3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">der3</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Degré: </span><span class="si">{</span><span class="n">degree</span><span class="si">}</span><span class="s2">, Nœuds: </span><span class="si">{</span><span class="n">kn</span><span class="si">}</span><span class="s2">, Fonctions de base: </span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Contraintes monotonie: </span><span class="si">{</span><span class="n">monot</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Contraintes convexité (intervalles): </span><span class="si">{</span><span class="n">cv_array</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Contraintes convexité (nœuds): </span><span class="si">{</span><span class="n">cv_knots</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Contraintes dérivée 3e: </span><span class="si">{</span><span class="n">der3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Construction des B-splines avec dérivée troisième</span>
+    <span class="n">List_Bsplines</span><span class="p">,</span> <span class="n">Der1_array</span><span class="p">,</span> <span class="n">Der2_array</span><span class="p">,</span><span class="n">Der3_array</span> <span class="o">=</span> <span class="n">build_bsplines_and_deriv</span><span class="p">(</span><span class="n">knots</span><span class="p">,</span> <span class="n">degree</span><span class="p">)</span>
+    <span class="c1"># Matrice de design</span>
+    <span class="n">env_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">env_array</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">List_Bsplines</span><span class="p">[</span><span class="n">j</span><span class="p">](</span><span class="n">xtab</span><span class="p">)</span>
+    
+    <span class="c1"># Variables d&#39;optimisation</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>  <span class="c1"># Coefficients des B-splines</span>
+    
+    <span class="c1"># Fonction objectif</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">ytab</span> <span class="o">-</span> <span class="n">env_array</span> <span class="o">@</span> <span class="n">alpha</span>
+    <span class="n">objective</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Minimize</span><span class="p">(</span><span class="n">rhotau</span><span class="p">(</span><span class="n">residuals</span><span class="p">,</span> <span class="n">tau</span><span class="p">))</span>
+    
+    <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># Contraintes de monotonie (sur la dérivée première, cubique)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kn</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">monot</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Coefficients de la dérivée première sur cet intervalle</span>
+            <span class="n">coeffs_sum</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">@</span> <span class="n">Der1_array</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span>
+            
+            <span class="c1"># Appliquer contraintes de Karlin pour cubique</span>
+            <span class="n">karlin_constraints</span> <span class="o">=</span> <span class="n">apply_karlin_constraints_cubic</span><span class="p">(</span><span class="n">coeffs_sum</span><span class="p">,</span> <span class="n">monot</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">constraints</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">karlin_constraints</span><span class="p">)</span>
+    
+    <span class="c1"># Contraintes de convexité (sur la dérivée seconde, quadratique)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kn</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cv_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Coefficients de la dérivée seconde sur cet intervalle</span>
+            <span class="n">coeffs_sum2</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">@</span> <span class="n">Der2_array</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span>
+            
+            <span class="c1"># Appliquer contraintes de Karlin pour quadratique</span>
+            <span class="n">quad_constraints</span> <span class="o">=</span> <span class="n">apply_karlin_constraints_quadratic</span><span class="p">(</span><span class="n">coeffs_sum2</span><span class="p">,</span> <span class="n">cv_array</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">constraints</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">quad_constraints</span><span class="p">)</span>
+    
+    <span class="c1"># Contraintes sur la dérivée troisième (linéaire par morceau)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kn</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">der3</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Coefficients de la dérivée troisième sur cet intervalle</span>
+            <span class="n">coeffs_sum</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">@</span> <span class="n">Der3_array</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+            
+            <span class="c1"># Appliquer contraintes linéaires à chaque noed</span>
+            <span class="c1">#lin_constraints = apply_linear_constraints(coeffs_sum, der3[i])</span>
+            <span class="n">val3_constraints</span> <span class="o">=</span> <span class="n">apply_val_constraints</span><span class="p">(</span><span class="n">coeffs_sum</span><span class="p">,</span> <span class="n">der3</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">constraints</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">val3_constraints</span><span class="p">)</span>
+    
+    <span class="c1"># Contraintes de convexité aux nœuds</span>
+    <span class="c1">#for j in range(kn + 1):</span>
+    <span class="c1">#    if cv_knots[j] != 0:</span>
+    <span class="c1">#        constraints.append(cv_knots[j] * (con_array[j, :] @ alpha) &gt;= 0)</span>
+    
+    <span class="c1"># Résolution</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="n">objective</span><span class="p">,</span> <span class="n">constraints</span><span class="p">)</span>
+    <span class="n">prob</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">alpha</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;L&#39;optimisation n&#39;a pas convergé, essayer un autre solveur&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Statut: </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2">, Valeur objectif: </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">value</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Construction de la spline résultante</span>
+    <span class="n">l_end</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">knots</span><span class="p">)</span>
+    <span class="n">r_end</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">knots</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="n">l_end</span><span class="p">]</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="p">[</span><span class="n">r_end</span><span class="p">]</span> <span class="o">*</span> <span class="n">degree</span><span class="p">])</span>
+    <span class="n">polyn</span> <span class="o">=</span> <span class="n">BSpline</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">alpha</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">degree</span><span class="p">)</span>    
+    <span class="k">return</span> <span class="n">polyn</span></div>
+
+
+<div class="viewcode-block" id="quantile_spline">
+<a class="viewcode-back" href="../../../bsplinequantregpy.html#BsplineQuantRegpy.quantile_spline">[docs]</a>
+<span class="k">def</span> <span class="nf">quantile_spline</span><span class="p">(</span><span class="n">xtab</span><span class="p">,</span> <span class="n">ytab</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">der3</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;CLARABEL&#39;</span><span class="p">,</span><span class="n">weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>  
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Cette fonction permet d&#39;appeler la régression quantile pour tous les degrés</span>
+<span class="sd">    de splines (1 à 4) avec une interface unique. Elle redirige vers la fonction</span>
+<span class="sd">    appropriée selon le degré choisi.</span>
+<span class="sd">    </span>
+<span class="sd">    Paramètres</span>
+<span class="sd">    ----------</span>
+<span class="sd">    xtab : array-like, shape (n,)</span>
+<span class="sd">        Variables indépendantes (abscisses). Doivent être dans l&#39;intervalle [0, 1].</span>
+<span class="sd">    </span>
+<span class="sd">    ytab : array-like, shape (n,)</span>
+<span class="sd">        Variables dépendantes (ordonnées).</span>
+<span class="sd">    </span>
+<span class="sd">    knots : array-like</span>
+<span class="sd">        Positions des nœuds pour la base B-spline.</span>
+<span class="sd">        Si un entier est fourni, il est interprété comme le nombre de nœuds.</span>
+<span class="sd">    </span>
+<span class="sd">    tau : float, 0 &lt; tau &lt; 1</span>
+<span class="sd">        Quantile à estimer. Par exemple:</span>
+<span class="sd">        - tau = 0.5 : médiane</span>
+<span class="sd">        - tau = 0.1 : quantile inférieur</span>
+<span class="sd">        - tau = 0.9 : quantile supérieur</span>
+<span class="sd">    </span>
+<span class="sd">    degree : int, default=3</span>
+<span class="sd">        Degré de la spline :</span>
+<span class="sd">        - 1 : linéaire (affine par morceaux)</span>
+<span class="sd">        - 2 : quadratique</span>
+<span class="sd">        - 3 : cubique</span>
+<span class="sd">        - 4 : quartique</span>
+<span class="sd">    </span>
+<span class="sd">    monot : int ou list, default=0</span>
+<span class="sd">        Contrainte de monotonie :</span>
+<span class="sd">        - 1 : fonction croissante</span>
+<span class="sd">        - -1 : fonction décroissante</span>
+<span class="sd">        - 0 : aucune contrainte</span>
+<span class="sd">        Si une liste est fournie, chaque élément correspond à un intervalle.</span>
+<span class="sd">    </span>
+<span class="sd">    cv : int ou list, default=0</span>
+<span class="sd">        Contrainte de convexité :</span>
+<span class="sd">        - 1 : fonction convexe</span>
+<span class="sd">        - -1 : fonction concave</span>
+<span class="sd">        - 0 : aucune contrainte</span>
+<span class="sd">        Si une liste est fournie, chaque élément correspond à un intervalle.</span>
+<span class="sd">    </span>
+<span class="sd">    der3 : int ou list, default=0</span>
+<span class="sd">        Contrainte sur la dérivée troisième :</span>
+<span class="sd">        - 1 : dérivée troisième positive</span>
+<span class="sd">        - -1 : dérivée troisième négative</span>
+<span class="sd">        - 0 : aucune contrainte</span>
+<span class="sd">        (Uniquement pour les splines de degré 3 et 4)</span>
+<span class="sd">    </span>
+<span class="sd">    solver : str, default=&#39;CLARABEL&#39;</span>
+<span class="sd">        Solveur CVXPY à utiliser. Options disponibles :</span>
+<span class="sd">        - &#39;CLARABEL&#39; (recommandé, gratuit)</span>
+<span class="sd">        - &#39;ECOS&#39;</span>
+<span class="sd">        - &#39;SCS&#39;</span>
+<span class="sd">        - &#39;GUROBI&#39; (payant, nécessite une licence)</span>
+<span class="sd">        - &#39;MOSEK&#39; (payant, nécessite une licence)</span>
+<span class="sd">        - &#39;CVXOPT&#39;</span>
+<span class="sd">    </span>
+<span class="sd">    weight : array-like, optional</span>
+<span class="sd">        Poids des observations pour la régression pondérée.</span>
+<span class="sd">        Si None, tous les poids sont égaux à 1.</span>
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        Si le degré n&#39;est pas compris entre 1 et 4.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    callable</span>
+<span class="sd">        Fonction spline résultante. Elle peut être évaluée en tout point x :</span>
+<span class="sd">        &gt;&gt;&gt; y_eval = spline_result(x_eval)</span>
+<span class="sd">    </span>
+<span class="sd">       </span>
+<span class="sd">    Exemples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from BsplineQuantRegpy import quantile_spline</span>
+<span class="sd">    &gt;&gt;&gt; </span>
+<span class="sd">    &gt;&gt;&gt; # Générer des données</span>
+<span class="sd">    &gt;&gt;&gt; x = np.linspace(0, 1, 100)</span>
+<span class="sd">    &gt;&gt;&gt; y = 2*x + 0.2*np.sin(10*np.pi*x) + 0.05*np.random.randn(100)</span>
+<span class="sd">    &gt;&gt;&gt; knots = np.quantile(x, np.linspace(0, 1, 11))</span>
+<span class="sd">    &gt;&gt;&gt; </span>
+<span class="sd">    &gt;&gt;&gt; # Régression avec spline cubique et contrainte croissante</span>
+<span class="sd">    &gt;&gt;&gt; result = quantile_spline(x, y, knots, tau=0.5, degree=3, monot=1)</span>
+<span class="sd">    &gt;&gt;&gt; </span>
+<span class="sd">    &gt;&gt;&gt; # Régression avec spline quadratique et contrainte convexe</span>
+<span class="sd">    &gt;&gt;&gt; result = quantile_spline(x, y, knots, tau=0.5, degree=2, cv=1)</span>
+<span class="sd">    &gt;&gt;&gt; </span>
+<span class="sd">    &gt;&gt;&gt; # Régression avec spline quartique et toutes les contraintes</span>
+<span class="sd">    &gt;&gt;&gt; result = quantile_spline(x, y, knots, tau=0.5, degree=4, </span>
+<span class="sd">    ...                          monot=1, cv=1, der3=1)</span>
+<span class="sd">    &gt;&gt;&gt; </span>
+<span class="sd">    &gt;&gt;&gt; # Évaluer la spline</span>
+<span class="sd">    &gt;&gt;&gt; x_eval = np.linspace(0, 1, 200)</span>
+<span class="sd">    &gt;&gt;&gt; y_eval = result(x_eval)</span>
+<span class="sd">    </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Les contraintes de monotonie pour les degrés 3 et 4 sont implémentées</span>
+<span class="sd">    via la caractérisation de Karlin-Studden (1966) pour les polynômes</span>
+<span class="sd">    positifs de degrés 2 et 3, ce sont des contraintes quadratiques.</span>
+<span class="sd">    Les autres contraintes sont lineaires.</span>
+<span class="sd">    Le problème d&#39;optimisation est formulé comme un problème</span>
+<span class="sd">    de programmation conique du second ordre (SOCP) et résolu avec CVXPY.</span>
+<span class="sd">    </span>
+<span class="sd">    Références</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Karlin, S., &amp; Studden, W.J. (1966). Tchebycheff Systems:</span>
+<span class="sd">    With Applications in Analysis and Statistics. Interscience Publishers.</span>
+<span class="sd">    </span>
+<span class="sd">    He, X., &amp; Shi, P. (1998). Monotone B-spline smoothing.</span>
+<span class="sd">    Journal of the American Statistical Association, 93(442), 643-650.</span>
+
+<span class="sd">    Abbes, A. (2025). Quantile regression with cubic polynomial splines </span>
+<span class="sd">    under shape constraints with applications. </span>
+<span class="sd">    doi:10.5281/zenodo.17427913</span>
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    SplineLinearQuant, SplineQuadraticQuant, SplineCubicQuant, SplineQuarticQuant</span>
+
+<span class="sd">    statsmodels.regression.quantile_regression.QuantReg (Python)</span>
+<span class="sd">    </span>
+<span class="sd">    BsplineQuantReg (R) : https://cran.r-project.org/package=BsplineQuantReg</span>
+<span class="sd">    cobs (R) : https://cran.r-project.org/package=cobs</span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="n">degree</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">SplineLinearQuant</span><span class="p">(</span><span class="n">xtab</span><span class="p">,</span> <span class="n">ytab</span><span class="o">=</span><span class="n">ytab</span><span class="p">,</span> <span class="n">knots</span><span class="o">=</span><span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="n">tau</span><span class="p">,</span> 
+                                 <span class="n">monot</span><span class="o">=</span><span class="n">monot</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">degree</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">SplineQuadraticQuant</span><span class="p">(</span><span class="n">xtab</span><span class="p">,</span> <span class="n">ytab</span><span class="o">=</span><span class="n">ytab</span><span class="p">,</span> <span class="n">knots</span><span class="o">=</span><span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="n">tau</span><span class="p">,</span> 
+                                    <span class="n">monot</span><span class="o">=</span><span class="n">monot</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">degree</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">SplineCubicQuant</span><span class="p">(</span><span class="n">xtab</span><span class="p">,</span> <span class="n">ytab</span><span class="o">=</span><span class="n">ytab</span><span class="p">,</span> <span class="n">knots</span><span class="o">=</span><span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="n">tau</span><span class="p">,</span> 
+                                <span class="n">monot</span><span class="o">=</span><span class="n">monot</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">der3</span><span class="o">=</span><span class="n">der3</span><span class="p">,</span> 
+                                <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">degree</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">SplineQuarticQuant</span><span class="p">(</span><span class="n">xtab</span><span class="p">,</span> <span class="n">ytab</span><span class="o">=</span><span class="n">ytab</span><span class="p">,</span> <span class="n">knots</span><span class="o">=</span><span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="n">tau</span><span class="p">,</span> 
+                                  <span class="n">monot</span><span class="o">=</span><span class="n">monot</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">der3</span><span class="o">=</span><span class="n">der3</span><span class="p">,</span> 
+                                  <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Le degré doit être compris entre 1 et 4. Reçu: </span><span class="si">{</span><span class="n">degree</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+    <span class="k">if</span> <span class="n">degree</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+           <span class="k">return</span> <span class="n">SplineLinearQuant</span><span class="p">(</span><span class="n">xtab</span><span class="p">,</span> <span class="n">ytab</span><span class="o">=</span><span class="n">ytab</span><span class="p">,</span> <span class="n">knots</span><span class="o">=</span><span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="n">tau</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="n">monot</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">degree</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+           <span class="k">return</span> <span class="n">SplineQuadraticQuant</span><span class="p">(</span><span class="n">xtab</span><span class="p">,</span> <span class="n">ytab</span><span class="o">=</span><span class="n">ytab</span><span class="p">,</span> <span class="n">knots</span><span class="o">=</span><span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="n">tau</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="n">monot</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">degree</span><span class="o">==</span><span class="mi">3</span><span class="p">:</span>
+           <span class="k">return</span> <span class="n">SplineCubicQuant</span><span class="p">(</span><span class="n">xtab</span><span class="p">,</span> <span class="n">ytab</span><span class="o">=</span><span class="n">ytab</span><span class="p">,</span> <span class="n">knots</span><span class="o">=</span><span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="n">tau</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="n">monot</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span><span class="n">der3</span><span class="o">=</span><span class="n">der3</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">degree</span><span class="o">==</span><span class="mi">4</span><span class="p">:</span>
+           <span class="k">return</span> <span class="n">SplineQuarticQuant</span><span class="p">(</span><span class="n">xtab</span><span class="p">,</span> <span class="n">ytab</span><span class="o">=</span><span class="n">ytab</span><span class="p">,</span> <span class="n">knots</span><span class="o">=</span><span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="n">tau</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="n">monot</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">der3</span><span class="o">=</span><span class="n">der3</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">weight</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Alexandre Abbes.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

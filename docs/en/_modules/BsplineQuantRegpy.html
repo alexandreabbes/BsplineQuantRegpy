@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BsplineQuantRegpy &mdash; BsplineQuantRegpy 1.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/documentation_options.js?v=292eb321"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            BsplineQuantRegpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">BsplineQuantRegpy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BsplineQuantRegpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">BsplineQuantRegpy</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for BsplineQuantRegpy</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">BsplineQuantRegpy - Quantile Regression with Constrained B-Splines</span>
+<span class="sd">==================================================================</span>
+
+<span class="sd">Package pour la régression quantile avec splines sous contraintes</span>
+<span class="sd">de forme (monotonie, convexité, dérivée troisième).</span>
+
+<span class="sd">Auteur: Alexandre Abbes</span>
+<span class="sd">Version: 1.0.1</span>
+<span class="sd">Licence: GPLv3</span>
+
+<span class="sd">DESCRIPTION</span>
+<span class="sd">-----------</span>
+<span class="sd">Ce package implémente la régression quantile avec des B-splines</span>
+<span class="sd">de degrés 1 à 4, sous contraintes de forme (monotonie, convexité,</span>
+<span class="sd">dérivée troisième). Les contraintes sont appliquées via la</span>
+<span class="sd">caractérisation de Karlin-Studden, formulée comme un problème</span>
+<span class="sd">de programmation conique du second ordre (SOCP).</span>
+
+<span class="sd">Ce package utilise les bibliothèques B-spline de SciPy pour la</span>
+<span class="sd">construction des splines et CVXPY pour l&#39;optimisation SOCP.</span>
+
+<span class="sd">PACKAGES RELIÉS</span>
+<span class="sd">---------------</span>
+<span class="sd">Ce package est le l&#39;équivalent Python de **BsplineQuantReg** (R),</span>
+<span class="sd">disponible sur le CRAN (https://cran.r-project.org/package=BsplineQuantReg).</span>
+
+<span class="sd">Le package R **BsplineQuantReg** propose des splines cubiques</span>
+<span class="sd">avec contraintes et est entièrement self-contained (calculs de</span>
+<span class="sd">splines et polynômes intégrés). Il est lui-même complémentaire</span>
+<span class="sd">de **cobs** (Constrained B-Splines) qui traite les splines</span>
+<span class="sd">linéaires et quadratiques.</span>
+
+<span class="sd">Contrairement à cobs (R) qui ne traite que des splines quadratiques,</span>
+<span class="sd">ce package (Python)  étend la méthode aux splines cubiques et quartiques avec des contraintes exactes sur tout l&#39;intervalle (pas seulement aux nœuds).</span>
+
+<span class="sd">Packages R associés :</span>
+<span class="sd">- **BsplineQuantReg** (R) : Splines cubiques contraintes, self-contained</span>
+<span class="sd">  https://cran.r-project.org/package=BsplineQuantReg</span>
+<span class="sd">- **cobs** (R) : Constrained B-Splines Smoothing (linéaires et quadratiques)</span>
+<span class="sd">  https://cran.r-project.org/package=cobs</span>
+<span class="sd">- **quantreg** (R) : Quantile Regression (splines linéaires uniquement)</span>
+<span class="sd">  https://cran.r-project.org/package=quantreg</span>
+
+<span class="sd">FONCTIONNALITÉS</span>
+<span class="sd">---------------</span>
+<span class="sd">- Régression quantile avec splines de degré 1 à 4</span>
+<span class="sd">- Contraintes de monotonie (croissant/décroissant)</span>
+<span class="sd">- Contraintes de convexité (convexe/concave)</span>
+<span class="sd">- Contraintes sur la dérivée troisième</span>
+<span class="sd">- Contraintes uniformes ou par région</span>
+<span class="sd">- Interface graphique (Tkinter)</span>
+<span class="sd">- Multiples solveurs supportés (CLARABEL, ECOS, SCS, MOSEK)</span>
+
+<span class="sd">MODULES</span>
+<span class="sd">-------</span>
+<span class="sd">core/           - Construction des B-splines et contraintes de Karlin</span>
+<span class="sd">models/         - Fonctions de régression quantile (degrés 1 à 4)</span>
+<span class="sd">gui/            - Interface graphique Tkinter</span>
+<span class="sd">examples/       - Exemples d&#39;utilisation</span>
+
+<span class="sd">FONCTIONS PRINCIPALES</span>
+<span class="sd">---------------------</span>
+<span class="sd">SplineLinearQuant      - Régression avec splines linéaires (degré 1)</span>
+<span class="sd">SplineQuadraticQuant   - Régression avec splines quadratiques (degré 2)</span>
+<span class="sd">SplineCubicQuant       - Régression avec splines cubiques (degré 3)</span>
+<span class="sd">SplineQuarticQuant     - Régression avec splines quartiques (degré 4)</span>
+<span class="sd">quantile_spline        - Interface unifiée pour tous les degrés</span>
+<span class="sd">run_gui                - Lance l&#39;interface graphique</span>
+
+<span class="sd">EXEMPLES</span>
+<span class="sd">--------</span>
+<span class="sd">&gt;&gt;&gt; import numpy as np</span>
+<span class="sd">&gt;&gt;&gt; from BsplineQuantRegpy import SplineCubicQuant, run_gui</span>
+<span class="sd">&gt;&gt;&gt; </span>
+<span class="sd">&gt;&gt;&gt; # Générer des données</span>
+<span class="sd">&gt;&gt;&gt; x = np.linspace(0, 1, 100)</span>
+<span class="sd">&gt;&gt;&gt; y = 3*x + 0.2*np.sin(10*np.pi*x) + 0.05*np.random.randn(100)</span>
+<span class="sd">&gt;&gt;&gt; knots = np.quantile(x, np.linspace(0, 1, 11))</span>
+<span class="sd">&gt;&gt;&gt; </span>
+<span class="sd">&gt;&gt;&gt; # Régression avec contrainte croissante</span>
+<span class="sd">&gt;&gt;&gt; result = SplineCubicQuant(x, y, knots, tau=0.5, monot=1)</span>
+<span class="sd">&gt;&gt;&gt; </span>
+<span class="sd">&gt;&gt;&gt; # Évaluer la spline</span>
+<span class="sd">&gt;&gt;&gt; x_eval = np.linspace(0, 1, 200)</span>
+<span class="sd">&gt;&gt;&gt; y_eval = result(x_eval)</span>
+<span class="sd">&gt;&gt;&gt; </span>
+<span class="sd">&gt;&gt;&gt; # Lancer l&#39;interface graphique</span>
+<span class="sd">&gt;&gt;&gt; run_gui()</span>
+
+<span class="sd">RÉFÉRENCES BIBLIOGRAPHIQUES</span>
+<span class="sd">---------------------------</span>
+<span class="sd">Abbes, A. (2025). Quantile regression with cubic polynomial splines </span>
+<span class="sd">under shape constraints with applications. </span>
+<span class="sd">doi:10.5281/zenodo.17427913</span>
+
+<span class="sd">He, X., &amp; Shi, P. (1998). Monotone B-spline smoothing.</span>
+<span class="sd">Journal of the American Statistical Association, 93(442), 643-650.</span>
+
+<span class="sd">Karlin, S., &amp; Studden, W.J. (1966). Tchebycheff Systems:</span>
+<span class="sd">With Applications in Analysis and Statistics. Interscience Publishers.</span>
+
+<span class="sd">Papp, D., &amp; Alizadeh, F. (2014). Shape-Constrained Estimation</span>
+<span class="sd">Using Nonnegative Splines. Journal of Computational and Graphical</span>
+<span class="sd">Statistics, 23(1), 211-231.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;1.0.1&quot;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Alexandre Abbes&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;alexandre.abbes@proton.me&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;GPLv3&quot;</span>
+
+<span class="c1"># ============ MODÈLES ============</span>
+<span class="kn">from</span> <span class="nn">.models.quantile_reg</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SplineLinearQuant</span><span class="p">,</span>
+    <span class="n">SplineQuadraticQuant</span><span class="p">,</span>
+    <span class="n">SplineCubicQuant</span><span class="p">,</span>
+    <span class="n">SplineQuarticQuant</span><span class="p">,</span>
+    <span class="n">quantile_spline</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># ============ CŒUR ============</span>
+<span class="kn">from</span> <span class="nn">.core.bases</span> <span class="kn">import</span> <span class="n">build_bsplines_and_deriv</span>
+<span class="kn">from</span> <span class="nn">.core.constraints</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">apply_karlin_constraints_cubic</span><span class="p">,</span>
+    <span class="n">apply_karlin_constraints_quadratic</span><span class="p">,</span>
+    <span class="n">apply_val_constraints</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># ============ EXEMPLES ============</span>
+<span class="kn">from</span> <span class="nn">.examples</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">run_logistic_example</span><span class="p">)</span>
+
+<span class="kn">from</span>    <span class="nn">.examples.quick_start</span> <span class="kn">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">quick_start</span>
+<span class="kn">from</span>    <span class="nn">.examples.quick_start2</span> <span class="kn">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">quick_start2</span>
+
+
+<span class="kn">from</span> <span class="nn">.examples.comparison_example</span> <span class="kn">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">run_comparison_example</span>
+
+<span class="kn">from</span> <span class="nn">.examples.example_temperature</span> <span class="kn">import</span> <span class="n">run_temperature_analysis</span> 
+
+<div class="viewcode-block" id="run_basic_example">
+<a class="viewcode-back" href="../bsplinequantregpy.html#BsplineQuantRegpy.run_basic_example">[docs]</a>
+<span class="k">def</span> <span class="nf">run_basic_example</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lance l&#39;exemple basique.&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.examples.example_basic</span> <span class="kn">import</span> <span class="n">test_all_degrees</span>
+    <span class="n">test_all_degrees</span><span class="p">()</span></div>
+
+
+<span class="c1">#def run_temperature_analysis(degree=3, tau=[0.1, 0.25, 0.5, 0.75, 0.9], solver=#&#39;CLARABEL&#39;):</span>
+<span class="c1">#    &quot;&quot;&quot;Lance l&#39;analyse des données de température.&quot;&quot;&quot;</span>
+<span class="c1">#    from .examples.example_temperature import run_temperature_analysis</span>
+<span class="c1">#    run_temperature_analysis(degree=degree, tau=tau, solver=solver)</span>
+
+
+<span class="c1"># ============ GUI ============</span>
+<div class="viewcode-block" id="run_gui">
+<a class="viewcode-back" href="../bsplinequantregpy.html#BsplineQuantRegpy.run_gui">[docs]</a>
+<span class="k">def</span> <span class="nf">run_gui</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Lance l&#39;interface graphique Tkinter.</span>
+<span class="sd">    </span>
+<span class="sd">    Cette fonction est le point d&#39;entrée principal pour l&#39;interface</span>
+<span class="sd">    graphique. Elle ouvre une fenêtre interactive permettant de :</span>
+<span class="sd">    - Charger des données</span>
+<span class="sd">    - Configurer les splines et les contraintes</span>
+<span class="sd">    - Lancer des régressions</span>
+<span class="sd">    - Visualiser et exporter les résultats</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    None</span>
+<span class="sd">        La fonction lance l&#39;interface et ne retourne rien.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from BsplineQuantRegpy import run_gui</span>
+<span class="sd">    &gt;&gt;&gt; run_gui()</span>
+<span class="sd">    </span>
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    BsplineQuantRegpy.gui.Quant_reg_tk : Module GUI complet</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="kn">from</span> <span class="nn">.gui.Quant_reg_tk</span> <span class="kn">import</span> <span class="n">main</span>
+    <span class="n">main</span><span class="p">()</span></div>
+
+
+
+
+<span class="c1"># ============ EXPORT ============</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Modèles</span>
+    <span class="s2">&quot;SplineLinearQuant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SplineQuadraticQuant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SplineCubicQuant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SplineQuarticQuant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;quantile_spline&quot;</span><span class="p">,</span>
+    <span class="c1"># Cœur</span>
+    <span class="s2">&quot;build_bsplines_and_deriv&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;apply_karlin_constraints_cubic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;apply_karlin_constraints_quadratic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;apply_val_constraints&quot;</span><span class="p">,</span>
+    <span class="c1"># Exemples</span>
+    <span class="s2">&quot;run_logistic_example&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;run_comparison_example&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;run_basic_example&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;run_temperature_analysis&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;quick_start&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;quick_start2&quot;</span><span class="p">,</span>
+    <span class="c1"># GUI</span>
+    <span class="s2">&quot;run_gui&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;BsplineQuantRegpy v</span><span class="si">{</span><span class="n">__version__</span><span class="si">}</span><span class="s2"> chargé&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Auteur: </span><span class="si">{</span><span class="n">__author__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fonctions disponibles: SplineLinearQuant, SplineQuadraticQuant, SplineCubicQuant, SplineQuarticQuant&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pour lancer la GUI: run_gui()&quot;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Alexandre Abbes.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

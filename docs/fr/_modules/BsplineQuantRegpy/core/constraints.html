@@ -1,0 +1,269 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BsplineQuantRegpy.core.constraints &mdash; Documentation BsplineQuantRegpy 1.0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../../_static/documentation_options.js?v=a1a25f23"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/translations.js?v=e6b791cb"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Recherche" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            BsplineQuantRegpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">BsplineQuantRegpy</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">BsplineQuantRegpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Code du module</a></li>
+          <li class="breadcrumb-item"><a href="../../BsplineQuantRegpy.html">BsplineQuantRegpy</a></li>
+      <li class="breadcrumb-item active">BsplineQuantRegpy.core.constraints</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Code source de BsplineQuantRegpy.core.constraints</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Alexandre Abbes&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright 2026, Alexandre Adel Abbes&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;GPL&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;1.0.1&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cvxpy</span> <span class="k">as</span> <span class="nn">cp</span>
+
+<div class="viewcode-block" id="apply_karlin_constraints_cubic">
+<a class="viewcode-back" href="../../../bsplinequantregpy.html#BsplineQuantRegpy.apply_karlin_constraints_cubic">[docs]</a>
+<span class="k">def</span> <span class="nf">apply_karlin_constraints_cubic</span><span class="p">(</span><span class="n">coeffs_cubic</span><span class="p">,</span> <span class="n">sign</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applique les contraintes de Karlin pour un polynôme cubique (dérivée première)</span>
+<span class="sd">    selon le théorème 3 de l&#39;article</span>
+<span class="sd">    </span>
+<span class="sd">    sign &gt; 0 : p(u) &gt;= 0 sur [0,1]</span>
+<span class="sd">    sign &lt; 0 : p(u) &lt;= 0 sur [0,1]  (soit -p(u) &gt;= 0)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">coeffs_cubic</span>
+    
+    <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">if</span> <span class="n">sign</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># p(u) &gt;= 0</span>
+        <span class="n">coeffs</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+        <span class="n">final_sign</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># p(u) &lt;= 0  &lt;=&gt;  -p(u) &gt;= 0</span>
+        <span class="n">coeffs</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">a</span><span class="p">,</span> <span class="o">-</span><span class="n">b</span><span class="p">,</span> <span class="o">-</span><span class="n">c</span><span class="p">,</span> <span class="o">-</span><span class="n">d</span><span class="p">)</span>  <span class="c1"># Les coefficients de -p(u)</span>
+        <span class="n">final_sign</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># On veut -p(u) &gt;= 0, donc signe positif</span>
+    
+    <span class="n">a1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">d1</span> <span class="o">=</span> <span class="n">coeffs</span>
+    
+    <span class="c1"># Variables auxiliaires selon le théorème 3</span>
+    <span class="n">y0</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">()</span>
+    <span class="n">y1</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">()</span>
+    <span class="n">y2</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">()</span>
+    <span class="n">x0</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">()</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">()</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">()</span>
+    
+    <span class="c1"># Équations (6a)-(6d) pour le polynôme (p ou -p selon le signe)</span>
+    <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d1</span> <span class="o">==</span> <span class="n">y0</span><span class="p">)</span>
+    <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c1</span> <span class="o">==</span> <span class="mi">2</span><span class="o">*</span><span class="n">y1</span> <span class="o">+</span> <span class="n">x0</span> <span class="o">-</span> <span class="n">y0</span><span class="p">)</span>
+    <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b1</span> <span class="o">==</span> <span class="n">y2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x1</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">y1</span><span class="p">)</span>
+    <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a1</span> <span class="o">==</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">y2</span><span class="p">)</span>
+    
+    <span class="c1"># Contraintes de cône second-order (6e)-(6f)</span>
+    <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">SOC</span><span class="p">(</span><span class="n">x0</span> <span class="o">+</span> <span class="n">x2</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">x0</span> <span class="o">-</span> <span class="n">x2</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">x1</span><span class="p">])))</span>
+    <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">SOC</span><span class="p">(</span><span class="n">y0</span> <span class="o">+</span> <span class="n">y2</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">y0</span> <span class="o">-</span> <span class="n">y2</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">y1</span><span class="p">])))</span>
+    
+    <span class="c1"># Conditions aux bornes (pour le polynôme transformé)</span>
+    <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d1</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a1</span> <span class="o">+</span> <span class="n">b1</span> <span class="o">+</span> <span class="n">c1</span> <span class="o">+</span> <span class="n">d1</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">constraints</span></div>
+
+
+<div class="viewcode-block" id="apply_karlin_constraints_cubic_bak">
+<a class="viewcode-back" href="../../../api/BsplineQuantRegpy.core.html#BsplineQuantRegpy.apply_karlin_constraints_cubic_bak">[docs]</a>
+<span class="k">def</span> <span class="nf">apply_karlin_constraints_cubic_bak</span><span class="p">(</span><span class="n">coeffs_cubic</span><span class="p">,</span> <span class="n">monot_sign</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applique les contraintes de Karlin pour un polynôme cubique (dérivée première)</span>
+<span class="sd">    selon le théorème 3 de l&#39;article</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># coeffs_cubic = [a, b, c, d] pour a*u^3 + b*u^2 + c*u + d</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">coeffs_cubic</span>
+    
+    <span class="c1"># Variables auxiliaires selon le théorème 3</span>
+    <span class="n">y0</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">()</span>
+    <span class="n">y1</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">()</span>
+    <span class="n">y2</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">()</span>
+    <span class="n">x0</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">()</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">()</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">()</span>
+    
+    <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># Équations (6a)-(6d) adaptées pour un polynôme cubique</span>
+    <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span> <span class="o">==</span> <span class="n">y0</span><span class="p">)</span>
+    <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span> <span class="o">==</span> <span class="mi">2</span><span class="o">*</span><span class="n">y1</span> <span class="o">+</span> <span class="n">x0</span> <span class="o">-</span> <span class="n">y0</span><span class="p">)</span>
+    <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="n">y2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x1</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">y1</span><span class="p">)</span>
+    <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">y2</span><span class="p">)</span>
+    
+    <span class="c1"># Contraintes de cône second-order (6e)-(6f)</span>
+    <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">SOC</span><span class="p">(</span><span class="n">x0</span> <span class="o">+</span> <span class="n">x2</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">x0</span> <span class="o">-</span> <span class="n">x2</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">x1</span><span class="p">])))</span>
+    <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">SOC</span><span class="p">(</span><span class="n">y0</span> <span class="o">+</span> <span class="n">y2</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">y0</span> <span class="o">-</span> <span class="n">y2</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">y1</span><span class="p">])))</span>
+    
+    <span class="c1"># Pour la monotonie: si monot_sign &gt; 0, p(u) &gt;= 0 pour u ∈ [0,1]</span>
+    <span class="c1"># si monot_sign &lt; 0, -p(u) &gt;= 0 pour u ∈ [0,1]</span>
+    <span class="k">if</span> <span class="n">monot_sign</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># p(0) = d &gt;= 0 et p(1) = a + b + c + d &gt;= 0</span>
+        <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="o">+</span> <span class="n">d</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">monot_sign</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># -p(0) = -d &gt;= 0 et -p(1) = -(a + b + c + d) &gt;= 0</span>
+        <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="n">d</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="o">+</span> <span class="n">d</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">constraints</span></div>
+
+
+<div class="viewcode-block" id="apply_karlin_constraints_quadratic">
+<a class="viewcode-back" href="../../../bsplinequantregpy.html#BsplineQuantRegpy.apply_karlin_constraints_quadratic">[docs]</a>
+<span class="k">def</span> <span class="nf">apply_karlin_constraints_quadratic</span><span class="p">(</span><span class="n">coeffs_quad</span><span class="p">,</span> <span class="n">const_sign</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applique les contraintes de Karlin pour un polynôme quadratique (dérivée seconde)</span>
+<span class="sd">    selon la Proposition 5 du document PDF</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># coeffs_quad = [a, b, c] pour a*u^2 + b*u + c</span>
+    <span class="c1"># Note: selon la notation du PDF: p(x) = p0 + p1*x + p2*x^2</span>
+    <span class="c1"># Donc: p0 = c, p1 = b, p2 = a</span>
+    <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">coeffs_quad</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">coeffs_quad</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">coeffs_quad</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1">#Karlin&#39;s matrices</span>
+    <span class="n">K1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">K2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    
+    <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">if</span> <span class="n">const_sign</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># Variable auxiliaire z0 &gt;= 0</span>
+        <span class="n">z0</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">Variable</span><span class="p">()</span>
+        <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">z0</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">P</span><span class="o">=</span><span class="n">const_sign</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">p0</span><span class="p">,</span><span class="n">p1</span><span class="p">,</span><span class="n">p2</span><span class="p">,</span><span class="n">const_sign</span><span class="o">*</span><span class="n">z0</span><span class="p">])</span>
+        <span class="n">x1</span> <span class="o">=</span>    <span class="n">K2</span><span class="nd">@P</span>
+        <span class="p">[</span><span class="n">x2</span><span class="p">,</span><span class="n">x3</span><span class="p">]</span><span class="o">=</span><span class="n">K1</span><span class="nd">@P</span>
+            
+        <span class="c1"># Pour cv_sign &gt; 0: p(x) &gt;= 0 sur [0,1]</span>
+        <span class="c1">#if cv_sign &gt; 0:</span>
+            <span class="c1"># Selon Proposition 5: (p0 + p2 + z0, p0 - p2 - z0, p1 - z0) ∈ Q3</span>
+            <span class="c1">#x1 = p0 + p2 + z0</span>
+            <span class="c1">#x2 = p0 - p2 - z0</span>
+            <span class="c1">#x3 = p1 - z0</span>
+        <span class="c1">#    P=cv_sign*np.array([p0,p1,p2,cv_sign*z0])</span>
+        <span class="c1">#    x1 =    K2@P</span>
+        <span class="c1">#    [x2,x3]=K1@P</span>
+            
+            <span class="c1"># Contrainte SOC: x1 &gt;= ||(x2, x3)||_2</span>
+        <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">SOC</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">])))</span>  
+    
+    <span class="k">return</span> <span class="n">constraints</span></div>
+
+
+
+<div class="viewcode-block" id="apply_val_constraints">
+<a class="viewcode-back" href="../../../bsplinequantregpy.html#BsplineQuantRegpy.apply_val_constraints">[docs]</a>
+<span class="k">def</span> <span class="nf">apply_val_constraints</span><span class="p">(</span><span class="n">const</span><span class="p">,</span> <span class="n">sign</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applique les contraintes pour un polynôme linéaire (dérivée troisième)</span>
+<span class="sd">    p(u) = a*u + b &gt;= 0 (ou &lt;= 0) pour u ∈ [0,1]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">if</span> <span class="n">sign</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># p(u) &gt;= 0 sur [0,1] ↔ min(p(0), p(1)) &gt;= 0</span>
+        <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">const</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>      <span class="c1"># p(0) &gt;= 0</span>
+        <span class="c1">#constraints.append(a + b &gt;= 0)  # p(1) &gt;= 0</span>
+    <span class="k">elif</span> <span class="n">sign</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># p(u) &lt;= 0 sur [0,1] ↔ max(p(0), p(1)) &lt;= 0</span>
+        <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">const</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>      <span class="c1"># p(0) &lt;= 0</span>
+        <span class="c1">#constraints.append(a + b &lt;= 0)  # p(1) &lt;= 0</span>
+    
+    <span class="k">return</span> <span class="n">constraints</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Alexandre Abbes.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

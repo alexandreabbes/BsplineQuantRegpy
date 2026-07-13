@@ -1,0 +1,675 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BsplineQuantRegpy.models package &mdash; BsplineQuantRegpy 1.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/documentation_options.js?v=292eb321"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="BsplineQuantRegpy.gui package" href="BsplineQuantRegpy.gui.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            BsplineQuantRegpy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">BsplineQuantRegpy</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="BsplineQuantRegpy.html">BsplineQuantRegpy package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="BsplineQuantRegpy.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.core.html">BsplineQuantRegpy.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.examples.html">BsplineQuantRegpy.examples package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="BsplineQuantRegpy.gui.html">BsplineQuantRegpy.gui package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">BsplineQuantRegpy.models package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="BsplineQuantRegpy.html#module-BsplineQuantRegpy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BsplineQuantRegpy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">BsplineQuantRegpy</a></li>
+          <li class="breadcrumb-item"><a href="BsplineQuantRegpy.html">BsplineQuantRegpy package</a></li>
+      <li class="breadcrumb-item active">BsplineQuantRegpy.models package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/BsplineQuantRegpy.models.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="bsplinequantregpy-models-package">
+<h1>BsplineQuantRegpy.models package<a class="headerlink" href="#bsplinequantregpy-models-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-BsplineQuantRegpy.models.quantile_reg">
+<span id="bsplinequantregpy-models-quantile-reg-module"></span><h2>BsplineQuantRegpy.models.quantile_reg module<a class="headerlink" href="#module-BsplineQuantRegpy.models.quantile_reg" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.models.quantile_reg.rhotau">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.models.quantile_reg.</span></span><span class="sig-name descname"><span class="pre">rhotau</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/models/quantile_reg.html#rhotau"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.models.quantile_reg.rhotau" title="Link to this definition">¶</a></dt>
+<dd><p>Fonction de perte quantile (check function).</p>
+<p>La fonction de perte quantile, également appelée fonction de vérification,
+est définie par ρ_τ(u) = u * (τ - 1_{u &lt; 0}). Elle est utilisée comme
+fonction objectif en régression quantile.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>u</strong> (<em>cvxpy.Expression</em>) – Résidus (valeurs réelles ou expressions CVXPY)</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>0 &lt; tau &lt; 1</em>) – Paramètre quantile</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Somme des pertes quantiles</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>cvxpy.Expression</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>La fonction est convexe et linéaire par morceaux.
+Pour τ = 0.5, elle correspond à l’erreur absolue médiane.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.models.quantile_reg.SplineLinearQuant">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.models.quantile_reg.</span></span><span class="sig-name descname"><span class="pre">SplineLinearQuant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xtab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/models/quantile_reg.html#SplineLinearQuant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.models.quantile_reg.SplineLinearQuant" title="Link to this definition">¶</a></dt>
+<dd><p>Régression quantile avec B-splines de degré 1 (affines par morceaux)
+et contraintes de monotonie.</p>
+<p>Les splines linéaires sont des fonctions continues et linéaires sur chaque
+intervalle entre les nœuds. La monotonie est contrôlée par le signe de
+la dérivée (constante par morceaux).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xtab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>ytab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>knots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Nombre de nœuds ou liste des nœuds</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Paramètre quantile (entre 0 et 1)</p></li>
+<li><p><strong>monot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>default=0</em>) – Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)</p></li>
+<li><p><strong>solver</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default='CLARABEL'</em>) – Solveur CVXPY à utiliser</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Poids des observations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>polyn</strong> – Fonction spline résultante (degré 1)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>BSpline object</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy</span> <span class="kn">import</span> <span class="n">SplineLinearQuant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">SplineLinearQuant</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">result</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.models.quantile_reg.</span></span><span class="sig-name descname"><span class="pre">SplineQuadraticQuant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xtab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/models/quantile_reg.html#SplineQuadraticQuant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant" title="Link to this definition">¶</a></dt>
+<dd><p>Régression quantile avec B-splines de degré 2 et contraintes de forme.</p>
+<p>Les splines quadratiques sont des fonctions continues, dérivables une fois,
+et quadratiques sur chaque intervalle entre les nœuds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xtab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>ytab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>knots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Nombre de nœuds ou liste des nœuds</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Paramètre quantile (entre 0 et 1)</p></li>
+<li><p><strong>monot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>default=0</em>) – Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)</p></li>
+<li><p><strong>cv</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>default=0</em>) – Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)</p></li>
+<li><p><strong>solver</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default='CLARABEL'</em>) – Solveur CVXPY à utiliser</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Poids des observations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>polyn</strong> – Fonction spline résultante (degré 2)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>BSpline object</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>-Pour une spline quadratique, la monotonie sur chaque intervalle est
+implémentée par des contraintes suffisantes et nécessaires aux noeuds
+de la dérivée affine par morceaux.
+-La convexité est contrôlée par le signe d’un point quelconque de
+chaque intervalle (la dérivée seconde est constante par morceaux).
+L’ensemble des contraintes est un problème linéaire.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy</span> <span class="kn">import</span> <span class="n">SplineQuadraticQuant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">SplineQuadraticQuant</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.models.quantile_reg.</span></span><span class="sig-name descname"><span class="pre">SplineCubicQuant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xtab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">der3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/models/quantile_reg.html#SplineCubicQuant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant" title="Link to this definition">¶</a></dt>
+<dd><p>Régression quantile avec B-splines cubiques et contraintes de forme.
+Les splines cubiques sont des fonctions continues, deux fois dérivables,
+et cubiques sur chaque intervalle entre les nœuds.
+:param xtab: Données x et y
+:type xtab: array-like
+:param ytab: Données x et y
+:type ytab: array-like
+:param knots: Nombre de nœuds ou liste des nœuds
+:type knots: int or list
+:param tau: Paramètre quantile
+:type tau: float
+:param monot: Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)
+:type monot: int or list, default=0
+:param cv: Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)
+:type cv: int or list, default=0
+:param der3: Contrainte sur la dérivée troisième (+1 positive, -1 négative, 0 aucune)
+:type der3: int or list, default=0
+:param solver: Solveur CVXPY à utiliser
+:type solver: str, default=’CLARABEL’
+:param weight: Poids des observations
+:type weight: array-like, optional</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>polyn</strong> – Fonction spline résultante (degré 3)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>BSpline object</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Les contraintes de monotonie sont implémentées via la caractérisation de Karlin-Studden (1966)</p></li>
+</ul>
+<p>du signe des polynômes positifs de degré 2.
+- Les contraintes de convexité sont implémentéee par le signe de la dérivée seconde affine
+par morceaux aux noeud.
+- Les contraintes de dérivée troisième (constante par morceaux) sont implémentées par
+le signe d’un point quelconque de chque intervalle.</p>
+<section id="exemples">
+<h3>Exemples<a class="headerlink" href="#exemples" title="Link to this heading">¶</a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy</span> <span class="kn">import</span> <span class="n">SplineCubicQuant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">SplineCubicQuant</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.models.quantile_reg.</span></span><span class="sig-name descname"><span class="pre">SplineQuarticQuant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xtab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">der3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/models/quantile_reg.html#SplineQuarticQuant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant" title="Link to this definition">¶</a></dt>
+<dd><p>Régression quantile avec B-splines de degré 4 et contraintes de forme.</p>
+<p>Les splines quartiques sont des fonctions continues, trois fois dérivables,
+et quartiques sur chaque intervalle entre les nœuds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xtab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>ytab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>knots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Nombre de nœuds ou liste des nœuds</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Paramètre quantile</p></li>
+<li><p><strong>monot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)</p></li>
+<li><p><strong>cv</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)</p></li>
+<li><p><strong>der3</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>optional</em>) – Contrainte sur la dérivée troisième (+1 positive, -1 négative, 0 aucune)</p></li>
+<li><p><strong>solver</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default='CLARABEL'</em>) – Solveur CVXPY à utiliser</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Poids des observations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>polyn</strong> – Fonction spline résultante (degré 4)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>BSpline object</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>-Les contraintes monotones (resp. convexes) sont implémentées
+via la caractérisation de Karlin-Studden (1966) pour les polynômes
+positifs de degré 3 (resp degré 2). Le problème d’optimisation est formulé comme un problème
+de programmation conique du second ordre (SOCP) et résolu avec CVXPY.</p>
+<ul class="simple">
+<li><p>La dérivée troisième étant affine par morceaux, les contraintes sont</p></li>
+</ul>
+<p>implémentées aux noeuds (problèmes linéaire).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy</span> <span class="kn">import</span> <span class="n">SplineQuarticQuant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">SplineQuarticQuant</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.models.quantile_reg.quantile_spline">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.models.quantile_reg.</span></span><span class="sig-name descname"><span class="pre">quantile_spline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xtab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">der3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/models/quantile_reg.html#quantile_spline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.models.quantile_reg.quantile_spline" title="Link to this definition">¶</a></dt>
+<dd><p>Cette fonction permet d’appeler la régression quantile pour tous les degrés
+de splines (1 à 4) avec une interface unique. Elle redirige vers la fonction
+appropriée selon le degré choisi.</p>
+<section id="parametres">
+<h3>Paramètres<a class="headerlink" href="#parametres" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>xtab<span class="classifier">array-like, shape (n,)</span></dt><dd><p>Variables indépendantes (abscisses). Doivent être dans l’intervalle [0, 1].</p>
+</dd>
+<dt>ytab<span class="classifier">array-like, shape (n,)</span></dt><dd><p>Variables dépendantes (ordonnées).</p>
+</dd>
+<dt>knots<span class="classifier">array-like</span></dt><dd><p>Positions des nœuds pour la base B-spline.
+Si un entier est fourni, il est interprété comme le nombre de nœuds.</p>
+</dd>
+<dt>tau<span class="classifier">float, 0 &lt; tau &lt; 1</span></dt><dd><p>Quantile à estimer. Par exemple:
+- tau = 0.5 : médiane
+- tau = 0.1 : quantile inférieur
+- tau = 0.9 : quantile supérieur</p>
+</dd>
+<dt>degree<span class="classifier">int, default=3</span></dt><dd><p>Degré de la spline :
+- 1 : linéaire (affine par morceaux)
+- 2 : quadratique
+- 3 : cubique
+- 4 : quartique</p>
+</dd>
+<dt>monot<span class="classifier">int ou list, default=0</span></dt><dd><p>Contrainte de monotonie :
+- 1 : fonction croissante
+- -1 : fonction décroissante
+- 0 : aucune contrainte
+Si une liste est fournie, chaque élément correspond à un intervalle.</p>
+</dd>
+<dt>cv<span class="classifier">int ou list, default=0</span></dt><dd><p>Contrainte de convexité :
+- 1 : fonction convexe
+- -1 : fonction concave
+- 0 : aucune contrainte
+Si une liste est fournie, chaque élément correspond à un intervalle.</p>
+</dd>
+<dt>der3<span class="classifier">int ou list, default=0</span></dt><dd><p>Contrainte sur la dérivée troisième :
+- 1 : dérivée troisième positive
+- -1 : dérivée troisième négative
+- 0 : aucune contrainte
+(Uniquement pour les splines de degré 3 et 4)</p>
+</dd>
+<dt>solver<span class="classifier">str, default=’CLARABEL’</span></dt><dd><p>Solveur CVXPY à utiliser. Options disponibles :
+- ‘CLARABEL’ (recommandé, gratuit)
+- ‘ECOS’
+- ‘SCS’
+- ‘GUROBI’ (payant, nécessite une licence)
+- ‘MOSEK’ (payant, nécessite une licence)
+- ‘CVXOPT’</p>
+</dd>
+<dt>weight<span class="classifier">array-like, optional</span></dt><dd><p>Poids des observations pour la régression pondérée.
+Si None, tous les poids sont égaux à 1.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">raises ValueError<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Si le degré n’est pas compris entre 1 et 4.</p>
+</dd>
+<dt class="field-even">returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Fonction spline résultante. Elle peut être évaluée en tout point x :
+&gt;&gt;&gt; y_eval = spline_result(x_eval)</p>
+</dd>
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>callable</p>
+</dd>
+</dl>
+</section>
+<section id="id1">
+<h3>Exemples<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy</span> <span class="kn">import</span> <span class="n">quantile_spline</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Générer des données</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">10</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.05</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Régression avec spline cubique et contrainte croissante</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">quantile_spline</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Régression avec spline quadratique et contrainte convexe</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">quantile_spline</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Régression avec spline quartique et toutes les contraintes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">quantile_spline</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="gp">... </span>                         <span class="n">monot</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">der3</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Évaluer la spline</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x_eval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_eval</span> <span class="o">=</span> <span class="n">result</span><span class="p">(</span><span class="n">x_eval</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>Les contraintes de monotonie pour les degrés 3 et 4 sont implémentées
+via la caractérisation de Karlin-Studden (1966) pour les polynômes
+positifs de degrés 2 et 3, ce sont des contraintes quadratiques.
+Les autres contraintes sont lineaires.
+Le problème d’optimisation est formulé comme un problème
+de programmation conique du second ordre (SOCP) et résolu avec CVXPY.</p>
+</section>
+<section id="references">
+<h3>Références<a class="headerlink" href="#references" title="Link to this heading">¶</a></h3>
+<p>Karlin, S., &amp; Studden, W.J. (1966). Tchebycheff Systems:
+With Applications in Analysis and Statistics. Interscience Publishers.</p>
+<p>He, X., &amp; Shi, P. (1998). Monotone B-spline smoothing.
+Journal of the American Statistical Association, 93(442), 643-650.</p>
+<p>Abbes, A. (2025). Quantile regression with cubic polynomial splines
+under shape constraints with applications.
+doi:10.5281/zenodo.17427913</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#BsplineQuantRegpy.models.quantile_reg.SplineLinearQuant" title="BsplineQuantRegpy.models.quantile_reg.SplineLinearQuant"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplineLinearQuant</span></code></a>, <a class="reference internal" href="#BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant" title="BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplineQuadraticQuant</span></code></a>, <a class="reference internal" href="#BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant" title="BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplineCubicQuant</span></code></a>, <a class="reference internal" href="#BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant" title="BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplineQuarticQuant</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">statsmodels.regression.quantile_regression.QuantReg</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">BsplineQuantReg</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">cobs</span></code></p>
+</div>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-BsplineQuantRegpy.models">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-BsplineQuantRegpy.models" title="Link to this heading">¶</a></h2>
+<p>Models module - Régressions quantile avec B-splines de degré 1 à 4</p>
+<p>Fonctions exportées:
+- SplineLinearQuant : Régression avec splines linéaires
+- SplineQuadraticQuant : Régression avec splines quadratiques
+- SplineCubicQuant : Régression avec splines cubiques
+- SplineQuarticQuant : Régression avec splines quartiques
+- quantile_spline : Interface unifiée</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.models.SplineLinearQuant">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.models.</span></span><span class="sig-name descname"><span class="pre">SplineLinearQuant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xtab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/models/quantile_reg.html#SplineLinearQuant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.models.SplineLinearQuant" title="Link to this definition">¶</a></dt>
+<dd><p>Régression quantile avec B-splines de degré 1 (affines par morceaux)
+et contraintes de monotonie.</p>
+<p>Les splines linéaires sont des fonctions continues et linéaires sur chaque
+intervalle entre les nœuds. La monotonie est contrôlée par le signe de
+la dérivée (constante par morceaux).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xtab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>ytab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>knots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Nombre de nœuds ou liste des nœuds</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Paramètre quantile (entre 0 et 1)</p></li>
+<li><p><strong>monot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>default=0</em>) – Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)</p></li>
+<li><p><strong>solver</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default='CLARABEL'</em>) – Solveur CVXPY à utiliser</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Poids des observations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>polyn</strong> – Fonction spline résultante (degré 1)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>BSpline object</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy</span> <span class="kn">import</span> <span class="n">SplineLinearQuant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">SplineLinearQuant</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">result</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.models.SplineQuadraticQuant">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.models.</span></span><span class="sig-name descname"><span class="pre">SplineQuadraticQuant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xtab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/models/quantile_reg.html#SplineQuadraticQuant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.models.SplineQuadraticQuant" title="Link to this definition">¶</a></dt>
+<dd><p>Régression quantile avec B-splines de degré 2 et contraintes de forme.</p>
+<p>Les splines quadratiques sont des fonctions continues, dérivables une fois,
+et quadratiques sur chaque intervalle entre les nœuds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xtab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>ytab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>knots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Nombre de nœuds ou liste des nœuds</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Paramètre quantile (entre 0 et 1)</p></li>
+<li><p><strong>monot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>default=0</em>) – Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)</p></li>
+<li><p><strong>cv</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>default=0</em>) – Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)</p></li>
+<li><p><strong>solver</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default='CLARABEL'</em>) – Solveur CVXPY à utiliser</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Poids des observations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>polyn</strong> – Fonction spline résultante (degré 2)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>BSpline object</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>-Pour une spline quadratique, la monotonie sur chaque intervalle est
+implémentée par des contraintes suffisantes et nécessaires aux noeuds
+de la dérivée affine par morceaux.
+-La convexité est contrôlée par le signe d’un point quelconque de
+chaque intervalle (la dérivée seconde est constante par morceaux).
+L’ensemble des contraintes est un problème linéaire.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy</span> <span class="kn">import</span> <span class="n">SplineQuadraticQuant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">SplineQuadraticQuant</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.models.SplineCubicQuant">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.models.</span></span><span class="sig-name descname"><span class="pre">SplineCubicQuant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xtab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">der3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/models/quantile_reg.html#SplineCubicQuant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.models.SplineCubicQuant" title="Link to this definition">¶</a></dt>
+<dd><p>Régression quantile avec B-splines cubiques et contraintes de forme.
+Les splines cubiques sont des fonctions continues, deux fois dérivables,
+et cubiques sur chaque intervalle entre les nœuds.
+:param xtab: Données x et y
+:type xtab: array-like
+:param ytab: Données x et y
+:type ytab: array-like
+:param knots: Nombre de nœuds ou liste des nœuds
+:type knots: int or list
+:param tau: Paramètre quantile
+:type tau: float
+:param monot: Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)
+:type monot: int or list, default=0
+:param cv: Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)
+:type cv: int or list, default=0
+:param der3: Contrainte sur la dérivée troisième (+1 positive, -1 négative, 0 aucune)
+:type der3: int or list, default=0
+:param solver: Solveur CVXPY à utiliser
+:type solver: str, default=’CLARABEL’
+:param weight: Poids des observations
+:type weight: array-like, optional</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>polyn</strong> – Fonction spline résultante (degré 3)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>BSpline object</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Les contraintes de monotonie sont implémentées via la caractérisation de Karlin-Studden (1966)</p></li>
+</ul>
+<p>du signe des polynômes positifs de degré 2.
+- Les contraintes de convexité sont implémentéee par le signe de la dérivée seconde affine
+par morceaux aux noeud.
+- Les contraintes de dérivée troisième (constante par morceaux) sont implémentées par
+le signe d’un point quelconque de chque intervalle.</p>
+<section id="id2">
+<h3>Exemples<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy</span> <span class="kn">import</span> <span class="n">SplineCubicQuant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">SplineCubicQuant</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.models.SplineQuarticQuant">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.models.</span></span><span class="sig-name descname"><span class="pre">SplineQuarticQuant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xtab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ytab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">der3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CLARABEL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/models/quantile_reg.html#SplineQuarticQuant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.models.SplineQuarticQuant" title="Link to this definition">¶</a></dt>
+<dd><p>Régression quantile avec B-splines de degré 4 et contraintes de forme.</p>
+<p>Les splines quartiques sont des fonctions continues, trois fois dérivables,
+et quartiques sur chaque intervalle entre les nœuds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xtab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>ytab</strong> (<em>array-like</em>) – Données x et y</p></li>
+<li><p><strong>knots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Nombre de nœuds ou liste des nœuds</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Paramètre quantile</p></li>
+<li><p><strong>monot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)</p></li>
+<li><p><strong>cv</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)</p></li>
+<li><p><strong>der3</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>optional</em>) – Contrainte sur la dérivée troisième (+1 positive, -1 négative, 0 aucune)</p></li>
+<li><p><strong>solver</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default='CLARABEL'</em>) – Solveur CVXPY à utiliser</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Poids des observations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>polyn</strong> – Fonction spline résultante (degré 4)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>BSpline object</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>-Les contraintes monotones (resp. convexes) sont implémentées
+via la caractérisation de Karlin-Studden (1966) pour les polynômes
+positifs de degré 3 (resp degré 2). Le problème d’optimisation est formulé comme un problème
+de programmation conique du second ordre (SOCP) et résolu avec CVXPY.</p>
+<ul class="simple">
+<li><p>La dérivée troisième étant affine par morceaux, les contraintes sont</p></li>
+</ul>
+<p>implémentées aux noeuds (problèmes linéaire).</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">BsplineQuantRegpy</span> <span class="kn">import</span> <span class="n">SplineQuarticQuant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">knots</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">SplineQuarticQuant</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">monot</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="BsplineQuantRegpy.models.rhotau">
+<span class="sig-prename descclassname"><span class="pre">BsplineQuantRegpy.models.</span></span><span class="sig-name descname"><span class="pre">rhotau</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/BsplineQuantRegpy/models/quantile_reg.html#rhotau"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#BsplineQuantRegpy.models.rhotau" title="Link to this definition">¶</a></dt>
+<dd><p>Fonction de perte quantile (check function).</p>
+<p>La fonction de perte quantile, également appelée fonction de vérification,
+est définie par ρ_τ(u) = u * (τ - 1_{u &lt; 0}). Elle est utilisée comme
+fonction objectif en régression quantile.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>u</strong> (<em>cvxpy.Expression</em>) – Résidus (valeurs réelles ou expressions CVXPY)</p></li>
+<li><p><strong>tau</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>0 &lt; tau &lt; 1</em>) – Paramètre quantile</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Somme des pertes quantiles</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>cvxpy.Expression</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>La fonction est convexe et linéaire par morceaux.
+Pour τ = 0.5, elle correspond à l’erreur absolue médiane.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="BsplineQuantRegpy.gui.html" class="btn btn-neutral float-left" title="BsplineQuantRegpy.gui package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Alexandre Abbes.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
