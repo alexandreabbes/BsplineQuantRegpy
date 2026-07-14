@@ -1,0 +1,11 @@
+Modules
+=======
+
+.. toctree::
+   :maxdepth: 2
+
+   api/bsplinequantregpy
+   api/bsplinequantregpy.models
+   api/bsplinequantregpy.core
+   api/bsplinequantregpy.gui
+EOF
