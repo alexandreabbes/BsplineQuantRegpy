@@ -326,55 +326,69 @@ def SplineQuadraticQuant(xtab, ytab, knots, tau, monot=0, cv=0, solver='CLARABEL
 
 def SplineCubicQuant(xtab, ytab, knots, tau, monot=0, cv=0, der3=0, 
                                    solver='CLARABEL', weight=None):
-    
-
     """
-    Régression quantile avec B-splines cubiques et contraintes de forme.
-    Les splines cubiques sont des fonctions continues, deux fois dérivables,
-    et cubiques sur chaque intervalle entre les nœuds.    
+    Régression quantile avec B-splines cubiques (degré 3).
+
+    Cette fonction ajuste un modèle de régression quantile avec des
+    B-splines cubiques, avec possibilité de contraintes de forme
+    (monotonie, convexité, dérivée troisième).
+
+    La méthode utilise la caractérisation de Karlin-Studden (1966)
+    pour le signe d'un polynôme du second degré (dérivée première".
+
     Parameters
     ----------
-    xtab, ytab : array-like
-        Données x et y
-    knots : int or list
-        Nombre de nœuds ou liste des nœuds
-    tau : float
-        Paramètre quantile
-    monot : int or list, default=0
-        Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)
-    cv : int or list, default=0
-        Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)
-    der3 : int or list, default=0
-        Contrainte sur la dérivée troisième (+1 positive, -1 négative, 0 aucune)
+    x : array-like
+        Variables explicatives (1D).
+    y : array-like
+        Variables à expliquer (1D).
+    knots : array-like
+        Nœuds pour les B-splines.
+    tau : float, default=0.5
+        Quantile à estimer (entre 0 et 1).
+    monot : int, default=0
+        Contrainte de monotonie :
+        0 = aucune, 1 = croissante, -1 = décroissante.
+    convex : int, default=0
+        Contrainte de convexité :
+        0 = aucune, 1 = convexe, -1 = concave.
+    deriv3 : int, default=0
+        Contrainte sur la dérivée troisième :
+        0 = aucune, 1 = dérivée troisième >= 0, -1 = dérivée troisième <= 0.
+    n_int : int, default=100
+        Nombre de points d'évaluation pour les contraintes.
     solver : str, default='CLARABEL'
-        Solveur CVXPY à utiliser
-    weight : array-like, optional
-        Poids des observations
-        
+        Solveur SOCP à utiliser ('CLARABEL', 'ECOS', 'SCS', 'MOSEK').
+    **kwargs : dict
+        Arguments supplémentaires pour CVXPY (verbose, etc.).
+
     Returns
     -------
-    polyn : BSpline object
-        Fonction spline résultante (degré 3)
-    
-    Notes
-    -----
-    - Les contraintes de monotonie sont implémentées via la caractérisation de Karlin-Studden (1966)
-    du signe des polynômes positifs de degré 2.
-    - Les contraintes de convexité sont implémentéee par le signe de la dérivée seconde affine
-    par morceaux aux noeud.
-    - Les contraintes de dérivée troisième (constante par morceaux) sont implémentées par
-    le signe d'un point quelconque de chque intervalle.
-    
-    Exemples
+    callable
+        Une fonction d'évaluation de la spline ajustée.
+
+    Examples
+    -------- 
+    Exemple d'utilisation avec contrainte croissante ::
+
+        import numpy as np
+        from BsplineQuantRegpy import SplineCubicQuant
+
+        x = np.linspace(0, 1, 100)
+        y = 3*x + 0.2*np.sin(10*np.pi*x) + 0.05*np.random.randn(100)
+        knots = np.quantile(x, np.linspace(0, 1, 11))
+
+        result = SplineCubicQuant(x, y, knots, tau=0.5, monot=1)
+        y_pred = result(np.linspace(0, 1, 200))
+
+    See Also
     --------
-    >>> import numpy as np
-    >>> from BsplineQuantRegpy import SplineCubicQuant
-    >>> x = np.linspace(0, 1, 50)
-    >>> y = 3*x + 0.1*np.random.randn(50)
-    >>> knots = np.quantile(x, np.linspace(0, 1, 6))
-    >>> result = SplineCubicQuant(x, y, knots, tau=0.5, monot=1, cv=1)
-    """
-    
+    SplineLinearQuant : Régression avec splines linéaires
+    SplineQuadraticQuant : Régression avec splines quadratiques
+    SplineQuarticQuant : Régression avec splines quartiques
+    quantile_spline : Interface unifiée pour tous les degrés
+    """    
+
     if weight is None:
         weight = np.ones(len(xtab))
     
@@ -605,12 +619,12 @@ def SplineQuarticQuant(xtab, ytab, knots, tau, monot, cv, der3=None, solver='CLA
     
     Notes
     -----
-    -Les contraintes monotones (resp. convexes) sont implémentées
+    Les contraintes monotones (resp. convexes) sont implémentées
     via la caractérisation de Karlin-Studden (1966) pour les polynômes
     positifs de degré 3 (resp degré 2). Le problème d'optimisation est formulé comme un problème
     de programmation conique du second ordre (SOCP) et résolu avec CVXPY.
 
-    - La dérivée troisième étant affine par morceaux, les contraintes sont
+    La dérivée troisième étant affine par morceaux, les contraintes sont
     implémentées aux noeuds (problèmes linéaire).
     
     Examples

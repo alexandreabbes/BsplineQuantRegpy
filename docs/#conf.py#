@@ -1,53 +1,82 @@
-# -*- coding: utf-8 -*-
+# Configuration file for the Sphinx documentation builder.
+#
+# For the full list of built-in configuration values, see the documentation:
+# https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 import os
 import sys
+from datetime import datetime
 
-# Ajouter le chemin src pour les imports
-sys.path.insert(0, os.path.abspath('../src'))
+# -- Path setup --------------------------------------------------------------
+# If extensions (or modules to document with autodoc) are in another directory,
+# add these directories to sys.path here. If the directory is relative to the
+# documentation root, use os.path.abspath to make it absolute.
 
-# ============ PROJECT INFO ============
+# Ajouter le chemin vers le code source
+src_path = os.path.abspath('../src')
+sys.path.insert(0, src_path)
+
+# Vérifier que le module est trouvé
+print(f"Python path: {sys.path}")
+print(f"Trying to import BsplineQuantRegpy from: {src_path}")
+
+try:
+    import BsplineQuantRegpy
+    print(f"✅ BsplineQuantRegpy imported successfully")
+    print(f"   Version: {BsplineQuantRegpy.__version__}")
+    print(f"   Location: {BsplineQuantRegpy.__file__}")
+except ImportError as e:
+    print(f"❌ Could not import BsplineQuantRegpy: {e}")
+    print("   Check that the module is properly installed or the path is correct.")
+
+# -- Project information -----------------------------------------------------
 project = 'BsplineQuantRegpy'
-copyright = '2026, Alexandre Abbes'
+copyright = f'{datetime.now().year}, Alexandre Abbes'
 author = 'Alexandre Abbes'
 release = '1.0.1'
-version = '1.0.1'
 
-# ============ EXTENSIONS ============
+# -- General configuration ---------------------------------------------------
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
+    'sphinx.ext.mathjax',
 ]
 
-# ============ THEME ============
-html_theme = 'sphinx_rtd_theme'
+templates_path = ['_templates']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-# ============ NAPOLEON ============
+# -- Options for HTML output -------------------------------------------------
+html_theme = 'alabaster'
+html_static_path = ['_static']
+
+# -- Options for autodoc ----------------------------------------------------
+autodoc_default_options = {
+    'members': True,
+    'undoc-members': True,
+    'private-members': False,
+    'special-members': '__call__',
+    'inherited-members': False,
+    'show-inheritance': True,
+}
+
+# -- Options for napoleon ---------------------------------------------------
 napoleon_google_docstring = True
 napoleon_numpy_docstring = True
 napoleon_include_init_with_doc = True
 napoleon_include_private_with_doc = False
 napoleon_include_special_with_doc = True
-napoleon_use_admonition_for_examples = False
-napoleon_use_admonition_for_notes = False
-napoleon_use_admonition_for_references = False
+napoleon_use_admonition_for_examples = True
+napoleon_use_admonition_for_notes = True
+napoleon_use_admonition_for_references = True
 napoleon_use_ivar = False
 napoleon_use_param = True
 napoleon_use_rtype = True
+napoleon_preprocess_types = False
 
-# ============ AUTODOC ============
-autodoc_default_options = {
-    'members': True,
-    'member-order': 'bysource',
-    'special-members': '__init__',
-    'undoc-members': True,
-    'exclude-members': '__weakref__',
-}
-
-# ============ INTERSPHINX ============
+# -- Options for intersphinx ------------------------------------------------
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None),
     'numpy': ('https://numpy.org/doc/stable', None),
@@ -55,3 +84,5 @@ intersphinx_mapping = {
     'matplotlib': ('https://matplotlib.org/stable', None),
 }
 
+# -- Options for autosummary ------------------------------------------------
+autosummary_generate = True

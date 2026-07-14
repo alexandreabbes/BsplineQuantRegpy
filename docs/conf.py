@@ -1,56 +1,48 @@
-# -*- coding: utf-8 -*-
+# Configuration file for the Sphinx documentation builder.
+#
+# For the full list of built-in configuration values, see the documentation:
+# https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 import os
 import sys
+from datetime import datetime
 
-# Ajouter le chemin src pour les imports
-sys.path.insert(0, os.path.abspath('../src'))
+# -- Path setup --------------------------------------------------------------
+# Ajouter le chemin vers le code source
+src_path = os.path.abspath('../src')
+if src_path not in sys.path:
+    sys.path.insert(0, src_path)
 
-# ============ PROJECT INFO ============
+# -- Project information -----------------------------------------------------
 project = 'BsplineQuantRegpy'
-copyright = '2026, Alexandre Abbes'
+copyright = f'{datetime.now().year}, Alexandre Abbes'
 author = 'Alexandre Abbes'
 release = '1.0.1'
-version = '1.0.1'
 
-# ============ EXTENSIONS ============
+# -- General configuration ---------------------------------------------------
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
     'sphinx.ext.autosummary',
-    'sphinx.ext.intersphinx',
 ]
 
-# ============ THEME ============
-html_theme = 'sphinx_rtd_theme'
+templates_path = ['_templates']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-# ============ NAPOLEON ============
-napoleon_google_docstring = True
-napoleon_numpy_docstring = True
-napoleon_include_init_with_doc = True
-napoleon_include_private_with_doc = False
-napoleon_include_special_with_doc = True
-napoleon_use_admonition_for_examples = False
-napoleon_use_admonition_for_notes = False
-napoleon_use_admonition_for_references = False
-napoleon_use_ivar = False
-napoleon_use_param = True
-napoleon_use_rtype = True
+# -- Options for HTML output -------------------------------------------------
+html_theme = 'alabaster'
+html_static_path = ['_static']
 
-# ============ AUTODOC ============
+# -- Options for autodoc ----------------------------------------------------
 autodoc_default_options = {
     'members': True,
-    'member-order': 'bysource',
-    'special-members': '__init__',
     'undoc-members': True,
-    'exclude-members': '__weakref__',
+    'show-inheritance': True,
 }
 
-# ============ INTERSPHINX ============
-intersphinx_mapping = {
-    'python': ('https://docs.python.org/3', None),
-    'numpy': ('https://numpy.org/doc/stable', None),
-    'scipy': ('https://docs.scipy.org/doc/scipy', None),
-    'matplotlib': ('https://matplotlib.org/stable', None),
-}
+# -- Options for napoleon ---------------------------------------------------
+napoleon_google_docstring = True
+napoleon_numpy_docstring = True
+napoleon_use_param = True
+napoleon_use_rtype = True
