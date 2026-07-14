@@ -1,11 +1,6 @@
 BsplineQuantRegpy.examples package
 ==================================
 
-.. automodule:: BsplineQuantRegpy.examples
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
 Submodules
 ----------
 
@@ -53,6 +48,14 @@ BsplineQuantRegpy.examples.quick\_start2 module
 -----------------------------------------------
 
 .. automodule:: BsplineQuantRegpy.examples.quick_start2
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: BsplineQuantRegpy.examples
    :members:
    :show-inheritance:
    :undoc-members:

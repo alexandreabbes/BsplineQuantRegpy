@@ -1,11 +1,6 @@
 BsplineQuantRegpy package
 =========================
 
-.. automodule:: BsplineQuantRegpy
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
 Subpackages
 -----------
 
@@ -16,3 +11,11 @@ Subpackages
    BsplineQuantRegpy.examples
    BsplineQuantRegpy.gui
    BsplineQuantRegpy.models
+
+Module contents
+---------------
+
+.. automodule:: BsplineQuantRegpy
+   :members:
+   :show-inheritance:
+   :undoc-members:

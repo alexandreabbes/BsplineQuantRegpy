@@ -1,11 +1,6 @@
 BsplineQuantRegpy.core package
 ==============================
 
-.. automodule:: BsplineQuantRegpy.core
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
 Submodules
 ----------
 
@@ -29,6 +24,14 @@ BsplineQuantRegpy.core.run\_gui module
 --------------------------------------
 
 .. automodule:: BsplineQuantRegpy.core.run_gui
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: BsplineQuantRegpy.core
    :members:
    :show-inheritance:
    :undoc-members:
