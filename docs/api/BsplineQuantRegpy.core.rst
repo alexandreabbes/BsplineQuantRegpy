@@ -20,13 +20,6 @@ BsplineQuantRegpy.core.constraints module
    :show-inheritance:
    :undoc-members:
 
-BsplineQuantRegpy.core.run\_gui module
---------------------------------------
-
-.. automodule:: BsplineQuantRegpy.core.run_gui
-   :members:
-   :show-inheritance:
-   :undoc-members:
 
 Module contents
 ---------------

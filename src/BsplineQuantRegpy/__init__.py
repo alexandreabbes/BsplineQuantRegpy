@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 """
 BsplineQuantRegpy - Quantile Regression with Constrained B-Splines
 ==================================================================
@@ -36,13 +35,18 @@ de **cobs** (Constrained B-Splines) qui traite les splines
 linéaires et quadratiques.
 
 Contrairement à cobs (R) qui ne traite que des splines quadratiques,
-ce package (Python)  étend la méthode aux splines cubiques et quartiques avec des contraintes exactes sur tout l'intervalle (pas seulement aux nœuds).
+ce package (Python) étend la méthode aux splines cubiques et
+quartiques avec des contraintes exactes sur tout l'intervalle
+(pas seulement aux nœuds).
 
 Packages R associés :
+
 - **BsplineQuantReg** (R) : Splines cubiques contraintes, self-contained
   https://cran.r-project.org/package=BsplineQuantReg
+
 - **cobs** (R) : Constrained B-Splines Smoothing (linéaires et quadratiques)
   https://cran.r-project.org/package=cobs
+
 - **quantreg** (R) : Quantile Regression (splines linéaires uniquement)
   https://cran.r-project.org/package=quantreg
 
@@ -74,28 +78,30 @@ run_gui                - Lance l'interface graphique
 
 EXEMPLES
 --------
->>> import numpy as np
->>> from BsplineQuantRegpy import SplineCubicQuant, run_gui
->>> 
->>> # Générer des données
->>> x = np.linspace(0, 1, 100)
->>> y = 3*x + 0.2*np.sin(10*np.pi*x) + 0.05*np.random.randn(100)
->>> knots = np.quantile(x, np.linspace(0, 1, 11))
->>> 
->>> # Régression avec contrainte croissante
->>> result = SplineCubicQuant(x, y, knots, tau=0.5, monot=1)
->>> 
->>> # Évaluer la spline
->>> x_eval = np.linspace(0, 1, 200)
->>> y_eval = result(x_eval)
->>> 
->>> # Lancer l'interface graphique
->>> run_gui()
+Voici un exemple d'utilisation du package ::
+
+    import numpy as np
+    from BsplineQuantRegpy import SplineCubicQuant, run_gui
+
+    # Générer des données
+    x = np.linspace(0, 1, 100)
+    y = 3*x + 0.2*np.sin(10*np.pi*x) + 0.05*np.random.randn(100)
+    knots = np.quantile(x, np.linspace(0, 1, 11))
+
+    # Régression avec contrainte croissante
+    result = SplineCubicQuant(x, y, knots, tau=0.5, monot=1)
+
+    # Évaluer la spline
+    x_eval = np.linspace(0, 1, 200)
+    y_eval = result(x_eval)
+
+    # Lancer l'interface graphique
+    run_gui()
 
 RÉFÉRENCES BIBLIOGRAPHIQUES
 ---------------------------
-Abbes, A. (2025). Quantile regression with cubic polynomial splines 
-under shape constraints with applications. 
+Abbes, A. (2025). Quantile regression with cubic polynomial splines
+under shape constraints with applications.
 doi:10.5281/zenodo.17427913
 
 He, X., & Shi, P. (1998). Monotone B-spline smoothing.
@@ -132,58 +138,50 @@ from .core.constraints import (
 )
 
 # ============ EXEMPLES ============
-from .examples import (
-    run_logistic_example)
-
-from    .examples.quick_start import main as quick_start
-from    .examples.quick_start2 import main as quick_start2
-
-
+from .examples import run_logistic_example
+from .examples.quick_start import main as quick_start
+from .examples.quick_start2 import main as quick_start2
 from .examples.comparison_example import main as run_comparison_example
+from .examples.example_temperature import run_temperature_analysis
 
-from .examples.example_temperature import run_temperature_analysis 
 
 def run_basic_example():
     """Lance l'exemple basique."""
     from .examples.example_basic import test_all_degrees
     test_all_degrees()
 
-#def run_temperature_analysis(degree=3, tau=[0.1, 0.25, 0.5, 0.75, 0.9], solver=#'CLARABEL'):
-#    """Lance l'analyse des données de température."""
-#    from .examples.example_temperature import run_temperature_analysis
-#    run_temperature_analysis(degree=degree, tau=tau, solver=solver)
-
 
 # ============ GUI ============
 def run_gui():
     """
     Lance l'interface graphique Tkinter.
-    
+
     Cette fonction est le point d'entrée principal pour l'interface
     graphique. Elle ouvre une fenêtre interactive permettant de :
+
     - Charger des données
     - Configurer les splines et les contraintes
     - Lancer des régressions
     - Visualiser et exporter les résultats
-    
+
     Returns
     -------
     None
         La fonction lance l'interface et ne retourne rien.
-    
+
     Examples
     --------
-    >>> from BsplineQuantRegpy import run_gui
-    >>> run_gui()
-    
+    Lancement de l'interface graphique ::
+
+        from BsplineQuantRegpy import run_gui
+        run_gui()
+
     See Also
     --------
     BsplineQuantRegpy.gui.Quant_reg_tk : Module GUI complet
     """
-
     from .gui.Quant_reg_tk import main
     main()
-
 
 
 # ============ EXPORT ============

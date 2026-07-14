@@ -1,3 +1,9 @@
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+
+[project.scripts]
+# ... autres scripts ...
+build-docs = "sphinx-build -b html docs/ docs/_build/html"
+gen-docs = "sphinx-apidoc -o docs/api/ src/BsplineQuantRegpy/ -f -M"
