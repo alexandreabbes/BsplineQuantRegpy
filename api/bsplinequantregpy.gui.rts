@@ -1,8 +1,0 @@
-Interface graphique
-===================
-
-.. automodule:: BsplineQuantRegpy.gui.Quant_reg_tk
-   :members:
-   :undoc-members:
-   :show-inheritance:
-EOF
