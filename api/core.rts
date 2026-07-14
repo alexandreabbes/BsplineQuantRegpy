@@ -1,0 +1,14 @@
+Noyau
+=====
+
+.. automodule:: BsplineQuantRegpy.core.bases
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: BsplineQuantRegpy.core.constraints
+   :members:
+   :undoc-members:
+   :show-inheritance:
+EOF
+

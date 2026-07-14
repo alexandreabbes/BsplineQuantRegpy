@@ -1,0 +1,8 @@
+Modèles
+=======
+
+.. automodule:: BsplineQuantRegpy.models.quantile_reg
+   :members:
+   :undoc-members:
+   :show-inheritance:
+EOF
