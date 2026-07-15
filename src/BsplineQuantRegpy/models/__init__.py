@@ -2,15 +2,14 @@
 # -*- coding: utf-8 -*-
 
 """
-Models module - Régressions quantile avec B-splines de degré 1 à 4
+Models module - Quantile regressions with B-splines of degree 1 to 4
 
-
-Fonctions exportées:
-- SplineLinearQuant : Régression avec splines linéaires
-- SplineQuadraticQuant : Régression avec splines quadratiques
-- SplineCubicQuant : Régression avec splines cubiques
-- SplineQuarticQuant : Régression avec splines quartiques
-- quantile_spline : Interface unifiée
+Exported functions:
+- SplineLinearQuant : Regression with linear splines
+- SplineQuadraticQuant : Regression with quadratic splines
+- SplineCubicQuant : Regression with cubic splines
+- SplineQuarticQuant : Regression with quartic splines
+- quantile_spline : Unified interface
 """
 
 

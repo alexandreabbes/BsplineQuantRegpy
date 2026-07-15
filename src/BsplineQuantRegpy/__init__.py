@@ -5,98 +5,97 @@
 BsplineQuantRegpy - Quantile Regression with Constrained B-Splines
 ==================================================================
 
-Package pour la régression quantile avec splines sous contraintes
-de forme (monotonie, convexité, dérivée troisième).
+Package for quantile regression with shape-constrained splines
+(monotonicity, convexity, third derivative).
 
-Auteur: Alexandre Abbes
+Author: Alexandre Abbes
 Version: 1.0.1
-Licence: GPLv3
+License: GPLv3
 
 DESCRIPTION
 -----------
-Ce package implémente la régression quantile avec des B-splines
-de degrés 1 à 4, sous contraintes de forme (monotonie, convexité,
-dérivée troisième). Les contraintes sont appliquées via la
-caractérisation de Karlin-Studden, formulée comme un problème
-de programmation conique du second ordre (SOCP).
+This package implements quantile regression with B-splines of
+degrees 1 to 4, under shape constraints (monotonicity, convexity,
+third derivative). Constraints are applied via the
+Karlin-Studden characterization, formulated as a second-order
+cone programming (SOCP) problem.
 
-Ce package utilise les bibliothèques B-spline de SciPy pour la
-construction des splines et CVXPY pour l'optimisation SOCP.
+This package uses SciPy's B-spline libraries for spline
+construction and CVXPY for SOCP optimization.
 
-PACKAGES RELIÉS
----------------
-Ce package est le l'équivalent Python de **BsplineQuantReg** (R),
-disponible sur le CRAN (https://cran.r-project.org/package=BsplineQuantReg).
+RELATED PACKAGES
+----------------
+This package is the Python equivalent of **BsplineQuantReg** (R),
+available on CRAN (https://cran.r-project.org/package=BsplineQuantReg).
 
-Le package R **BsplineQuantReg** propose des splines cubiques
-avec contraintes et est entièrement self-contained (calculs de
-splines et polynômes intégrés). Il est lui-même complémentaire
-de **cobs** (Constrained B-Splines) qui traite les splines
-linéaires et quadratiques.
+The R package **BsplineQuantReg** provides cubic splines with
+constraints and is fully self-contained (integrated spline and
+polynomial computations). It is itself complementary to
+**cobs** (Constrained B-Splines), which handles linear and
+quadratic splines.
 
-Contrairement à cobs (R) qui ne traite que des splines quadratiques,
-ce package (Python) étend la méthode aux splines cubiques et
-quartiques avec des contraintes exactes sur tout l'intervalle
-(pas seulement aux nœuds).
+Unlike cobs (R), which only handles quadratic splines, this
+package (Python) extends the method to cubic and quartic splines
+with exact constraints over the entire interval (not just at knots).
 
-Packages R associés :
+Related R packages:
 
-- **BsplineQuantReg** (R) : Splines cubiques contraintes, self-contained
+- **BsplineQuantReg** (R): Constrained cubic splines, self-contained
   https://cran.r-project.org/package=BsplineQuantReg
 
-- **cobs** (R) : Constrained B-Splines Smoothing (linéaires et quadratiques)
+- **cobs** (R): Constrained B-Splines Smoothing (linear and quadratic)
   https://cran.r-project.org/package=cobs
 
-FONCTIONNALITÉS
----------------
-- Régression quantile avec splines de degré 1 à 4
-- Contraintes de monotonie (croissant/décroissant)
-- Contraintes de convexité (convexe/concave)
-- Contraintes sur la dérivée troisième
-- Contraintes uniformes ou par région
-- Interface graphique (Tkinter)
-- Multiples solveurs supportés (CLARABEL, ECOS, SCS, MOSEK)
+FEATURES
+--------
+- Quantile regression with splines of degree 1 to 4
+- Monotonicity constraints (increasing/decreasing)
+- Convexity constraints (convex/concave)
+- Third derivative constraints
+- Uniform or region-specific constraints
+- Graphical user interface (Tkinter)
+- Multiple supported solvers (CLARABEL, ECOS, SCS, MOSEK)
 
 MODULES
 -------
-core/           - Construction des B-splines et contraintes de Karlin
-models/         - Fonctions de régression quantile (degrés 1 à 4)
-gui/            - Interface graphique Tkinter
-examples/       - Exemples d'utilisation
+core/           - B-spline construction and Karlin constraints
+models/         - Quantile regression functions (degrees 1 to 4)
+gui/            - Tkinter graphical user interface
+examples/       - Usage examples
 
-FONCTIONS PRINCIPALES
----------------------
-SplineLinearQuant      - Régression avec splines linéaires (degré 1)
-SplineQuadraticQuant   - Régression avec splines quadratiques (degré 2)
-SplineCubicQuant       - Régression avec splines cubiques (degré 3)
-SplineQuarticQuant     - Régression avec splines quartiques (degré 4)
-quantile_spline        - Interface unifiée pour tous les degrés
-run_gui                - Lance l'interface graphique
+MAIN FUNCTIONS
+--------------
+SplineLinearQuant      - Regression with linear splines (degree 1)
+SplineQuadraticQuant   - Regression with quadratic splines (degree 2)
+SplineCubicQuant       - Regression with cubic splines (degree 3)
+SplineQuarticQuant     - Regression with quartic splines (degree 4)
+quantile_spline        - Unified interface for all degrees
+run_gui                - Launch the graphical user interface
 
-EXEMPLES
+EXAMPLES
 --------
-Voici un exemple d'utilisation du package ::
+Here is an example of using the package::
 
     import numpy as np
     from BsplineQuantRegpy import SplineCubicQuant, run_gui
 
-    # Générer des données
+    # Generate data
     x = np.linspace(0, 1, 100)
     y = 3*x + 0.2*np.sin(10*np.pi*x) + 0.05*np.random.randn(100)
     knots = np.quantile(x, np.linspace(0, 1, 11))
 
-    # Régression avec contrainte croissante
+    # Regression with increasing constraint
     result = SplineCubicQuant(x, y, knots, tau=0.5, monot=1)
 
-    # Évaluer la spline
+    # Evaluate the spline
     x_eval = np.linspace(0, 1, 200)
     y_eval = result(x_eval)
 
-    # Lancer l'interface graphique
+    # Launch the graphical user interface
     run_gui()
 
-RÉFÉRENCES BIBLIOGRAPHIQUES
----------------------------
+REFERENCES
+----------
 Abbes, A. (2025). Quantile regression with cubic polynomial splines
 under shape constraints with applications.
 doi:10.5281/zenodo.17427913
