@@ -6,14 +6,13 @@ version: 2
 
 # Configuration du build
 build:
+  # Pour Ubuntu 22.04 (ancienne syntaxe)
   os: ubuntu-22.04
   tools:
     python: "3.11"
-  # Options de build
-  jobs:
-    pre_build:
-      # Compiler les fichiers de traduction avant le build
-      - sphinx-intl build
+  
+  # Pour les versions plus récentes, utiliser image:
+  # image: latest
 
 # Configuration Python
 python:
@@ -26,28 +25,9 @@ python:
 # Configuration Sphinx
 sphinx:
   configuration: docs/conf.py
-  # Ne pas échouer sur les avertissements (pour les traductions partielles)
   fail_on_warning: false
 
-# Formats supplémentaires (optionnel)
+# Formats supplémentaires
 formats:
   - htmlzip
   - epub
-  - pdf
-
-# Configuration des langues
-# Note: Les langues sont configurées dans l'interface web de ReadTheDocs
-# mais on peut les définir ici
-build:
-  languages:
-    - fr
-    - en
-
-# Configuration des sous-modules (si nécessaire)
-# submodules:
-#   include: all
-
-# Environnement
-env:
-  - SPHINXOPTS: "-W --keep-going"
-  - LANGUAGE: "fr"
