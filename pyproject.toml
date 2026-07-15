@@ -4,14 +4,14 @@ version = "1.0.2"
 description = "Quantile Regression with Constrained B-Splines"
 readme = "README.md"
 requires-python = ">=3.8"
-license = {text = "GPLv3"}  # Changé de "GPLv3" à "GPL-3.0-only"
+license = {text = "GPL-3.0-only"}
 authors = [
     {name = "Alexandre Abbes", email = "alexandre.abbes@proton.me"},
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",  # Changé
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -66,6 +66,6 @@ package-dir = {"" = "src"}
 packages = {find = {where = ["src"], include = ["BsplineQuantRegpy*"]}}
 
 [tool.setuptools.package-data]
-BsplineQuantRegpy = ["py.typed", "gui/*.py"]
-BsplineQuantRegpy.examples = ["*.py", "*.xls", "*.csv", "*.ods"]
+"BsplineQuantRegpy" = ["py.typed", "gui/*.py"]
+"BsplineQuantRegpy.examples" = ["*.py", "*.xls", "*.csv", "*.ods"]
 "*" = ["*.txt", "*.md", "*.xls", "*.csv", "*.ods"]
