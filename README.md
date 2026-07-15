@@ -5,8 +5,8 @@
 [![PyPI version](https://badge.fury.io/py/splinequantreg.svg)](https://badge.fury.io/py/splinequantreg)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17427913.svg)](https://doi.org/10.5281/zenodo.17427913)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)  # Changé
-[![Documentation](https://img.shields.io/badge/docs-fr-blue.svg)](https://bsplinequantregpy.readthedocs.io/fr/latest/)
-[![Documentation EN](https://img.shields.io/badge/docs-en-blue.svg)](https://bsplinequantregpy.readthedocs.io/en/latest/)
+[![Documentation](https://img.shields.io/badge/docs-fr-blue.svg)](https://alexandre.readthedocs.io/fr/latest/)
+[![Documentation EN](https://img.shields.io/badge/docs-en-blue.svg)](https://alexandre.readthedocs.io/en/latest/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 Python implementation of quantile regression with constrained splines (degrees 1-4). Degrees 1-3 are based on the article **"Quantile regression with cubic splines under shape constraints"** by Alexandre Abbes, while degree 4 is a natural consequence of the cited references.

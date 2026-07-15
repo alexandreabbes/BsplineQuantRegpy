@@ -8,9 +8,6 @@ BsplineQuantRegpy - Quantile Regression with Constrained B-Splines
 Package for quantile regression with shape-constrained splines
 (monotonicity, convexity, third derivative).
 
-Author: Alexandre Abbes
-Version: 1.0.1
-License: GPLv3
 
 DESCRIPTION
 -----------
