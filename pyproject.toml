@@ -1,6 +1,6 @@
 [project]
 name = "BsplineQuantRegpy"
-version = "1.0.3"
+version = "1.0.4"
 description = "Quantile Regression with Constrained B-Splines"
 readme = "README.md"
 requires-python = ">=3.8"
