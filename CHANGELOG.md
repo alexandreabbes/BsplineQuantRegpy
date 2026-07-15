@@ -1,7 +1,3 @@
-
-### 1.4 Mettre à jour `CHANGELOG.md`
-
-```markdown
 # Changelog
 
 ## [1.0.2] - 2026-01-15
