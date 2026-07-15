@@ -1,21 +1,34 @@
 # Quantile Regression with Constrained Splines
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)  # Changé
+
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![PyPI version](https://badge.fury.io/py/splinequantreg.svg)](https://badge.fury.io/py/splinequantreg)
+[![PyPI version](https://badge.fury.io/py/BsplineQuantRegpy.svg)](https://badge.fury.io/py/BsplineQuantRegpy)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17427913.svg)](https://doi.org/10.5281/zenodo.17427913)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Documentation](https://img.shields.io/badge/docs-fr-blue.svg)](https://alexandre.readthedocs.io/fr/latest/)
 [![Documentation EN](https://img.shields.io/badge/docs-en-blue.svg)](https://alexandre.readthedocs.io/en/latest/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![R](https://img.shields.io/badge/R-4.0+-blue.svg)](https://www.r-project.org/)
+
+
 ---
 
-**Python implementation of quantile regression with constrained splines (degrees 1-4).** Degrees 1-3 are based on the article **"Quantile regression with cubic splines under shape constraints"** by Alexandre Abbes, while degree 4 is a natural extension of the cited references.[![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![R](https://img.shields.io/badge/R-4.0+-blue.svg)](https://www.r-project.org/)## Associated packages| Package | Language | Description | Link |
+**Python implementation of quantile regression with constrained splines (degrees 1-4).**
+ Degrees 1-3 are based on the article *"Quantile regression with cubic splines under shape constraints"* by Alexandre Abbes, while degree 4 is a natural extension of the cited references.
+
+
+
+## Associated packages
+| Package | Language |Description | Link |
 |---------|---------|-------------|------|
 | **BsplineQuantReg** | R | Constrained cubic splines, self-contained | [CRAN](https://cran.r-project.org/package=BsplineQuantReg) |
 | **cobs** | R | Constrained B-Splines (linear and quadratic) | [CRAN](https://cran.r-project.org/package=cobs) |
 | **quantreg** | R | Quantile Regression | [CRAN](https://cran.r-project.org/package=quantreg) |
 | **quantreg** | Python | Quantile Regression | [statmodels](https://www.statsmodels.org) or [PyPI](https://pypi.org/project/statsmodels) |
-| **This package** | Python | Constrained splines of degrees 1 to 4 | [GitHub](https://github.com/alexandreabbes/BsplineQuantRegpy) |### Comparison of packages| Feature | cobs (R) | BsplineQuantReg (R) | BsplineQuantRegpy (Python) |
+| **This package** | Python | Constrained splines of degrees 1 to 4 | [GitHub](https://github.com/alexandreabbes/BsplineQuantRegpy) |
+
+### Comparison of packages
+| Feature | cobs (R) | BsplineQuantReg (R) | BsplineQuantRegpy (Python) |
 |---------|----------|---------------------|----------------------------|
 | Linear Splines | ✅ | ❌ | ✅ |
 | Quadratic Splines | ✅ | ❌ | ✅ |

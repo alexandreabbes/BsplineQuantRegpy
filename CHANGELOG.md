@@ -1,5 +1,9 @@
 # Changelog
 
+
+## [1.0.3] - 2026-01-15
+- update link to documentation (broken in 1.0.2)
+
 ## [1.0.2] - 2026-01-15
 
 ### Added
