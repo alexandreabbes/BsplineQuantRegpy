@@ -6,7 +6,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17427913.svg)](https://doi.org/10.5281/zenodo.17427913)
 
 
-Python implementation of quantile regression with constrained splines (degrees 1-3). Degrees 1-3 are based on the article **"Quantile regression with cubic splines under shape constraints"** by Alexandre Abbes, while degree 4 is a natural consequence of the cited references.
+Python implementation of quantile regression with constrained splines (degrees 1-4). Degrees 1-3 are based on the article **"Quantile regression with cubic splines under shape constraints"** by Alexandre Abbes, while degree 4 is a natural consequence of the cited references.
 
 
 [![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
@@ -23,7 +23,7 @@ Python implementation of quantile regression with constrained splines (degrees 1
 | **quantreg** | Python | Quantile Regression | [statmodels](https://www.statsmodels.org) or [PyPI](https://pypi.org/project/statsmodels) |
 | **Ce package** | Python | Splines de degrés 1 à 4 contraintes | [GitHub](https://github.com/alexandreabbes/BsplineQuantRegpy) |
 
-### Comparaison of packages
+### Comparison of packages
 
 | Fonctionnality| cobs (R) | BsplineQuantReg (R) | BsplineQuantRegpy (Python) |
 |---------------|----------|---------------------|---------------------|
@@ -31,12 +31,12 @@ Python implementation of quantile regression with constrained splines (degrees 1
 | Quadratic Splines | ✅ | ❌ | ✅ |
 | Cubic Splines | ❌ | ✅ | ✅ |
 | Quartic Splines | ❌ | ❌ | ✅ |
-| Contraints at nœuds | ✅ | ✅ | ✅ |
+| Contraints at knots | ✅ | ✅ | ✅ |
 | Over the whole interval | ❌ | ✅ | ✅ |
-| Third derivative| ❌ | ✅ | ✅ |
-| Gui | ❌ | ❌ | ✅ |
 | Region constraints | ❌ | ✅ | ✅ |
-| Self-contained | ❌ | ✅ | ❌ (utilise SciPy) |
+| Third derivative| ❌ | ❌ | ✅ |
+| Gui | ❌ | ❌ | ✅ |
+| Self-contained for Bsplines| ❌ | ✅ | ❌ (utilise SciPy) |
 
 
 
@@ -49,7 +49,6 @@ Python implementation of quantile regression with constrained splines (degrees 1
 -  Constraints valid over the entire interval or selected regions
 -  Graphical interface for interactive testing (Tkinter)
 -  Multiple solvers support (CLARABEL, ECOS, SCS, MOSEK)
--  Standalone code with built-in tests
 
 ##  Installation
 
@@ -82,7 +81,7 @@ install.packages("BsplineQuantReg")
 ## File Structure
 
 ### Graphical Interface
-- `Quant_reg_tk.py` - Tkinter GUI for interactive parameter testing (spline degree, knots, derivative constraints)
+- `Quantr_eg_tk.py` - Tkinter GUI for interactive parameter testing (spline degree, knots, derivative constraints)
 
 ### Main Algorithms
 
@@ -95,7 +94,7 @@ install.packages("BsplineQuantReg")
 | `quantile_spline.py` | Unified function for regresion with any degree 1-4 and constraints|
 
 ### Examples and Data
-- `Test_temp.py` - Replication of the test on global temperatures (data in `temp.xls`)
+- `example_temerature.py` - Replication of the test on global warming (temperatures , data in `temp.xls`)
 - `examples/` - Additional usage examples
 
 ## Quick Start

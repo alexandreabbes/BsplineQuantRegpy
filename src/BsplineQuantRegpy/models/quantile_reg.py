@@ -796,58 +796,57 @@ def SplineQuarticQuant(xtab, ytab, knots, tau, monot, cv, der3=None, solver='CLA
     return polyn
 
 def quantile_spline(xtab, ytab, knots, tau, degree=3, monot=0, cv=0, der3=0, solver='CLARABEL',weight=None):  
-
     """
     Cette fonction permet d'appeler la régression quantile pour tous les degrés
     de splines (1 à 4) avec une interface unique. Elle redirige vers la fonction
     appropriée selon le degré choisi.
     
+    Les contraintes de monotonie pour les degrés 3 et 4 sont implémentées
+    via la caractérisation de Karlin-Studden (1966) pour les polynômes
+    positifs de degrés 2 et 3, ce sont des contraintes quadratiques.
+    Les autres contraintes sont lineaires.
+    
+    Le problème d'optimisation est formulé comme un problème
+    de programmation conique du second ordre (SOCP) et résolu avec CVXPY.
+
     Paramètres
     ----------
     xtab : array-like, shape (n,)
-        Variables indépendantes (abscisses). Doivent être dans l'intervalle [0, 1].
-    
+        Variables indépendantes (abscisses). Doivent être dans l'intervalle [0, 1]. 
     ytab : array-like, shape (n,)
         Variables dépendantes (ordonnées).
-    
     knots : array-like
         Positions des nœuds pour la base B-spline.
         Si un entier est fourni, il est interprété comme le nombre de nœuds.
-    
     tau : float, 0 < tau < 1
         Quantile à estimer. Par exemple:
         - tau = 0.5 : médiane
         - tau = 0.1 : quantile inférieur
         - tau = 0.9 : quantile supérieur
-    
     degree : int, default=3
         Degré de la spline :
         - 1 : linéaire (affine par morceaux)
         - 2 : quadratique
         - 3 : cubique
         - 4 : quartique
-    
     monot : int ou list, default=0
         Contrainte de monotonie :
         - 1 : fonction croissante
         - -1 : fonction décroissante
         - 0 : aucune contrainte
         Si une liste est fournie, chaque élément correspond à un intervalle.
-    
     cv : int ou list, default=0
         Contrainte de convexité :
         - 1 : fonction convexe
         - -1 : fonction concave
         - 0 : aucune contrainte
         Si une liste est fournie, chaque élément correspond à un intervalle.
-    
     der3 : int ou list, default=0
         Contrainte sur la dérivée troisième :
         - 1 : dérivée troisième positive
         - -1 : dérivée troisième négative
         - 0 : aucune contrainte
         (Uniquement pour les splines de degré 3 et 4)
-    
     solver : str, default='CLARABEL'
         Solveur CVXPY à utiliser. Options disponibles :
         - 'CLARABEL' (recommandé, gratuit)
@@ -855,11 +854,11 @@ def quantile_spline(xtab, ytab, knots, tau, degree=3, monot=0, cv=0, der3=0, sol
         - 'SCS'
         - 'GUROBI' (payant, nécessite une licence)
         - 'MOSEK' (payant, nécessite une licence)
-        - 'CVXOPT'
-    
+        - 'CVXOPT'    
     weight : array-like, optional
         Poids des observations pour la régression pondérée.
         Si None, tous les poids sont égaux à 1.
+
     Raises
     ------
     ValueError
@@ -870,7 +869,6 @@ def quantile_spline(xtab, ytab, knots, tau, degree=3, monot=0, cv=0, der3=0, sol
     callable
         Fonction spline résultante. Elle peut être évaluée en tout point x :
         >>> y_eval = spline_result(x_eval)
-    
        
     Exemples
     --------
@@ -896,15 +894,7 @@ def quantile_spline(xtab, ytab, knots, tau, degree=3, monot=0, cv=0, der3=0, sol
     >>> x_eval = np.linspace(0, 1, 200)
     >>> y_eval = result(x_eval)
     
-    Notes
-    -----
-    Les contraintes de monotonie pour les degrés 3 et 4 sont implémentées
-    via la caractérisation de Karlin-Studden (1966) pour les polynômes
-    positifs de degrés 2 et 3, ce sont des contraintes quadratiques.
-    Les autres contraintes sont lineaires.
-    Le problème d'optimisation est formulé comme un problème
-    de programmation conique du second ordre (SOCP) et résolu avec CVXPY.
-    
+        
     Références
     ----------
     Karlin, S., & Studden, W.J. (1966). Tchebycheff Systems:
@@ -916,16 +906,14 @@ def quantile_spline(xtab, ytab, knots, tau, degree=3, monot=0, cv=0, der3=0, sol
     Abbes, A. (2025). Quantile regression with cubic polynomial splines 
     under shape constraints with applications. 
     doi:10.5281/zenodo.17427913
+
     See Also
     --------
     SplineLinearQuant, SplineQuadraticQuant, SplineCubicQuant, SplineQuarticQuant
-
     statsmodels.regression.quantile_regression.QuantReg (Python)
-    
     BsplineQuantReg (R) : https://cran.r-project.org/package=BsplineQuantReg
     cobs (R) : https://cran.r-project.org/package=cobs
-    
-    
+
     """
     
     if degree == 1:

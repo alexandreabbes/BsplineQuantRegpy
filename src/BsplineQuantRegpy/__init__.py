@@ -47,9 +47,6 @@ Packages R associés :
 - **cobs** (R) : Constrained B-Splines Smoothing (linéaires et quadratiques)
   https://cran.r-project.org/package=cobs
 
-- **quantreg** (R) : Quantile Regression (splines linéaires uniquement)
-  https://cran.r-project.org/package=quantreg
-
 FONCTIONNALITÉS
 ---------------
 - Régression quantile avec splines de degré 1 à 4
