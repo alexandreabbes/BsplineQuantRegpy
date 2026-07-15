@@ -1,0 +1,60 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Alexandre Abbes
+# This file is distributed under the same license as the BsplineQuantRegpy
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: BsplineQuantRegpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-14 23:30+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../user_guide/logistic_example.rst:2
+msgid "Exemple avec la fonction logistique"
+msgstr ""
+
+#: ../../user_guide/logistic_example.rst:4
+msgid ""
+"Cet exemple montre comment appliquer différentes contraintes sur une "
+"fonction logistique."
+msgstr ""
+
+#: ../../user_guide/logistic_example.rst:7
+msgid "Contraintes testées"
+msgstr ""
+
+#: ../../user_guide/logistic_example.rst:9
+msgid "Sans contrainte"
+msgstr ""
+
+#: ../../user_guide/logistic_example.rst:10
+msgid "Croissante"
+msgstr ""
+
+#: ../../user_guide/logistic_example.rst:11
+msgid "Convexité mixte (concave puis convexe)"
+msgstr ""
+
+#: ../../user_guide/logistic_example.rst:12
+msgid "Croissante + convexité mixte"
+msgstr ""
+
+#: ../../user_guide/logistic_example.rst:13
+msgid "Dérivée troisième négative"
+msgstr ""
+
+#: ../../user_guide/logistic_example.rst:16
+msgid "Utilisation (on peut choisir degree=1..4)"
+msgstr ""
+

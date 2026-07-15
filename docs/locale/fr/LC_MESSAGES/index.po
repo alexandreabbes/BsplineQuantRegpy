@@ -1,0 +1,67 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Alexandre Abbes
+# This file is distributed under the same license as the BsplineQuantRegpy
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: BsplineQuantRegpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-14 23:30+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../index.rst:9
+msgid "Démarrage"
+msgstr ""
+
+#: ../../index.rst:19
+msgid "Exemples avancés"
+msgstr ""
+
+#: ../../index.rst:29
+msgid "Référence API"
+msgstr ""
+
+#: ../../index.rst:2
+msgid "BsplineQuantRegpy"
+msgstr ""
+
+#: ../../index.rst:4
+msgid ""
+"**BsplineQuantRegpy** - Régression quantile avec B-splines sous "
+"contraintes de forme."
+msgstr ""
+
+#: ../../index.rst:6
+msgid ""
+"Ce package implémente la régression quantile avec des B-splines de degrés"
+" 1 à 4, sous contraintes de forme (monotonie, convexité, dérivée "
+"troisième)."
+msgstr ""
+
+#: ../../index.rst:36
+msgid "Indices et tables"
+msgstr ""
+
+#: ../../index.rst:38
+msgid ":ref:`genindex`"
+msgstr ""
+
+#: ../../index.rst:39
+msgid ":ref:`modindex`"
+msgstr ""
+
+#: ../../index.rst:40
+msgid ":ref:`search`"
+msgstr ""
+

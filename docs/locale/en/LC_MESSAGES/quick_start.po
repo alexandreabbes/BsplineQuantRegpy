@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Alexandre Abbes
+# This file is distributed under the same license as the BsplineQuantRegpy
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: BsplineQuantRegpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-14 23:30+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../quick_start.rst:4
+msgid "Démarrage rapide - Spline cubique croissante"
+msgstr "**Quick Start - Increasing Cubic Spline**"
+
+#: ../../quick_start.rst:6
+msgid ""
+"Ce premier exemple montre comment utiliser une spline cubique avec "
+"contrainte de monotonie."
+msgstr "This first example demonstrates how to use a cubic spline with a monotonicity constraint."
+
+#: ../../quick_start.rst:9
+msgid "Le code complet"
+msgstr "**Complete Code**"
+
+#: ../../quick_start.rst:11
+msgid "examples/quick_start.py"
+msgstr "**examples/quick_start.py**"
+
+#: ../../quick_start.rst:17
+msgid "Explication"
+msgstr "**Explanation**"
+
+#: ../../quick_start.rst:19
+msgid ""
+"**Importation** : On importe `SplineCubicQuant` pour la régression avec "
+"splines cubiques."
+msgstr "**Import**: We import `SplineCubicQuant` for regression with cubic splines."
+
+#: ../../quick_start.rst:21
+msgid ""
+"**Génération des données** : - 100 points sur l'intervalle [0, 1] - La "
+"fonction cible est :math:`3x + 0.2\\sin(10\\pi x)` avec du bruit"
+msgstr "**Data Generation**: - 100 points on the interval [0, 1] - The target function is :math:`3x + 0.2\\sin(10\\pi x)` with noise"
+
+#: ../../quick_start.rst:25
+msgid "**Définition des nœuds** : 11 nœuds placés aux quantiles de x"
+msgstr "**Knot Definition**: 11 knots placed at the quantiles of x"
+
+#: ../../quick_start.rst:27
+msgid ""
+"**Ajustement** : Appel à `SplineCubicQuant` avec `monot=1` pour imposer "
+"une contrainte de croissance"
+msgstr "**Fitting**: Call to `SplineCubicQuant` with `monot=1` to enforce an increasing constraint"
+
+#: ../../quick_start.rst:29
+msgid "**Visualisation** : Affichage des données et de la courbe ajustée"
+msgstr "**Visualization**: Display of data and fitted curve"
+
+#: ../../quick_start.rst:32
+msgid "Résultat"
+msgstr "**Result**"
+
+#: ../../quick_start.rst:34
+msgid ""
+"L'exécution produit un graphique montrant les données en rouge et la "
+"spline ajustée en noir, respectant la contrainte de monotonie."
+msgstr "The execution produces a plot showing the data in red and the fitted spline in black, respecting the monotonicity constraint."
+
+#: ../../quick_start.rst:38
+msgid "Pour essayer sans contrainte"
+msgstr "**To try without constraints**"
+
+#: ../../quick_start.rst:40
+msgid "Décommentez la ligne : .. code-block:: python"
+msgstr "**Uncomment the line**: .. code-block:: python"
+
+#: ../../quick_start.rst:43
+msgid "#result = SplineCubicQuant(x, y, knots, tau=0.5, monot=0)"
+msgstr "#result = SplineCubicQuant(x, y, knots, tau=0.5, monot=0)"
+

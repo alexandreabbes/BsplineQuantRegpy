@@ -1,0 +1,30 @@
+API Reference
+=============
+
+Ceci est la documentation de l'API du package BsplineQuantRegpy.
+
+
+.. automodule:: BsplineQuantRegpy
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: BsplineQuantRegpy.core
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: BsplineQuantRegpy.models
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: BsplineQuantRegpy.gui
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: BsplineQuantRegpy.examples
+   :members:
+   :undoc-members:
+   :show-inheritance:

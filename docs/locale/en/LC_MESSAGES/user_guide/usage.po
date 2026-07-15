@@ -1,0 +1,90 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Alexandre Abbes
+# This file is distributed under the same license as the BsplineQuantRegpy
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: BsplineQuantRegpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-14 23:30+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../user_guide/usage.rst:2
+msgid "Utilisation"
+msgstr ""
+
+#: ../../user_guide/usage.rst:5
+msgid "Exemple basique"
+msgstr ""
+
+#: ../../user_guide/usage.rst:7
+msgid "Voici un exemple d'utilisation du package :"
+msgstr ""
+
+#: ../../user_guide/usage.rst:29
+msgid "Avec contrainte de convexité"
+msgstr ""
+
+#: ../../user_guide/usage.rst:43
+msgid "Interface unifiée"
+msgstr ""
+
+#: ../../user_guide/usage.rst:56
+msgid "Interface graphique (GUI)"
+msgstr ""
+
+#: ../../user_guide/usage.rst:64
+msgid "Paramètres des fonctions"
+msgstr ""
+
+#: ../../user_guide/usage.rst:66
+msgid "Les principales fonctions acceptent les paramètres suivants :"
+msgstr ""
+
+#: ../../user_guide/usage.rst:68
+msgid "`x` : Variables explicatives (1D)"
+msgstr ""
+
+#: ../../user_guide/usage.rst:69
+msgid "`y` : Variables à expliquer (1D)"
+msgstr ""
+
+#: ../../user_guide/usage.rst:70
+msgid "`knots` : Nœuds pour les B-splines"
+msgstr ""
+
+#: ../../user_guide/usage.rst:71
+msgid "`tau` : Quantile à estimer (entre 0 et 1)"
+msgstr ""
+
+#: ../../user_guide/usage.rst:72
+msgid "`monot` : Contrainte de monotonie (0, 1, -1)"
+msgstr ""
+
+#: ../../user_guide/usage.rst:73
+msgid "`convex` : Contrainte de convexité (0, 1, -1)"
+msgstr ""
+
+#: ../../user_guide/usage.rst:74
+msgid "`deriv3` : Contrainte sur la dérivée troisième (0, 1, -1)"
+msgstr ""
+
+#: ../../user_guide/usage.rst:75
+msgid "`solver` : Solveur SOCP à utiliser"
+msgstr ""
+
+#: ../../user_guide/usage.rst:76
+msgid "`n_int` : Nombre de points d'évaluation pour les contraintes"
+msgstr ""
+

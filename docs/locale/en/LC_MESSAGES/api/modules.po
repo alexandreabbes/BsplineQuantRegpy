@@ -1,0 +1,946 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Alexandre Abbes
+# This file is distributed under the same license as the BsplineQuantRegpy
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: BsplineQuantRegpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-15 01:37+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../api/modules.rst:2
+msgid "API Reference"
+msgstr ""
+
+#: ../../api/modules.rst:4
+msgid "Ceci est la documentation de l'API du package BsplineQuantRegpy."
+msgstr ""
+
+#: ../../api/modules.rst:7
+msgid "Module principal"
+msgstr ""
+
+#: BsplineQuantRegpy:2 of
+msgid "BsplineQuantRegpy - Quantile Regression with Constrained B-Splines"
+msgstr ""
+
+#: BsplineQuantRegpy:4 of
+msgid ""
+"Package pour la régression quantile avec splines sous contraintes de "
+"forme (monotonie, convexité, dérivée troisième)."
+msgstr ""
+
+#: BsplineQuantRegpy:7 of
+msgid "Auteur: Alexandre Abbes Version: 1.0.1 Licence: GPLv3"
+msgstr ""
+
+#: BsplineQuantRegpy:12 of
+msgid "DESCRIPTION"
+msgstr ""
+
+#: BsplineQuantRegpy:13 of
+msgid ""
+"Ce package implémente la régression quantile avec des B-splines de degrés"
+" 1 à 4, sous contraintes de forme (monotonie, convexité, dérivée "
+"troisième). Les contraintes sont appliquées via la caractérisation de "
+"Karlin-Studden, formulée comme un problème de programmation conique du "
+"second ordre (SOCP)."
+msgstr ""
+
+#: BsplineQuantRegpy:19 of
+msgid ""
+"Ce package utilise les bibliothèques B-spline de SciPy pour la "
+"construction des splines et CVXPY pour l'optimisation SOCP."
+msgstr ""
+
+#: BsplineQuantRegpy:23 of
+msgid "PACKAGES RELIÉS"
+msgstr ""
+
+#: BsplineQuantRegpy:24 of
+msgid ""
+"Ce package est le l'équivalent Python de **BsplineQuantReg** (R), "
+"disponible sur le CRAN "
+"(https://cran.r-project.org/package=BsplineQuantReg)."
+msgstr ""
+
+#: BsplineQuantRegpy:27 of
+msgid ""
+"Le package R **BsplineQuantReg** propose des splines cubiques avec "
+"contraintes et est entièrement self-contained (calculs de splines et "
+"polynômes intégrés). Il est lui-même complémentaire de **cobs** "
+"(Constrained B-Splines) qui traite les splines linéaires et quadratiques."
+msgstr ""
+
+#: BsplineQuantRegpy:33 of
+msgid ""
+"Contrairement à cobs (R) qui ne traite que des splines quadratiques, ce "
+"package (Python) étend la méthode aux splines cubiques et quartiques avec"
+" des contraintes exactes sur tout l'intervalle (pas seulement aux nœuds)."
+msgstr ""
+
+#: BsplineQuantRegpy:38 of
+msgid "Packages R associés :"
+msgstr ""
+
+#: BsplineQuantRegpy:40 of
+msgid ""
+"**BsplineQuantReg** (R) : Splines cubiques contraintes, self-contained "
+"https://cran.r-project.org/package=BsplineQuantReg"
+msgstr ""
+
+#: BsplineQuantRegpy:43 of
+msgid ""
+"**cobs** (R) : Constrained B-Splines Smoothing (linéaires et "
+"quadratiques) https://cran.r-project.org/package=cobs"
+msgstr ""
+
+#: BsplineQuantRegpy:47 of
+msgid "FONCTIONNALITÉS"
+msgstr ""
+
+#: BsplineQuantRegpy:48 of
+msgid "Régression quantile avec splines de degré 1 à 4"
+msgstr ""
+
+#: BsplineQuantRegpy:49 of
+msgid "Contraintes de monotonie (croissant/décroissant)"
+msgstr ""
+
+#: BsplineQuantRegpy:50 of
+msgid "Contraintes de convexité (convexe/concave)"
+msgstr ""
+
+#: BsplineQuantRegpy:51 of
+msgid "Contraintes sur la dérivée troisième"
+msgstr ""
+
+#: BsplineQuantRegpy:52 of
+msgid "Contraintes uniformes ou par région"
+msgstr ""
+
+#: BsplineQuantRegpy:53 of
+msgid "Interface graphique (Tkinter)"
+msgstr ""
+
+#: BsplineQuantRegpy:54 of
+msgid "Multiples solveurs supportés (CLARABEL, ECOS, SCS, MOSEK)"
+msgstr ""
+
+#: BsplineQuantRegpy:57 of
+msgid "MODULES"
+msgstr ""
+
+#: BsplineQuantRegpy:58 of
+msgid ""
+"core/           - Construction des B-splines et contraintes de Karlin "
+"models/         - Fonctions de régression quantile (degrés 1 à 4) gui/"
+"            - Interface graphique Tkinter examples/       - Exemples "
+"d'utilisation"
+msgstr ""
+
+#: BsplineQuantRegpy:64 of
+msgid "FONCTIONS PRINCIPALES"
+msgstr ""
+
+#: BsplineQuantRegpy:65 of
+msgid ""
+"SplineLinearQuant      - Régression avec splines linéaires (degré 1) "
+"SplineQuadraticQuant   - Régression avec splines quadratiques (degré 2) "
+"SplineCubicQuant       - Régression avec splines cubiques (degré 3) "
+"SplineQuarticQuant     - Régression avec splines quartiques (degré 4) "
+"quantile_spline        - Interface unifiée pour tous les degrés run_gui"
+"                - Lance l'interface graphique"
+msgstr ""
+
+#: BsplineQuantRegpy:73 of
+msgid "EXEMPLES"
+msgstr ""
+
+#: BsplineQuantRegpy:74 of
+msgid "Voici un exemple d'utilisation du package ::"
+msgstr ""
+
+#: BsplineQuantRegpy:95 of
+msgid "RÉFÉRENCES BIBLIOGRAPHIQUES"
+msgstr ""
+
+#: BsplineQuantRegpy:96
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:99 of
+msgid ""
+"Abbes, A. (2025). Quantile regression with cubic polynomial splines under"
+" shape constraints with applications. doi:10.5281/zenodo.17427913"
+msgstr ""
+
+#: BsplineQuantRegpy:100
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:96 of
+msgid ""
+"He, X., & Shi, P. (1998). Monotone B-spline smoothing. Journal of the "
+"American Statistical Association, 93(442), 643-650."
+msgstr ""
+
+#: BsplineQuantRegpy:103
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:93 of
+msgid ""
+"Karlin, S., & Studden, W.J. (1966). Tchebycheff Systems: With "
+"Applications in Analysis and Statistics. Interscience Publishers."
+msgstr ""
+
+#: BsplineQuantRegpy:106 of
+msgid ""
+"Papp, D., & Alizadeh, F. (2014). Shape-Constrained Estimation Using "
+"Nonnegative Splines. Journal of Computational and Graphical Statistics, "
+"23(1), 211-231."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:1 of
+msgid "Régression quantile avec B-splines cubiques (degré 3)."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:3 of
+msgid ""
+"Cette fonction ajuste un modèle de régression quantile avec des B-splines"
+" cubiques, avec possibilité de contraintes de forme (monotonie, "
+"convexité, dérivée troisième)."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:7 of
+msgid ""
+"La méthode utilise la caractérisation de Karlin-Studden (1966) pour le "
+"signe d'un polynôme du second degré (dérivée première\"."
+msgstr ""
+
+#: ../../api/modules.rst
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:14 of
+msgid "Paramètres"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:10 of
+msgid "Variables explicatives (1D)."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:12 of
+msgid "Variables à expliquer (1D)."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:14 of
+msgid "Nœuds pour les B-splines."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:16 of
+msgid "Quantile à estimer (entre 0 et 1)."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:18 of
+msgid "Contrainte de monotonie : 0 = aucune, 1 = croissante, -1 = décroissante."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:21 of
+msgid "Contrainte de convexité : 0 = aucune, 1 = convexe, -1 = concave."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:24 of
+msgid ""
+"Contrainte sur la dérivée troisième : 0 = aucune, 1 = dérivée troisième "
+">= 0, -1 = dérivée troisième <= 0."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:27 of
+msgid "Nombre de points d'évaluation pour les contraintes."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:29 of
+msgid "Solveur SOCP à utiliser ('CLARABEL', 'ECOS', 'SCS', 'MOSEK')."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:31 of
+msgid "Arguments supplémentaires pour CVXPY (verbose, etc.)."
+msgstr ""
+
+#: ../../api/modules.rst
+msgid "Renvoie"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:34 of
+msgid "Une fonction d'évaluation de la spline ajustée."
+msgstr ""
+
+#: ../../api/modules.rst
+msgid "Type renvoyé"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:37
+#: BsplineQuantRegpy.models.quantile_reg.SplineLinearQuant:26
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant:35
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant:38
+#: BsplineQuantRegpy.run_gui:14 of
+msgid "Exemples"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:39 of
+msgid "Exemple d'utilisation avec contrainte croissante ::"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:53 of
+msgid ":py:obj:`SplineLinearQuant`"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:54 of
+msgid "Régression avec splines linéaires"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:56 of
+msgid ":py:obj:`SplineQuadraticQuant`"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:57 of
+msgid "Régression avec splines quadratiques"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:59 of
+msgid ":py:obj:`SplineQuarticQuant`"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:60 of
+msgid "Régression avec splines quartiques"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:62 of
+msgid ":py:obj:`quantile_spline`"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineCubicQuant:63 of
+msgid "Interface unifiée pour tous les degrés"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineLinearQuant:1 of
+msgid ""
+"Régression quantile avec B-splines de degré 1 (affines par morceaux) et "
+"contraintes de monotonie."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineLinearQuant:4 of
+msgid ""
+"Les splines linéaires sont des fonctions continues et linéaires sur "
+"chaque intervalle entre les nœuds. La monotonie est contrôlée par le "
+"signe de la dérivée (constante par morceaux)."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineLinearQuant:8
+#: BsplineQuantRegpy.models.quantile_reg.SplineLinearQuant:10
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant:6
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant:8
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant:6
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant:8 of
+msgid "Données x et y"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineLinearQuant:12
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant:10
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant:10 of
+msgid "Nombre de nœuds ou liste des nœuds"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineLinearQuant:14
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant:12 of
+msgid "Paramètre quantile (entre 0 et 1)"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineLinearQuant:16
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant:14
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant:14 of
+msgid "Contrainte de monotonie (+1 croissant, -1 décroissant, 0 aucune)"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineLinearQuant:18
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant:18
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant:20 of
+msgid "Solveur CVXPY à utiliser"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineLinearQuant:20
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant:20
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant:22 of
+msgid "Poids des observations"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineLinearQuant:23 of
+msgid "**polyn** -- Fonction spline résultante (degré 1)"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant:1 of
+msgid "Régression quantile avec B-splines de degré 2 et contraintes de forme."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant:3 of
+msgid ""
+"Les splines quadratiques sont des fonctions continues, dérivables une "
+"fois, et quadratiques sur chaque intervalle entre les nœuds."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant:16
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant:16 of
+msgid "Contrainte de convexité (+1 convexe, -1 concave, 0 aucune)"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant:23 of
+msgid "**polyn** -- Fonction spline résultante (degré 2)"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant:26
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant:28
+#: BsplineQuantRegpy.models.quantile_reg.rhotau:15 of
+msgid "Notes"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuadraticQuant:28 of
+msgid ""
+"-Pour une spline quadratique, la monotonie sur chaque intervalle est "
+"implémentée par des contraintes suffisantes et nécessaires aux noeuds de "
+"la dérivée affine par morceaux. -La convexité est contrôlée par le signe "
+"d'un point quelconque de chaque intervalle (la dérivée seconde est "
+"constante par morceaux). L'ensemble des contraintes est un problème "
+"linéaire."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant:1 of
+msgid "Régression quantile avec B-splines de degré 4 et contraintes de forme."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant:3 of
+msgid ""
+"Les splines quartiques sont des fonctions continues, trois fois "
+"dérivables, et quartiques sur chaque intervalle entre les nœuds."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant:12
+#: BsplineQuantRegpy.models.quantile_reg.rhotau:9 of
+msgid "Paramètre quantile"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant:18 of
+msgid "Contrainte sur la dérivée troisième (+1 positive, -1 négative, 0 aucune)"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant:25 of
+msgid "**polyn** -- Fonction spline résultante (degré 4)"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant:30 of
+msgid ""
+"Les contraintes monotones (resp. convexes) sont implémentées via la "
+"caractérisation de Karlin-Studden (1966) pour les polynômes positifs de "
+"degré 3 (resp degré 2). Le problème d'optimisation est formulé comme un "
+"problème de programmation conique du second ordre (SOCP) et résolu avec "
+"CVXPY."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.SplineQuarticQuant:35 of
+msgid ""
+"La dérivée troisième étant affine par morceaux, les contraintes sont "
+"implémentées aux noeuds (problèmes linéaire)."
+msgstr ""
+
+#: BsplineQuantRegpy.core.constraints.apply_karlin_constraints_cubic:1 of
+msgid ""
+"Applique les contraintes de Karlin pour un polynôme cubique (dérivée "
+"première) selon le théorème 3 de l'article"
+msgstr ""
+
+#: BsplineQuantRegpy.core.constraints.apply_karlin_constraints_cubic:4 of
+msgid ""
+"sign > 0 : p(u) >= 0 sur [0,1] sign < 0 : p(u) <= 0 sur [0,1]  (soit "
+"-p(u) >= 0)"
+msgstr ""
+
+#: BsplineQuantRegpy.core.constraints.apply_karlin_constraints_quadratic:1 of
+msgid ""
+"Applique les contraintes de Karlin pour un polynôme quadratique (dérivée "
+"seconde) selon la Proposition 5 du document PDF"
+msgstr ""
+
+#: BsplineQuantRegpy.core.constraints.apply_val_constraints:1 of
+msgid ""
+"Applique les contraintes pour un polynôme linéaire (dérivée troisième) "
+"p(u) = a*u + b >= 0 (ou <= 0) pour u ∈ [0,1]"
+msgstr ""
+
+#: BsplineQuantRegpy.core.bases.build_bsplines_and_deriv:1 of
+msgid "Returns the derivatives of the B-spline according to the degree."
+msgstr ""
+
+#: BsplineQuantRegpy.core.bases.build_bsplines_and_deriv:3 of
+msgid ""
+"For linear and constant derivatives returns a vector of values at knots. "
+"When derivatives are splines of degree 2 or 3, returns a matrix of "
+"normalised coefficients on the local power basis, i.e. the PP-form of the"
+" derivative of the spline prepared for applying Karlin-Studden "
+"constraints."
+msgstr ""
+
+#: BsplineQuantRegpy.core.bases.build_bsplines_and_deriv:8 of
+msgid "Knots positions"
+msgstr ""
+
+#: BsplineQuantRegpy.core.bases.build_bsplines_and_deriv:10 of
+msgid "Degree of the spline (1, 2, 3, or 4)"
+msgstr ""
+
+#: BsplineQuantRegpy.core.bases.build_bsplines_and_deriv:13 of
+msgid ""
+"* **List_Bsplines** (*list*) -- List of B-spline basis functions * "
+"**Der1_array** (*ndarray*) -- First derivative coefficients or values * "
+"**Der2_array** (*ndarray, optional*) -- Second derivative coefficients or"
+" values * **Der3_array** (*ndarray, optional*) -- Third derivative "
+"coefficients or values"
+msgstr ""
+
+#: BsplineQuantRegpy.core.bases.build_bsplines_and_deriv:13 of
+msgid "**List_Bsplines** (*list*) -- List of B-spline basis functions"
+msgstr ""
+
+#: BsplineQuantRegpy.core.bases.build_bsplines_and_deriv:14 of
+msgid "**Der1_array** (*ndarray*) -- First derivative coefficients or values"
+msgstr ""
+
+#: BsplineQuantRegpy.core.bases.build_bsplines_and_deriv:15 of
+msgid ""
+"**Der2_array** (*ndarray, optional*) -- Second derivative coefficients or"
+" values"
+msgstr ""
+
+#: BsplineQuantRegpy.core.bases.build_bsplines_and_deriv:16 of
+msgid ""
+"**Der3_array** (*ndarray, optional*) -- Third derivative coefficients or "
+"values"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:1 of
+msgid ""
+"Cette fonction permet d'appeler la régression quantile pour tous les "
+"degrés de splines (1 à 4) avec une interface unique. Elle redirige vers "
+"la fonction appropriée selon le degré choisi."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:5 of
+msgid ""
+"Les contraintes de monotonie pour les degrés 3 et 4 sont implémentées via"
+" la caractérisation de Karlin-Studden (1966) pour les polynômes positifs "
+"de degrés 2 et 3, ce sont des contraintes quadratiques. Les autres "
+"contraintes sont lineaires."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:10 of
+msgid ""
+"Le problème d'optimisation est formulé comme un problème de programmation"
+" conique du second ordre (SOCP) et résolu avec CVXPY."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:15 of
+msgid "xtab"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:-1 of
+msgid "array-like, shape (n,)"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:16 of
+msgid ""
+"Variables indépendantes (abscisses). Doivent être dans l'intervalle [0, "
+"1]."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:17 of
+msgid "ytab"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:18 of
+msgid "Variables dépendantes (ordonnées)."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:19 of
+msgid "knots"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:-1 of
+msgid "array-like"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:20 of
+msgid ""
+"Positions des nœuds pour la base B-spline. Si un entier est fourni, il "
+"est interprété comme le nombre de nœuds."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:22 of
+msgid "tau"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:-1 of
+msgid "float, 0 < tau < 1"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:23 of
+msgid ""
+"Quantile à estimer. Par exemple: - tau = 0.5 : médiane - tau = 0.1 : "
+"quantile inférieur - tau = 0.9 : quantile supérieur"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:27 of
+msgid "degree"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:-1 of
+msgid "int, default=3"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:28 of
+msgid ""
+"Degré de la spline : - 1 : linéaire (affine par morceaux) - 2 : "
+"quadratique - 3 : cubique - 4 : quartique"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:33 of
+msgid "monot"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:-1 of
+msgid "int ou list, default=0"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:34 of
+msgid ""
+"Contrainte de monotonie : - 1 : fonction croissante - -1 : fonction "
+"décroissante - 0 : aucune contrainte Si une liste est fournie, chaque "
+"élément correspond à un intervalle."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:39 of
+msgid "cv"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:40 of
+msgid ""
+"Contrainte de convexité : - 1 : fonction convexe - -1 : fonction concave "
+"- 0 : aucune contrainte Si une liste est fournie, chaque élément "
+"correspond à un intervalle."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:45 of
+msgid "der3"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:46 of
+msgid ""
+"Contrainte sur la dérivée troisième : - 1 : dérivée troisième positive - "
+"-1 : dérivée troisième négative - 0 : aucune contrainte (Uniquement pour "
+"les splines de degré 3 et 4)"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:51 of
+msgid "solver"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:-1 of
+msgid "str, default='CLARABEL'"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:52 of
+msgid ""
+"Solveur CVXPY à utiliser. Options disponibles : - 'CLARABEL' (recommandé,"
+" gratuit) - 'ECOS' - 'SCS' - 'GUROBI' (payant, nécessite une licence) - "
+"'MOSEK' (payant, nécessite une licence) - 'CVXOPT'"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:59 of
+msgid "weight"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:-1 of
+msgid "array-like, optional"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:60 of
+msgid ""
+"Poids des observations pour la régression pondérée. Si None, tous les "
+"poids sont égaux à 1."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline of
+msgid "raises ValueError"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:63 of
+msgid "Si le degré n'est pas compris entre 1 et 4."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline of
+msgid "returns"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:65 of
+msgid ""
+"*callable* -- Fonction spline résultante. Elle peut être évaluée en tout "
+"point x : >>> y_eval = spline_result(x_eval)"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:67 of
+msgid "*Exemples*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:68 of
+msgid "*--------*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:69 of
+msgid "*>>> import numpy as np*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:70 of
+msgid "*>>> from BsplineQuantRegpy import quantile_spline*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:71
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:76
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:79
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:82
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:86 of
+msgid "*>>>*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:72 of
+msgid "*>>> # Générer des données*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:73 of
+msgid "*>>> x = np.linspace(0, 1, 100)*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:74 of
+msgid "*>>> y = 2*x + 0.2*np.sin(10*np.pi*x) + 0.05*np.random.randn(100)*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:75 of
+msgid "*>>> knots = np.quantile(x, np.linspace(0, 1, 11))*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:77 of
+msgid "*>>> # Régression avec spline cubique et contrainte croissante*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:78 of
+msgid "*>>> result = quantile_spline(x, y, knots, tau=0.5, degree=3, monot=1)*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:80 of
+msgid "*>>> # Régression avec spline quadratique et contrainte convexe*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:81 of
+msgid "*>>> result = quantile_spline(x, y, knots, tau=0.5, degree=2, cv=1)*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:83 of
+msgid "*>>> # Régression avec spline quartique et toutes les contraintes*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:84 of
+msgid "*>>> result = quantile_spline(x, y, knots, tau=0.5, degree=4,*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:85 of
+msgid "*...                          monot=1, cv=1, der3=1)*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:87 of
+msgid "*>>> # Évaluer la spline*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:88 of
+msgid "*>>> x_eval = np.linspace(0, 1, 200)*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:89 of
+msgid "*>>> y_eval = result(x_eval)*"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:92 of
+msgid "Références"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.quantile_spline:103 of
+msgid ""
+":py:obj:`SplineLinearQuant`, :py:obj:`SplineQuadraticQuant`, "
+":py:obj:`SplineCubicQuant`, :py:obj:`SplineQuarticQuant`, "
+":py:obj:`statsmodels.regression.quantile_regression.QuantReg`, "
+":py:obj:`BsplineQuantReg`, :py:obj:`cobs`"
+msgstr ""
+
+#: BsplineQuantRegpy.examples.run_basic_example:1
+#: BsplineQuantRegpy.run_basic_example:1 of
+msgid "Lance l'exemple basique."
+msgstr ""
+
+#: BsplineQuantRegpy.examples.comparison_example.main:1 of
+msgid "Fonction principale pour exécution indépendante."
+msgstr ""
+
+#: BsplineQuantRegpy.run_gui:1 of
+msgid "Lance l'interface graphique Tkinter."
+msgstr ""
+
+#: BsplineQuantRegpy.run_gui:3 of
+msgid ""
+"Cette fonction est le point d'entrée principal pour l'interface "
+"graphique. Elle ouvre une fenêtre interactive permettant de :"
+msgstr ""
+
+#: BsplineQuantRegpy.run_gui:6 of
+msgid "Charger des données"
+msgstr ""
+
+#: BsplineQuantRegpy.run_gui:7 of
+msgid "Configurer les splines et les contraintes"
+msgstr ""
+
+#: BsplineQuantRegpy.run_gui:8 of
+msgid "Lancer des régressions"
+msgstr ""
+
+#: BsplineQuantRegpy.run_gui:9 of
+msgid "Visualiser et exporter les résultats"
+msgstr ""
+
+#: BsplineQuantRegpy.run_gui:11 of
+msgid "La fonction lance l'interface et ne retourne rien."
+msgstr ""
+
+#: BsplineQuantRegpy.run_gui:16 of
+msgid "Lancement de l'interface graphique ::"
+msgstr ""
+
+#: BsplineQuantRegpy.run_gui:23 of
+msgid ":py:obj:`BsplineQuantRegpy.gui.Quant_reg_tk`"
+msgstr ""
+
+#: BsplineQuantRegpy.run_gui:24 of
+msgid "Module GUI complet"
+msgstr ""
+
+#: BsplineQuantRegpy.examples.logistic_example.run_logistic_example:1 of
+msgid "Exécute le test avec la fonction logistique."
+msgstr ""
+
+#: BsplineQuantRegpy.examples.logistic_example.run_logistic_example:3 of
+msgid "Afficher les graphiques"
+msgstr ""
+
+#: BsplineQuantRegpy.examples.logistic_example.run_logistic_example:5 of
+msgid "Retourner les données générées"
+msgstr ""
+
+#: BsplineQuantRegpy.examples.logistic_example.run_logistic_example:8 of
+msgid "Données si return_data=True"
+msgstr ""
+
+#: BsplineQuantRegpy.examples.example_temperature.run_temperature_analysis:1 of
+msgid ""
+"Lance une analyse complète des données de température avec différentes "
+"contraintes pour plusieurs quantiles."
+msgstr ""
+
+#: BsplineQuantRegpy.examples.example_temperature.run_temperature_analysis:4 of
+msgid "Degré de la spline (1, 2, 3, 4)"
+msgstr ""
+
+#: BsplineQuantRegpy.examples.example_temperature.run_temperature_analysis:6 of
+msgid "Les quantiles à évaluer."
+msgstr ""
+
+#: BsplineQuantRegpy.examples.example_temperature.run_temperature_analysis:8 of
+msgid "Solveur à utiliser"
+msgstr ""
+
+#: ../../api/modules.rst:14
+msgid "Module core"
+msgstr ""
+
+#: BsplineQuantRegpy.core:1 of
+msgid ""
+"Core module - Fonctions de base pour les B-splines et contraintes de "
+"Karlin"
+msgstr ""
+
+#: ../../api/modules.rst:21
+msgid "Module models"
+msgstr ""
+
+#: BsplineQuantRegpy.models:1 of
+msgid "Models module - Régressions quantile avec B-splines de degré 1 à 4"
+msgstr ""
+
+#: BsplineQuantRegpy.models:4 of
+msgid ""
+"Fonctions exportées: - SplineLinearQuant : Régression avec splines "
+"linéaires - SplineQuadraticQuant : Régression avec splines quadratiques -"
+" SplineCubicQuant : Régression avec splines cubiques - SplineQuarticQuant"
+" : Régression avec splines quartiques - quantile_spline : Interface "
+"unifiée"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.rhotau:1 of
+msgid "Fonction de perte quantile (check function)."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.rhotau:3 of
+#, python-brace-format
+msgid ""
+"La fonction de perte quantile, également appelée fonction de "
+"vérification, est définie par ρ_τ(u) = u * (τ - 1_{u < 0}). Elle est "
+"utilisée comme fonction objectif en régression quantile."
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.rhotau:7 of
+msgid "Résidus (valeurs réelles ou expressions CVXPY)"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.rhotau:12 of
+msgid "Somme des pertes quantiles"
+msgstr ""
+
+#: BsplineQuantRegpy.models.quantile_reg.rhotau:17 of
+msgid ""
+"La fonction est convexe et linéaire par morceaux. Pour τ = 0.5, elle "
+"correspond à l'erreur absolue médiane."
+msgstr ""
+
+#: ../../api/modules.rst:27
+msgid "#Module gui #----------"
+msgstr ""
+
+#: ../../api/modules.rst:30
+msgid ""
+"#.. automodule:: BsplineQuantRegpy.gui #   :members: #   :undoc-members: "
+"#   :no-index:"
+msgstr ""
+
+#: ../../api/modules.rst:36
+msgid "Module examples"
+msgstr ""
+
+#: BsplineQuantRegpy.examples:1 of
+msgid "Exemples pour l'utilisation du package BsplineQuantRegpy."
+msgstr ""
+

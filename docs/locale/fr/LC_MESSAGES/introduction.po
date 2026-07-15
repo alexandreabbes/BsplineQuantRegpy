@@ -1,0 +1,158 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Alexandre Abbes
+# This file is distributed under the same license as the BsplineQuantRegpy
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: BsplineQuantRegpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-14 23:30+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../introduction.rst:2
+msgid "Introduction"
+msgstr ""
+
+#: ../../introduction.rst:4
+msgid ""
+"**BsplineQuantRegpy** est un package Python pour la régression quantile "
+"avec des B-splines sous contraintes de forme (monotonie, convexité, "
+"dérivée troisième)."
+msgstr ""
+
+#: ../../introduction.rst:8
+msgid "Objectifs"
+msgstr ""
+
+#: ../../introduction.rst:10
+msgid "Ce package permet de :"
+msgstr ""
+
+#: ../../introduction.rst:12
+msgid ""
+"Ajuster des modèles de régression quantile avec des B-splines de degré 1 "
+"à 4"
+msgstr ""
+
+#: ../../introduction.rst:13
+msgid ""
+"Imposer des contraintes de forme exactes sur tout l'intervalle ou une "
+"partie seulement. Les contraintes sont imposées avec la caractérisation "
+"de Karlin-Studden pour le signe de polynômes de degré 2 ou 3, qui "
+"conduisent à des de contraintes problèmes quadratiques: SOCP."
+msgstr ""
+
+#: ../../introduction.rst:14
+msgid "Utiliser une gui performante."
+msgstr ""
+
+#: ../../introduction.rst:17
+msgid "Fonctionnalités principales"
+msgstr ""
+
+#: ../../introduction.rst:19
+msgid "**SplineLinearQuant** : Régression avec splines linéaires (degré 1)"
+msgstr ""
+
+#: ../../introduction.rst:20
+msgid "**SplineQuadraticQuant** : Régression avec splines quadratiques (degré 2)"
+msgstr ""
+
+#: ../../introduction.rst:21
+msgid "**SplineCubicQuant** : Régression avec splines cubiques (degré 3)"
+msgstr ""
+
+#: ../../introduction.rst:22
+msgid "**SplineQuarticQuant** : Régression avec splines quartiques (degré 4)"
+msgstr ""
+
+#: ../../introduction.rst:23
+msgid "**quantile_spline** : Interface unifiée pour tous les degrés"
+msgstr ""
+
+#: ../../introduction.rst:24
+msgid "**run_gui** : Interface graphique Tkinter"
+msgstr ""
+
+#: ../../introduction.rst:27
+msgid "Caractéristiques de la gui"
+msgstr ""
+
+#: ../../introduction.rst:28
+msgid "générer des données"
+msgstr ""
+
+#: ../../introduction.rst:29
+msgid "définir les noeuds"
+msgstr ""
+
+#: ../../introduction.rst:30
+msgid "choisir le quantile de régression"
+msgstr ""
+
+#: ../../introduction.rst:31
+msgid "imposer des contraintes multiples par régions,"
+msgstr ""
+
+#: ../../introduction.rst:32
+msgid "définir la taille de l'intervalle"
+msgstr ""
+
+#: ../../introduction.rst:33
+msgid "utiliser différents degrés de spline"
+msgstr ""
+
+#: ../../introduction.rst:34
+msgid "choisir les couleurs"
+msgstr ""
+
+#: ../../introduction.rst:35
+msgid ""
+"accéder aux exemples du module en choisissant le degré des splines de "
+"régression."
+msgstr ""
+
+#: ../../introduction.rst:36
+msgid "permet l'import-export de données et de code executable python"
+msgstr ""
+
+#: ../../introduction.rst:40
+msgid "RÉFÉRENCES BIBLIOGRAPHIQUES"
+msgstr ""
+
+#: ../../introduction.rst:42
+msgid ""
+"Abbes, A. (2025). Quantile regression with cubic polynomial splines under"
+" shape constraints with applications. doi:10.5281/zenodo.17427913"
+msgstr ""
+
+#: ../../introduction.rst:46
+msgid ""
+"He, X., & Shi, P. (1998). Monotone B-spline smoothing. Journal of the "
+"American Statistical Association, 93(442), 643-650."
+msgstr ""
+
+#: ../../introduction.rst:49
+msgid ""
+"Karlin, S., & Studden, W.J. (1966). Tchebycheff Systems: With "
+"Applications in Analysis and Statistics. Interscience Publishers."
+msgstr ""
+
+#: ../../introduction.rst:52
+msgid ""
+"Papp, D., & Alizadeh, F. (2014). Shape-Constrained Estimation Using "
+"Nonnegative Splines. Journal of Computational and Graphical Statistics, "
+"23(1), 211-231."
+msgstr ""
+

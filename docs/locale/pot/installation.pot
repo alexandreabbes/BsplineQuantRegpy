@@ -1,0 +1,109 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Alexandre Abbes
+# This file is distributed under the same license as the BsplineQuantRegpy package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: BsplineQuantRegpy \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-14 23:30+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../installation.rst:2
+msgid "Installation"
+msgstr ""
+
+#: ../../installation.rst:5
+msgid "Prérequis"
+msgstr ""
+
+#: ../../installation.rst:7
+msgid "Python 3.8 ou supérieur"
+msgstr ""
+
+#: ../../installation.rst:8
+msgid "Pip (gestionnaire de paquets Python)"
+msgstr ""
+
+#: ../../installation.rst:11
+msgid "Dépendances"
+msgstr ""
+
+#: ../../installation.rst:13
+msgid "Le package nécessite les bibliothèques suivantes :"
+msgstr ""
+
+#: ../../installation.rst:15
+msgid "numpy >= 1.20.0"
+msgstr ""
+
+#: ../../installation.rst:16
+msgid "scipy >= 1.7.0"
+msgstr ""
+
+#: ../../installation.rst:17
+msgid "cvxpy >= 1.2.0"
+msgstr ""
+
+#: ../../installation.rst:18
+msgid "matplotlib >= 3.5.0"
+msgstr ""
+
+#: ../../installation.rst:19
+msgid "pandas >= 1.3.0"
+msgstr ""
+
+#: ../../installation.rst:20
+msgid "tkinter (inclus avec Python)"
+msgstr ""
+
+#: ../../installation.rst:23
+msgid "Installation depuis PyPI"
+msgstr ""
+
+#: ../../installation.rst:30
+msgid "Installation depuis les sources"
+msgstr ""
+
+#: ../../installation.rst:39
+msgid "Installation des dépendances"
+msgstr ""
+
+#: ../../installation.rst:46
+msgid "Vérification de l'installation"
+msgstr ""
+
+#: ../../installation.rst:54
+msgid "Solveurs SOCP supportés"
+msgstr ""
+
+#: ../../installation.rst:56
+msgid "Le package supporte plusieurs solveurs pour l'optimisation SOCP :"
+msgstr ""
+
+#: ../../installation.rst:58
+msgid "**CLARABEL** : Solveur par défaut, open-source"
+msgstr ""
+
+#: ../../installation.rst:59
+msgid "**ECOS** : Solveur open-source, rapide pour les petits problèmes"
+msgstr ""
+
+#: ../../installation.rst:60
+msgid "**SCS** : Solveur open-source, adapté aux grands problèmes"
+msgstr ""
+
+#: ../../installation.rst:61
+msgid "**MOSEK** : Solveur commercial, très performant (nécessite une licence)"
+msgstr ""
+
+#: ../../installation.rst:62
+msgid "**GUROBI** : ne permet pas de gérer les SOCP. Uniquement utilisable pour les splines de degré 1 ou 2."
+msgstr ""
