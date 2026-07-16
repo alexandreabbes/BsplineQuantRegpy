@@ -12,7 +12,7 @@ import ast
 import json
 import hashlib
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 
 try:
     import requests
@@ -21,12 +21,12 @@ except ImportError:
     sys.exit(1)
 
 # ============ CONFIGURATION ============
-DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', 'DEEPSEEK_API_KEY = sk-3a3362b9ab1544fbbe75bc7e63da7b1c')
+DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', 'sk-15bf1114f0d14f9ab8d563421ed0a983')
 DEEPSEEK_API_URL = "https://api.deepseek.com/v1/chat/completions"
 
 # Chemins
 SRC_DIR = Path("../src/BsplineQuantRegpy")
-OUTPUT_DIR = Path("../docs/_docstrings_en")  # Dossier temporaire
+OUTPUT_DIR = Path("../docs/_docstrings_en")
 CACHE_FILE = "docstring_en_cache.json"
 
 # ============ CACHE ============
@@ -51,9 +51,12 @@ def save_cache(cache: Dict[str, str]):
 
 def is_french(text: str) -> bool:
     """Détecte si un texte est en français."""
+    if not text or not isinstance(text, str):
+        return False
+    
     markers = ['é', 'è', 'ê', 'à', 'ô', 'ç', 'ï', 'ù', 'â', 'î', 'û']
     words = ['Régression', 'Quantile', 'Contrainte', 'Spline', 'Package', 
-             'Fonction', 'Paramètres', 'Retourne', 'Exécute']
+             'Fonction', 'Paramètres', 'Retourne', 'Exécute', 'Licence']
     
     if any(m in text for m in markers):
         return True
@@ -119,6 +122,7 @@ def translate_file(file_path: Path, cache: Dict[str, str], output_dir: Path) -> 
     
     # Vérifier si le fichier contient du français
     if not is_french(content):
+        print("   Aucun texte français trouvé")
         return True
     
     # Analyser le code
@@ -132,15 +136,22 @@ def translate_file(file_path: Path, cache: Dict[str, str], output_dir: Path) -> 
     docstrings = []
     
     def extract(node):
+        """Extrait la docstring d'un nœud AST si elle est en français."""
         doc = ast.get_docstring(node)
         if doc and is_french(doc):
-            docstrings.append((doc, node.lineno))
+            # Trouver la ligne de début
+            try:
+                start_line = node.lineno
+            except AttributeError:
+                start_line = 1
+            docstrings.append((doc, start_line))
     
     for node in ast.walk(tree):
         if isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.Module)):
             extract(node)
     
     if not docstrings:
+        print("   Aucune docstring française trouvée")
         return True
     
     print(f"   {len(docstrings)} docstrings à traduire")
@@ -151,8 +162,9 @@ def translate_file(file_path: Path, cache: Dict[str, str], output_dir: Path) -> 
         translations[doc] = translate_docstring(doc, cache)
     
     # Créer une copie avec les docstrings traduites
-    for original, translated in translations.items():
-        if translated != original:
+    # On remplace du plus long au plus court pour éviter les conflits
+    for original, translated in sorted(translations.items(), key=lambda x: len(x[0]), reverse=True):
+        if translated != original and original in content:
             content = content.replace(original, translated, 1)
     
     # Écrire la copie
@@ -161,6 +173,7 @@ def translate_file(file_path: Path, cache: Dict[str, str], output_dir: Path) -> 
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(content)
     
+    print(f"   ✅ {file_path.name} traité")
     return True
 
 def main():
@@ -170,23 +183,30 @@ def main():
     print("=" * 70)
     
     if not DEEPSEEK_API_KEY:
-        print("❌ Définissez DEEPSEEK_API_KEY")
-        sys.exit(1)
+        print("⚠️  DEEPSEEK_API_KEY non définie, les docstrings resteront en français")
+        print("   Pour traduire, définissez: export DEEPSEEK_API_KEY='sk-votre-cle'")
     
     # Créer le dossier de sortie
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     
     cache = load_cache()
+    print(f"📦 Cache: {len(cache)} entrées chargées")
     
     # Traiter tous les fichiers Python
     python_files = list(SRC_DIR.rglob("*.py"))
     print(f"📂 {len(python_files)} fichiers trouvés")
     
     for py_file in python_files:
-        translate_file(py_file, cache, OUTPUT_DIR)
+        try:
+            translate_file(py_file, cache, OUTPUT_DIR)
+        except Exception as e:
+            print(f"❌ Erreur sur {py_file.name}: {e}")
     
     save_cache(cache)
+    print("\n" + "=" * 70)
     print("✅ Terminé")
+    print(f"📂 Docstrings traduites dans: {OUTPUT_DIR}")
+    print("=" * 70)
 
 if __name__ == "__main__":
     main()
