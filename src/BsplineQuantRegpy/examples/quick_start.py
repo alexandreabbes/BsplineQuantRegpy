@@ -4,8 +4,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def quick_start():
-    print('''code :
-    def quick_start():
+    print('''##code :
+    import numpy as np
+    from BsplineQuantRegpy import SplineCubicQuant
+    import matplotlib.pyplot as plt
+
     # Generate data
     x = np.linspace(0, 1, 100)
     y = 3*x + 0.2*np.sin(10*np.pi*x) + 0.2*np.random.randn(100)
@@ -21,8 +24,9 @@ def quick_start():
 
     plt.plot(x,y,"*r")
     plt.plot(x_eval,y_eval,color='black')
-    plt.show()''')
-    
+    plt.show()
+
+    ''')
     # Generate data
     x = np.linspace(0, 1, 100)
     y = 3*x + 0.2*np.sin(10*np.pi*x) + 0.2*np.random.randn(100)

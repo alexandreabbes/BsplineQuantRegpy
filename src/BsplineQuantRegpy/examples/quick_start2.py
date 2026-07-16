@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 
 def quick_start2():
     print('''##CODE:
+    import numpy as np
+    from BsplineQuantRegpy import SplineCubicQuant
+    import matplotlib.pyplot as plt
     
     print("test_basic_fit")
     x = np.linspace(0, 1, 30)
@@ -28,7 +31,8 @@ def quick_start2():
     plt.plot(x,y,"*r")
     plt.plot(x_eval,y_eval,color='grey')
     plt.plot(x_eval,y_eval_m,color='black')
-    plt.show()''')
+    plt.show()
+    ''')
     
     print("test_basic_fit")
     x = np.linspace(0, 1, 30)

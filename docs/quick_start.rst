@@ -10,7 +10,7 @@ Le code complet
 
 .. literalinclude:: ../examples/quick_start.py
    :language: python
-   :lines: 3-21
+   :lines: 8-27
    :caption: examples/quick_start.py
 
 Explication

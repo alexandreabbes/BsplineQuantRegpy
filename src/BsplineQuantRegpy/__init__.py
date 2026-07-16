@@ -55,19 +55,19 @@ FEATURES
 
 MODULES
 -------
-core/           - B-spline construction and Karlin constraints
-models/         - Quantile regression functions (degrees 1 to 4)
-gui/            - Tkinter graphical user interface
-examples/       - Usage examples
+- core/           - B-spline construction and Karlin constraints
+- models/         - Quantile regression functions (degrees 1 to 4)
+- gui/            - Tkinter graphical user interface
+- examples/       - Usage examples
 
 MAIN FUNCTIONS
 --------------
-SplineLinearQuant      - Regression with linear splines (degree 1)
-SplineQuadraticQuant   - Regression with quadratic splines (degree 2)
-SplineCubicQuant       - Regression with cubic splines (degree 3)
-SplineQuarticQuant     - Regression with quartic splines (degree 4)
-quantile_spline        - Unified interface for all degrees
-run_gui                - Launch the graphical user interface
+- SplineLinearQuant      - Regression with linear splines (degree 1)
+- SplineQuadraticQuant   - Regression with quadratic splines (degree 2)
+- SplineCubicQuant       - Regression with cubic splines (degree 3)
+- SplineQuarticQuant     - Regression with quartic splines (degree 4)
+- quantile_spline        - Unified interface for all degrees
+- run_gui                - Launch the graphical user interface
 
 EXAMPLES
 --------
