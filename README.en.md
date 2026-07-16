@@ -79,7 +79,7 @@ install.packages("BsplineQuantReg")
 ## File Structure
 
 ### Graphical Interface
-- `Quantr_eg_tk.py` - Tkinter GUI for interactive parameter testing (spline degree, knots, derivative constraints)
+- `Quant_reg_tk.py` - Tkinter GUI for interactive parameter testing (spline degree, knots, derivative constraints)
 
 ### Main Algorithms
 
@@ -98,7 +98,7 @@ install.packages("BsplineQuantReg")
 ## Quick Start
 
 ```python
-from splinequantreg import SplineCubicQuantile
+from BsplineQuanRegpy import SplineCubicQuantile
 import numpy as np
 Quickstart
 Quickstart2

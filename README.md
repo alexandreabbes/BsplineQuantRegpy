@@ -84,7 +84,7 @@ install.packages("BsplineQuantReg")
 ## File Structure
 
 ### Graphical Interface
-- `Quantr_eg_tk.py` - Tkinter GUI for interactive parameter testing (spline degree, knots, derivative constraints)
+- `Quant_reg_tk.py` - Tkinter GUI for interactive parameter testing (spline degree, knots, derivative constraints)
 
 ### Main Algorithms
 
@@ -103,24 +103,10 @@ install.packages("BsplineQuantReg")
 ## Quick Start
 
 ```python
-from splinequantreg import SplineCubicQuantile
+from BsplineQuanRegpy import SplineCubicQuantile
 import numpy as np
 Quickstart
 Quickstart2
-
-# Or
-# Generate data
-x = np.linspace(0, 1, 100)
-y = 3*x + 0.2*np.sin(10*np.pi*x) + 0.1*np.random.randn(100)
-knots = np.quantile(x, np.linspace(0, 1, 11))
-
-# Fit with monotonicity constraint
-result = SplineCubicQuantile(x, y, knots, tau=0.5, monot=1)
-
-# Evaluate
-x_eval = np.linspace(0, 1, 200)
-y_eval = result(x_eval)
-```
 
 Or launch the GUI:
 
