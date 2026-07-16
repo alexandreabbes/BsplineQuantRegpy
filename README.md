@@ -6,6 +6,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Documentation](https://img.shields.io/badge/docs-fr-blue.svg)](https://bsplinequantregpy.readthedocs.io/fr/latest/)
 [![Documentation EN](https://img.shields.io/badge/docs-en-blue.svg)](https://bsplinequantregpy.readthedocs.io/en/latest/)
+
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![R](https://img.shields.io/badge/R-4.0+-blue.svg)](https://www.r-project.org/)
@@ -161,7 +162,7 @@ Contributions are welcome! Feel free to:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GPL-v3 License - see the [LICENSE](LICENSE) file for details.
 
 ## AI Assistance
 

@@ -4,7 +4,7 @@ version = "1.0.4"
 description = "Quantile Regression with Constrained B-Splines"
 readme = "README.md"
 requires-python = ">=3.8"
-license = {text = "GPL-3.0-only"}
+license = {text = "GPL-3"}
 authors = [
     {name = "Alexandre Abbes", email = "alexandre.abbes@proton.me"},
 ]
