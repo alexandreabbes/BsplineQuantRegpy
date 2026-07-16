@@ -1,25 +1,26 @@
 # Changelog
 
+## [1.0.4] - 2026-01-15
+- Reset link to documentation, and modify on readthedocs.
 
 ## [1.0.3] - 2026-01-15
-- update link to documentation (broken in 1.0.2)
+- Update link to documentation (broken in 1.0.2)
 
 ## [1.0.2] - 2026-01-15
 
 ### Added
-- 📚 Documentation complète en anglais
-- 🌍 Support multi-langues (français/anglais) dans la documentation Sphinx
-- 🔧 Scripts de traduction automatique avec DeepSeek API
-- 🏷️ Badges de documentation dans le README
+-  Documentation complète en anglais
+-  Support multi-langues (français/anglais) dans la documentation Sphinx
+-  Scripts de traduction automatique avec DeepSeek API
+-  Badges de documentation dans le README
 
 ### Changed
-- 📝 Mise à jour de la documentation avec des exemples
-- ⚙️ Amélioration de la configuration Sphinx
-- 🔄 Migration vers pyproject.toml moderne
+-  Mise à jour de la documentation avec des exemples
+-  Amélioration de la configuration Sphinx
+-  Adaptation de pyproject.toml
 
 ### Fixed
-- 🐛 Corrections mineures dans la documentation
-- 🔧 Optimisation des imports
+-  Corrections mineures dans les docstrings
 
 ## [1.0.1] - 2026-01-10
 
