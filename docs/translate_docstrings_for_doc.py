@@ -21,7 +21,7 @@ except ImportError:
     sys.exit(1)
 
 # ============ CONFIGURATION ============
-DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', 'sk-15bf1114f0d14f9ab8d563421ed0a983')
+DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', 'sk-3a3362b9ab1544fbbe75bc7e63da7b1c')
 DEEPSEEK_API_URL = "https://api.deepseek.com/v1/chat/completions"
 
 # Chemins
